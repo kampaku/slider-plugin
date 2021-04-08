@@ -1,3 +1,5 @@
 
 
-export {}
+export default class Model {
+  
+}

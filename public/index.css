@@ -1,0 +1,38 @@
+*, ::after, ::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+}
+
+#root {
+  width: 300px;
+}
+
+.slider {
+  position: relative;
+}
+
+.track {
+  width: 100%;
+  height: 10px;
+  border: 2px solid purple;
+  border-radius: 5px;
+}
+
+.thumb {
+  position: absolute;
+  width: 20px;
+  height: 25px;
+  border-radius: 5px;
+  left: 0;
+  bottom: -75%;
+  cursor: pointer;
+  background-color: cornflowerblue;
+}
