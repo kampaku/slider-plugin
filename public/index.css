@@ -12,10 +12,20 @@ body {
 }
 
 #root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 300px;
+  height: 300px;
 }
 
 .slider {
+  width: 100%;
+  position: relative;
+}
+
+.slider-vertical {
+  height: 100%;
   position: relative;
 }
 
@@ -26,13 +36,30 @@ body {
   border-radius: 5px;
 }
 
+.track-vertical {
+  width: 10px;
+  height: 100%;
+  border: 2px solid purple;
+  border-radius: 5px;
+}
+
 .thumb {
   position: absolute;
-  width: 20px;
-  height: 25px;
   border-radius: 5px;
-  left: 0;
-  bottom: -75%;
   cursor: pointer;
   background-color: cornflowerblue;
+}
+
+.thumb-horizontal {
+  width: 15px;
+  height: 25px;
+  left: 0;
+  bottom: -75%;
+}
+
+.thumb-vertical {
+  width: 25px;
+  height: 15px;
+  top: 0;
+  right: -75%;
 }
