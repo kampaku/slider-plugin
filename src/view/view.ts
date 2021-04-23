@@ -5,14 +5,14 @@ import Thumb from './thumb';
 
 export default class View {
   app: HTMLElement | null;
-  thumb: Thumb;
+  thumbFrom: Thumb;
   track: Track;
-  slider: HTMLElement;
+  sliderContainer: HTMLElement;
 
   constructor() {
     this.app = document.querySelector('#root');
-    this.slider = createElement('div');
-    this.thumb = new Thumb();
+    this.sliderContainer = createElement('div');
+    this.thumbFrom = new Thumb();
     this.track = new Track();
   }
 
@@ -29,17 +29,17 @@ export default class View {
       connect,
       scale,
     } = props;
-    this.app?.append(this.slider);
+    this.app?.append(this.sliderContainer);
     if (vertical) {
-      this.slider.classList.add('slider-vertical');
+      this.sliderContainer.classList.add('slider-vertical');
       this.track.element.classList.add('track-vertical');
-      this.thumb.element.classList.add('thumb-vertical');
+      this.thumbFrom.element.classList.add('thumb-vertical');
     } else {
-      this.slider.classList.add('slider');
+      this.sliderContainer.classList.add('slider');
       this.track.element.classList.add('track');
-      this.thumb.element.classList.add('thumb-horizontal');
+      this.thumbFrom.element.classList.add('thumb-horizontal');
     }
 
-    this.slider.append(this.track.element, this.thumb.element);
+    this.sliderContainer.append(this.track.element, this.thumbFrom.element);
   }
 }
