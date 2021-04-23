@@ -5,4 +5,8 @@ export default class Thumb {
   constructor() {
     this.element = createElement('div', ['thumb']);
   }
+
+  addListener(func: () => void) {
+    this.element.addEventListener('mousedown', func);
+  }
 }

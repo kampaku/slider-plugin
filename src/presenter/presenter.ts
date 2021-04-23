@@ -67,8 +67,53 @@ export default class Presenter {
     return props;
   }
 
+  move = (event: MouseEvent) => {
+
+    const clientOreintation = this.model.vertical ? 'clientY' : 'clientX';
+    const side = this.model.vertical ? 'top' : 'left'
+    const offsetWH = this.model.vertical ? 'offsetHeight' : 'offsetWidth'
+
+    let shiftThumb = event[clientOreintation] - this.view.thumbFrom.element.getBoundingClientRect()[side];
+
+      const onMouseMove =  (event: MouseEvent) => {
+        event.preventDefault();
+        let newLeft = event[clientOreintation] - shiftThumb - this.view.sliderContainer.getBoundingClientRect()[side];
+
+        if (newLeft < 0) {
+          newLeft = 0;
+        }
+        let sliderEnd = this.view.sliderContainer[offsetWH] - this.view.thumbFrom.element[offsetWH];
+        if (newLeft > sliderEnd) {
+          newLeft = sliderEnd;
+        }
+
+        this.view.thumbFrom.element.style[side] = newLeft + 'px';
+        let max: number = this.model.getMax()
+        let min: number = this.model.getMin()
+        let rangeArray = () => {
+          const arr = [];
+          for(let i = min; i < max; i++) {
+            arr.push(i)
+          }
+          return arr
+        }
+        let arr = rangeArray()
+        let index = Math.floor((newLeft / sliderEnd) * rangeArray.length)
+        console.log(arr[index])
+      }
+
+      function onMouseUp() {
+        document.removeEventListener('mouseup', onMouseUp);
+        document.removeEventListener('mousemove', onMouseMove);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+  }
+
   render() {
     const props = this.getProperties();
     this.view.render(props);
+    this.view.thumbFrom.addListener(this.move)
   }
 }
