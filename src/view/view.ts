@@ -6,6 +6,7 @@ import Thumb from './thumb';
 export default class View {
   app: HTMLElement | null;
   thumbFrom: Thumb;
+  thumbTo: Thumb;
   track: Track;
   sliderContainer: HTMLElement;
 
@@ -13,6 +14,7 @@ export default class View {
     this.app = document.querySelector('#root');
     this.sliderContainer = createElement('div');
     this.thumbFrom = new Thumb();
+    this.thumbTo = new Thumb();
     this.track = new Track();
   }
 
@@ -34,11 +36,15 @@ export default class View {
       this.sliderContainer.classList.add('slider-vertical');
       this.track.element.classList.add('track-vertical');
       this.thumbFrom.element.classList.add('thumb-vertical');
+      this.thumbTo.element.classList.add('thumb-vertical');
     } else {
       this.sliderContainer.classList.add('slider');
       this.track.element.classList.add('track');
       this.thumbFrom.element.classList.add('thumb-horizontal');
+      this.thumbTo.element.classList.add('thumb-horizontal');
     }
+
+    if (range) this.sliderContainer.append(this.thumbTo.element)
 
     this.sliderContainer.append(this.track.element, this.thumbFrom.element);
   }

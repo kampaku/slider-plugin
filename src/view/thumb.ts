@@ -1,4 +1,4 @@
-import createElement from '../helpers/create-element'; 
+import createElement from '../helpers/create-element';
 
 export default class Thumb {
   element: HTMLElement;
@@ -6,7 +6,7 @@ export default class Thumb {
     this.element = createElement('div', ['thumb']);
   }
 
-  addListener(func: () => void) {
-    this.element.addEventListener('mousedown', func);
+  addListener(func: (event: MouseEvent, thumb: Thumb) => void) {
+    this.element.addEventListener('mousedown', (event) => func(event, this));
   }
 }
