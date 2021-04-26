@@ -1,3 +1,4 @@
+import type Thumb from 'src/view/thumb';
 import type { ModelInterface } from '../model/modelInterface';
 
 type Options = {
@@ -38,6 +39,8 @@ export default class Presenter {
     this.model.setMin(min);
     this.model.setMax(max);
     if (step) this.model.setStep(step);
+    this.model.setValueArray();
+    console.log(this.model.getValueArray())
     if (from) this.model.setFrom(from);
     if (to) this.model.setTo(to);
     if (vertical) this.model.setVertical(vertical);
@@ -62,44 +65,47 @@ export default class Presenter {
       range: this.model.getRange(),
       connect: this.model.getConnect(),
       scale: this.model.getScale(),
+      valueArray: this.model.getValueArray()
     };
 
     return props;
   }
 
-  move = (event: MouseEvent) => {
+  move(value: number, thumb: Thumb) {
 
+  }
+
+  thumbHandler = (event: MouseEvent, thumb: Thumb) => {
+    // console.log(thumb)
+    //const thumb = event.target;
+    console.log(thumb === this.view.thumbTo)
     const clientOreintation = this.model.vertical ? 'clientY' : 'clientX';
     const side = this.model.vertical ? 'top' : 'left'
     const offsetWH = this.model.vertical ? 'offsetHeight' : 'offsetWidth'
 
-    let shiftThumb = event[clientOreintation] - this.view.thumbFrom.element.getBoundingClientRect()[side];
+    let shiftThumb = event[clientOreintation] - thumb.element.getBoundingClientRect()[side];
 
       const onMouseMove =  (event: MouseEvent) => {
+
         event.preventDefault();
-        let newLeft = event[clientOreintation] - shiftThumb - this.view.sliderContainer.getBoundingClientRect()[side];
+        let newPosition = event[clientOreintation] - shiftThumb - this.view.sliderContainer.getBoundingClientRect()[side];
 
-        if (newLeft < 0) {
-          newLeft = 0;
+        if (newPosition < 0) {
+          newPosition = 0;
         }
-        let sliderEnd = this.view.sliderContainer[offsetWH] - this.view.thumbFrom.element[offsetWH];
-        if (newLeft > sliderEnd) {
-          newLeft = sliderEnd;
+        let sliderEnd = this.view.sliderContainer[offsetWH] - thumb.element[offsetWH];
+        if (newPosition > sliderEnd) {
+          newPosition = sliderEnd;
         }
-
-        this.view.thumbFrom.element.style[side] = newLeft + 'px';
-        let max: number = this.model.getMax()
-        let min: number = this.model.getMin()
-        let rangeArray = () => {
-          const arr = [];
-          for(let i = min; i < max; i++) {
-            arr.push(i)
-          }
-          return arr
-        }
-        let arr = rangeArray()
-        let index = Math.floor((newLeft / sliderEnd) * rangeArray.length)
+        
+        let arr = this.model.getValueArray();
+        const elemWidth = sliderEnd / (arr.length - 1);
+        
+        let index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
+        thumb.element.style[side] = elemWidth * index + 'px';
+        
         console.log(arr[index])
+        // console.log(elemWidth, this.view.sliderContainer[offsetWH])
       }
 
       function onMouseUp() {
@@ -114,6 +120,7 @@ export default class Presenter {
   render() {
     const props = this.getProperties();
     this.view.render(props);
-    this.view.thumbFrom.addListener(this.move)
+    this.view.thumbFrom.addListener(this.thumbHandler)
+    this.view.thumbTo.addListener(this.thumbHandler)
   }
 }

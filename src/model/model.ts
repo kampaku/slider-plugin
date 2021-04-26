@@ -11,10 +11,11 @@ export default class Model implements ModelInterface {
   range: boolean;
   connect: boolean;
   scale: boolean;
+  valueArray: number[];
   constructor() {
     this.min = 0;
     this.max = 0;
-    this.step = 0;
+    this.step = 1;
     this.from = 0;
     this.to = 0;
     this.vertical = false;
@@ -22,6 +23,7 @@ export default class Model implements ModelInterface {
     this.range = false;
     this.connect = false;
     this.scale = false;
+    this.valueArray = [];
   }
 
   setMin(value: number) {
@@ -102,5 +104,15 @@ export default class Model implements ModelInterface {
 
   getScale() {
     return this.scale;
+  }
+
+  setValueArray() {
+    for (let i = this.min; i <= this.max; i += this.step) {
+      this.valueArray.push(i);
+    }
+  }
+
+  getValueArray() {
+    return this.valueArray;
   }
 }

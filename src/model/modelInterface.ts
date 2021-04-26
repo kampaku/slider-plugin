@@ -9,4 +9,5 @@ export interface ModelInterface {
   range: boolean;
   connect: boolean;
   scale: boolean;
+  valueArray: number[];
 }
