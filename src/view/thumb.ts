@@ -1,5 +1,6 @@
 import createElement from '../helpers/create-element';
 
+
 export default class Thumb {
   element: HTMLElement;
   constructor() {
@@ -8,5 +9,9 @@ export default class Thumb {
 
   addListener(func: (event: MouseEvent, thumb: Thumb) => void) {
     this.element.addEventListener('mousedown', (event) => func(event, this));
+  }
+
+  move(orientation: string, value: string) {
+    this.element.style[orientation] = value;
   }
 }

@@ -40,7 +40,6 @@ export default class Presenter {
     this.model.setMax(max);
     if (step) this.model.setStep(step);
     this.model.setValueArray();
-    console.log(this.model.getValueArray())
     if (from) this.model.setFrom(from);
     if (to) this.model.setTo(to);
     if (vertical) this.model.setVertical(vertical);
@@ -53,7 +52,6 @@ export default class Presenter {
   }
 
   getProperties() {
-    
     const props: ModelInterface = {
       min: this.model.getMin(),
       max: this.model.getMax(),
@@ -65,62 +63,86 @@ export default class Presenter {
       range: this.model.getRange(),
       connect: this.model.getConnect(),
       scale: this.model.getScale(),
-      valueArray: this.model.getValueArray()
+      valueArray: this.model.getValueArray(),
     };
 
     return props;
   }
 
-  move(value: number, thumb: Thumb) {
+  calculatePosition(value: number) {
+    const arr = this.model.getValueArray();
+    const index = arr.indexOf(value);
+    const position = (100 / arr.length) * index + '%';
+    return position;
+  }
 
+  getOrientation() {
+    return {
+      clientXY: this.model.vertical ? 'clientY' : 'clientX',
+      start: this.model.vertical ? 'top' : 'left',
+      offsetWH: this.model.vertical ? 'offsetHeight' : 'offsetWidth',
+    };
   }
 
   thumbHandler = (event: MouseEvent, thumb: Thumb) => {
-    // console.log(thumb)
-    //const thumb = event.target;
-    console.log(thumb === this.view.thumbTo)
-    const clientOreintation = this.model.vertical ? 'clientY' : 'clientX';
-    const side = this.model.vertical ? 'top' : 'left'
-    const offsetWH = this.model.vertical ? 'offsetHeight' : 'offsetWidth'
+    const { clientXY, start, offsetWH } = this.getOrientation();
+    const shiftThumb =
+      event[clientXY] - thumb.element.getBoundingClientRect()[start];
 
-    let shiftThumb = event[clientOreintation] - thumb.element.getBoundingClientRect()[side];
+    const onMouseMove = (event: MouseEvent) => {
+      event.preventDefault();
+      let newPosition =
+        event[clientXY] -
+        shiftThumb -
+        this.view.sliderContainer.getBoundingClientRect()[start];
 
-      const onMouseMove =  (event: MouseEvent) => {
-
-        event.preventDefault();
-        let newPosition = event[clientOreintation] - shiftThumb - this.view.sliderContainer.getBoundingClientRect()[side];
-
-        if (newPosition < 0) {
-          newPosition = 0;
-        }
-        let sliderEnd = this.view.sliderContainer[offsetWH] - thumb.element[offsetWH];
-        if (newPosition > sliderEnd) {
-          newPosition = sliderEnd;
-        }
-        
-        let arr = this.model.getValueArray();
-        const elemWidth = sliderEnd / (arr.length - 1);
-        
-        let index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
-        thumb.element.style[side] = elemWidth * index + 'px';
-        
-        console.log(arr[index])
-        // console.log(elemWidth, this.view.sliderContainer[offsetWH])
+      if (newPosition < 0) {
+        newPosition = 0;
+      }
+      const sliderEnd =
+        this.view.sliderContainer[offsetWH] - thumb.element[offsetWH];
+      if (newPosition > sliderEnd) {
+        newPosition = sliderEnd;
       }
 
-      function onMouseUp() {
-        document.removeEventListener('mouseup', onMouseUp);
-        document.removeEventListener('mousemove', onMouseMove);
-      }
+      const arr = this.model.getValueArray();
+      const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
+      const pos = this.calculatePosition(arr[index]);
 
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-  }
+      if (thumb === this.view.thumbFrom) {
+        this.model.setFrom(arr[index]);
+        thumb.move(start, pos);
+      }
+      if (thumb === this.view.thumbTo) {
+        this.model.setTo(arr[index]);
+        thumb.move(start, pos);
+      }
+    };
+
+    function onMouseUp() {
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('mousemove', onMouseMove);
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
 
   render() {
     const props = this.getProperties();
+    const { start } = this.getOrientation();
+    const startPos = this.calculatePosition(props.from);
     this.view.render(props);
-    this.view.thumbFrom.addListener(this.thumbHandler)
-    this.view.thumbTo.addListener(this.thumbHandler)
+    this.view.thumbFrom.addListener(this.thumbHandler);
+    this.view.thumbTo.addListener(this.thumbHandler);
+    this.view.thumbFrom.move(start, startPos);
+    if (props.range) {
+      const thumbToPos = this.calculatePosition(props.to);
+      this.view.thumbTo.move(start, thumbToPos);
+    }
+  }
+
+  private destroy() {
+    this.view.sliderContainer.remove();
   }
 }

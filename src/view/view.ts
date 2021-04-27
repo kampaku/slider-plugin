@@ -44,8 +44,9 @@ export default class View {
       this.thumbTo.element.classList.add('thumb-horizontal');
     }
 
-    if (range) this.sliderContainer.append(this.thumbTo.element)
+    if (range) this.track.element.append(this.thumbTo.element)
 
-    this.sliderContainer.append(this.track.element, this.thumbFrom.element);
+    this.sliderContainer.append(this.track.element);
+    this.track.element.append(this.thumbFrom.element);
   }
 }
