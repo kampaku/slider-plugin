@@ -112,10 +112,12 @@ export default class Presenter {
       if (thumb === this.view.thumbFrom) {
         this.model.setFrom(arr[index]);
         thumb.move(start, pos);
+        this.view.tipFrom.displayValue(arr[index])
       }
       if (thumb === this.view.thumbTo) {
         this.model.setTo(arr[index]);
         thumb.move(start, pos);
+        this.view.tipTo.displayValue(arr[index]);
       }
     };
 
@@ -139,6 +141,11 @@ export default class Presenter {
     if (props.range) {
       const thumbToPos = this.calculatePosition(props.to);
       this.view.thumbTo.move(start, thumbToPos);
+    }
+
+    if (props.tip) {
+      this.view.tipFrom.displayValue(this.model.getFrom());
+      this.view.tipTo.displayValue(this.model.getTo());
     }
   }
 
