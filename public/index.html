@@ -9,7 +9,24 @@
     <title>slider</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div class="wrapper">
+      <div id="root"></div>
+      <div class="panel">
+        <div class="panel-row">
+          <label class="panel__label-number"><span>min</span><input class="panel-number" type="number"></label>
+          <label class="panel__label-number"><span>max</span><input class="panel-number" type="number"></label>
+          <label class="panel__label-number"><span>from</span><input class="panel-number" type="number"></label>
+          <label class="panel__label-number"><span>to</span><input class="panel-number" type="number"></label>
+        </div>
+        <div class="panel-row">
+          <label class="panel__toggle">vertical<input class="panel__toggle-input" type="checkbox"></label>
+          <label class="panel__toggle">range<input class="panel__toggle-input" type="checkbox"></label>
+          <label class="panel__toggle">scale<input class="panel__toggle-input" type="checkbox"></label>
+          <label class="panel__toggle">bar<input class="panel__toggle-input" type="checkbox"></label>
+          <label class="panel__toggle">tip<input class="panel__toggle-input" type="checkbox"></label>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/dist/index.js"></script>
   </body>
 </html>
