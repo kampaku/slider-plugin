@@ -3,6 +3,7 @@ import type { ModelInterface } from '../model/modelInterface';
 import Track from './track';
 import Thumb from './thumb';
 import Tip from './tip';
+import Connect from './connect';
 
 export default class View {
   app: HTMLElement | null;
@@ -11,6 +12,7 @@ export default class View {
   tipFrom: Tip;
   tipTo: Tip;
   track: Track;
+  connect: Connect;
   sliderContainer: HTMLElement;
 
   constructor() {
@@ -21,6 +23,7 @@ export default class View {
     this.tipFrom = new Tip();
     this.tipTo = new Tip();
     this.track = new Track();
+    this.connect = new Connect();
   }
 
   render(props: ModelInterface) {
@@ -44,6 +47,7 @@ export default class View {
       this.thumbTo.element.classList.add('thumb-vertical');
       this.tipFrom.element.classList.add('slider-tip--vertical')
       this.tipTo.element.classList.add('slider-tip--vertical')
+      this.connect.element.classList.add('slider-connect--vertical')
     } else {
       this.sliderContainer.classList.add('slider');
       this.track.element.classList.add('track');
@@ -51,6 +55,7 @@ export default class View {
       this.thumbTo.element.classList.add('thumb-horizontal');
       this.tipFrom.element.classList.add('slider-tip--horizontal')
       this.tipTo.element.classList.add('slider-tip--horizontal')
+      this.connect.element.classList.add('slider-connect--horizontal')
     }
 
     this.sliderContainer.append(this.track.element);
@@ -63,6 +68,10 @@ export default class View {
 
     if (tip) {
       this.thumbFrom.element.append(this.tipFrom.element);
+    }
+
+    if (connect) {
+      this.track.element.append(this.connect.element)
     }
   }
 }

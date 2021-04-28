@@ -80,8 +80,23 @@ export default class Presenter {
     return {
       clientXY: this.model.vertical ? 'clientY' : 'clientX',
       start: this.model.vertical ? 'top' : 'left',
+      end: this.model.vertical ? 'bottom' : 'right',
       offsetWH: this.model.vertical ? 'offsetHeight' : 'offsetWidth',
     };
+  }
+
+  displayConnect() {
+    const { start, end } = this.getOrientation();
+    let startPosition = this.calculatePosition(this.model.getFrom());
+    let endPosition = this.calculatePosition(this.model.getTo());
+    if (this.model.getRange()) {
+      endPosition = 100 - parseInt(endPosition) + '%';
+      this.view.connect.setPosition(start, end, startPosition, endPosition)
+    } else {
+      endPosition = 100 - parseInt(startPosition) + '%';
+      startPosition = '0%';
+      this.view.connect.setPosition(start, end, startPosition, endPosition)
+    }
   }
 
   thumbHandler = (event: MouseEvent, thumb: Thumb) => {
@@ -119,6 +134,7 @@ export default class Presenter {
         thumb.move(start, pos);
         this.view.tipTo.displayValue(arr[index]);
       }
+      this.displayConnect()
     };
 
     function onMouseUp() {
@@ -147,6 +163,8 @@ export default class Presenter {
       this.view.tipFrom.displayValue(this.model.getFrom());
       this.view.tipTo.displayValue(this.model.getTo());
     }
+
+    this.displayConnect()
   }
 
   private destroy() {
