@@ -4,6 +4,7 @@ import Track from './track';
 import Thumb from './thumb';
 import Tip from './tip';
 import Connect from './connect';
+import Scale from './scale';
 
 export default class View {
   app: HTMLElement | null;
@@ -14,6 +15,7 @@ export default class View {
   track: Track;
   connect: Connect;
   sliderContainer: HTMLElement;
+  scale: Scale;
 
   constructor() {
     this.app = document.querySelector('#root');
@@ -24,6 +26,7 @@ export default class View {
     this.tipTo = new Tip();
     this.track = new Track();
     this.connect = new Connect();
+    this.scale = new Scale();
   }
 
   render(props: ModelInterface) {
@@ -72,6 +75,9 @@ export default class View {
 
     if (connect) {
       this.track.element.append(this.connect.element)
+    }
+    if (scale) {
+      this.sliderContainer.append(this.scale.element)
     }
   }
 }

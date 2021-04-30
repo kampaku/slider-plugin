@@ -175,6 +175,10 @@ export default class Presenter {
       this.view.tipFrom.displayValue(props.from);
       this.view.tipTo.displayValue(props.to);
     }
+
+    if (props.scale) {
+      this.view.scale.displayScale(props.valueArray)
+    }
     this.displayConnect();
   }
 

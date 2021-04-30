@@ -79,3 +79,20 @@
   top: 0;
   right: -75%;
 }
+
+.slider-scale {
+  /* position: absolute; */
+  /* top: 10px;
+  left: 0;
+  transform: translateX(-50%); */
+  padding-top: 20px;
+  display: flex;
+}
+
+.slider-scale .scale-pip {
+  position: absolute;
+  /* transform: translateX(-50%); */
+  /* width: 100%; */
+  /* display: inline-flex; */
+  /* justify-content: center; */
+}
