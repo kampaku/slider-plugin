@@ -6,9 +6,9 @@ import Presenter from './presenter/presenter';
 let slider = new Presenter(new Model(), new View());
 
 slider.create({
-  min: -100,
-  max: 100,
-  step: 10,
+  min: -10,
+  max: 10,
+  step: 1,
   from: -10,
   to: 3,
   range: true,

@@ -51,6 +51,7 @@ export default class View {
       this.tipFrom.element.classList.add('slider-tip--vertical')
       this.tipTo.element.classList.add('slider-tip--vertical')
       this.connect.element.classList.add('slider-connect--vertical')
+      this.scale.element.classList.add('slider-scale-vertical')
     } else {
       this.sliderContainer.classList.add('slider');
       this.track.element.classList.add('track');

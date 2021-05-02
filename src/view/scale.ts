@@ -6,16 +6,20 @@ export default class Scale {
     this.element = createElement('div', ['slider-scale']);
   }
 
-  displayScale(arr: number[]) {
-    const x = Math.round(arr.length / 10);
+  displayScale(arr: number[], start: string) {
+    const x = Math.round(arr.length  / 4);
     
     for (let i = 0; i < arr.length; i+= x) {
       let pip = createElement('div', ['scale-pip']);
-      const y = Math.ceil(i * 100 / arr.length - 1);
-      pip.style.left = y + '%';
-      pip.style.transform = `translateX(-${y + '%'})`;
+      const y = Math.round(i * 100 / arr.length);
+      pip.style[start] = y + '%';
+      
       pip.textContent = String(arr[i]);
-      this.element.append(pip)
+      this.element.append(pip);
     }
+  }
+
+  addListener(func: (event: MouseEvent) => void) {
+    this.element.addEventListener('click', (event) => func(event));
   }
 }

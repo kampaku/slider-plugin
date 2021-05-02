@@ -1,4 +1,5 @@
 import type Thumb from 'src/view/thumb';
+import type Tip from 'src/view/tip';
 import type { ModelInterface } from '../model/modelInterface';
 
 type Options = {
@@ -96,9 +97,11 @@ export default class Presenter {
     const { start, end } = this.getOrientation();
     let startPosition = this.calculatePosition(this.model.getFrom());
     let endPosition = this.calculatePosition(this.model.getTo());
+
     if (parseInt(startPosition) > parseInt(endPosition)) {
       [endPosition, startPosition] = [startPosition, endPosition];
     }
+    
     if (this.model.getRange()) {
       endPosition = 100 - parseInt(endPosition) + '%';
       this.view.connect.setPosition(start, end, startPosition, endPosition);
@@ -107,6 +110,24 @@ export default class Presenter {
       startPosition = '0%';
       this.view.connect.setPosition(start, end, startPosition, endPosition);
     }
+  }
+
+  thumbMove(thumb: Thumb, orientation: string, value: number) {
+    const pos = this.calculatePosition(value);
+
+    if (thumb === this.view.thumbFrom) {
+      this.model.setFrom(value);
+      thumb.move(orientation, pos);
+      this.view.tipFrom.displayValue(value);
+    }
+
+    if (thumb === this.view.thumbTo) {
+      this.model.setTo(value);
+      thumb.move(orientation, pos);
+      this.view.tipTo.displayValue(value);
+    }
+
+    this.displayConnect();
   }
 
   thumbHandler = (event: MouseEvent, thumb: Thumb) => {
@@ -124,28 +145,18 @@ export default class Presenter {
       if (newPosition < 0) {
         newPosition = 0;
       }
+
       const sliderEnd =
         this.view.sliderContainer[offset] - thumb.element[offset];
+
       if (newPosition > sliderEnd) {
         newPosition = sliderEnd;
       }
 
       const arr = this.model.getValueArray();
       const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
-      const pos = this.calculatePosition(arr[index]);
 
-      if (thumb === this.view.thumbFrom) {
-        this.model.setFrom(arr[index]);
-        thumb.move(start, pos);
-        this.view.tipFrom.displayValue(arr[index]);
-      }
-      if (thumb === this.view.thumbTo) {
-        this.model.setTo(arr[index]);
-        thumb.move(start, pos);
-        this.view.tipTo.displayValue(arr[index]);
-      }
-
-      this.displayConnect();
+      this.thumbMove(thumb, start, arr[index]);
     };
 
     function onMouseUp() {
@@ -157,6 +168,12 @@ export default class Presenter {
     document.addEventListener('mouseup', onMouseUp);
   };
 
+  onScaleClick = (event: MouseEvent, position: string) => {
+    const pip = (event.target as HTMLElement).closest('.scale-pip');
+    const value = Number(pip?.textContent);
+    this.thumbMove(this.view.thumbFrom, position, value);
+  };
+
   render() {
     const props = this.getProperties();
     this.view.render(props);
@@ -166,6 +183,7 @@ export default class Presenter {
     this.view.thumbFrom.addListener(this.thumbHandler);
     this.view.thumbTo.addListener(this.thumbHandler);
     this.view.thumbFrom.move(start, startPos);
+
     if (props.range) {
       const thumbToPos = this.calculatePosition(props.to);
       this.view.thumbTo.move(start, thumbToPos);
@@ -177,8 +195,12 @@ export default class Presenter {
     }
 
     if (props.scale) {
-      this.view.scale.displayScale(props.valueArray)
+      this.view.scale.displayScale(props.valueArray, start);
+      this.view.scale.addListener((e: MouseEvent) =>
+        this.onScaleClick(e, start),
+      );
     }
+    
     this.displayConnect();
   }
 
