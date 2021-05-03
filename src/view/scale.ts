@@ -7,13 +7,13 @@ export default class Scale {
   }
 
   displayScale(arr: number[], start: string) {
-    const x = Math.round(arr.length  / 4);
-    
-    for (let i = 0; i < arr.length; i+= x) {
+    const x = Math.round(arr.length / 4);
+
+    for (let i = 0; i < arr.length; i += x) {
       let pip = createElement('div', ['scale-pip']);
-      const y = Math.round(i * 100 / arr.length);
+      const y = Math.round((i * 100) / arr.length);
       pip.style[start] = y + '%';
-      
+
       pip.textContent = String(arr[i]);
       this.element.append(pip);
     }
