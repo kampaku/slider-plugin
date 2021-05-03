@@ -174,8 +174,59 @@ export default class Presenter {
     this.thumbMove(this.view.thumbFrom, position, value);
   };
 
+  setMin(value: number) {
+    this.destroy();
+    this.model.setMin(value);
+    this.model.setValueArray();
+    this.render();
+  }
+
+  setMax(value: number) {
+    this.destroy();
+    this.model.setMax(value);
+    this.model.setValueArray();
+    this.render();
+  }
+
+  setFrom(value: number) {
+    this.destroy();
+    this.model.setFrom(value);
+    this.render();
+  }
+
+  setTo(value: number) {
+    this.destroy();
+    this.model.setTo(value);
+    this.render();
+  }
+
+  setVertical(value: boolean) {
+    this.destroy();
+    this.model.setVertical(value);
+    this.render();
+  }
+
+  setConnect(value: boolean) {
+    this.destroy();
+    this.model.setConnect(value);
+    this.render();
+  }
+
+  setTip(value: boolean) {
+    this.destroy();
+    this.model.setTip(value);
+    this.render();
+  }
+
+  setRange(value: boolean) {
+    this.destroy();
+    this.model.setRange(value);
+    this.render();
+  }
+
   render() {
     const props = this.getProperties();
+    // console.log(props.connect)
     this.view.render(props);
     const { start } = this.getOrientation();
     const startPos = this.calculatePosition(props.from);
@@ -200,11 +251,15 @@ export default class Presenter {
         this.onScaleClick(e, start),
       );
     }
-    
-    this.displayConnect();
+
+    if (props.connect) {
+      this.displayConnect();
+    }
+
+    console.log(this.model.getMin())
   }
 
-  private destroy() {
-    this.view.sliderContainer.remove();
+  private destroy = () => {
+    this.view.destroy();
   }
 }
