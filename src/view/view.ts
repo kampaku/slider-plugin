@@ -21,10 +21,10 @@ export default class View {
     this.app = document.querySelector('#root');
     this.sliderContainer = createElement('div');
     this.thumbFrom = new Thumb();
+    this.track = new Track();
     this.thumbTo = new Thumb();
     this.tipFrom = new Tip();
     this.tipTo = new Tip();
-    this.track = new Track();
     this.connect = new Connect();
     this.scale = new Scale();
   }
@@ -77,8 +77,34 @@ export default class View {
     if (connect) {
       this.track.element.append(this.connect.element)
     }
+
     if (scale) {
       this.sliderContainer.append(this.scale.element)
     }
+  }
+
+  destroy() {
+    const delNodes = (node: ChildNode) => {
+      if (node.firstChild ) {
+        // console.log(node.firstChild)
+        delNodes(node.firstChild)
+      }
+      // console.log(node.firstChild)
+
+      node.firstChild?.remove();
+    }
+
+    
+    delNodes(this.sliderContainer);
+    delNodes(this.scale.element);
+    this.scale.element.innerHTML = '';
+    // this.scale.element.remove()
+    this.tipTo.element.remove()
+    this.tipFrom.element.remove()
+    this.thumbTo.element.remove()
+    
+    console.log(this.scale.element.firstChild);
+    // this.sliderContainer.remove();
+    // this.sliderContainer.innerHTML = '';
   }
 }
