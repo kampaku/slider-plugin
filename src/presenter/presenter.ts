@@ -224,9 +224,14 @@ export default class Presenter {
     this.render();
   }
 
+  setScale(value: boolean) {
+    this.destroy();
+    this.model.setScale(value);
+    this.render();
+  }
+
   render() {
     const props = this.getProperties();
-    // console.log(props.connect)
     this.view.render(props);
     const { start } = this.getOrientation();
     const startPos = this.calculatePosition(props.from);
@@ -255,8 +260,6 @@ export default class Presenter {
     if (props.connect) {
       this.displayConnect();
     }
-
-    console.log(this.model.getMin())
   }
 
   private destroy = () => {
