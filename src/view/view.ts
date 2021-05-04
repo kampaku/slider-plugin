@@ -43,68 +43,64 @@ export default class View {
       scale,
     } = props;
     this.app?.append(this.sliderContainer);
+    this.track.render(vertical);
+    this.thumbFrom.render(vertical);
     if (vertical) {
       this.sliderContainer.classList.add('slider-vertical');
-      this.track.element.classList.add('track-vertical');
-      this.thumbFrom.element.classList.add('thumb-vertical');
-      this.thumbTo.element.classList.add('thumb-vertical');
-      this.tipFrom.element.classList.add('slider-tip--vertical')
-      this.tipTo.element.classList.add('slider-tip--vertical')
-      this.connect.element.classList.add('slider-connect--vertical')
-      this.scale.element.classList.add('slider-scale-vertical')
     } else {
       this.sliderContainer.classList.add('slider');
-      this.track.element.classList.add('track');
-      this.thumbFrom.element.classList.add('thumb-horizontal');
-      this.thumbTo.element.classList.add('thumb-horizontal');
-      this.tipFrom.element.classList.add('slider-tip--horizontal')
-      this.tipTo.element.classList.add('slider-tip--horizontal')
-      this.connect.element.classList.add('slider-connect--horizontal')
     }
 
     this.sliderContainer.append(this.track.element);
     this.track.element.append(this.thumbFrom.element);
 
-    if (range) {
-      this.track.element.append(this.thumbTo.element);
-      if (tip) this.thumbTo.element.append(this.tipTo.element);
-    }
-
     if (tip) {
+      this.tipFrom.render(vertical);
       this.thumbFrom.element.append(this.tipFrom.element);
     }
 
+    if (range) {
+      this.thumbTo.render(vertical);
+      this.track.element.append(this.thumbTo.element);
+      if (tip) {
+        this.tipTo.render(vertical);
+        this.thumbTo.element.append(this.tipTo.element);
+      }
+    }
+
     if (connect) {
-      this.track.element.append(this.connect.element)
+      this.connect.render(vertical);
+      this.track.element.append(this.connect.element);
     }
 
     if (scale) {
-      this.sliderContainer.append(this.scale.element)
+      this.scale.render(vertical);
+      this.sliderContainer.append(this.scale.element);
     }
   }
 
   destroy() {
+    // this.sliderContainer.remove();
     const delNodes = (node: ChildNode) => {
-      if (node.firstChild ) {
+      if (node.firstChild) {
         // console.log(node.firstChild)
-        delNodes(node.firstChild)
+        delNodes(node.firstChild);
       }
       // console.log(node.firstChild)
 
       node.firstChild?.remove();
-    }
+    };
 
-    
     delNodes(this.sliderContainer);
-    delNodes(this.scale.element);
-    this.scale.element.innerHTML = '';
-    // this.scale.element.remove()
-    this.tipTo.element.remove()
-    this.tipFrom.element.remove()
-    this.thumbTo.element.remove()
-    
-    console.log(this.scale.element.firstChild);
-    // this.sliderContainer.remove();
-    // this.sliderContainer.innerHTML = '';
+    // delNodes(this.scale.element);
+    // this.scale.element.innerHTML = '';
+    // // this.scale.element.remove()
+    // this.tipTo.element.remove();
+    // this.tipFrom.element.remove();
+    // this.thumbTo.element.remove();
+
+    // console.log(this.scale.element.firstChild);
+    // // this.sliderContainer.remove();
+    this.sliderContainer.innerHTML = '';
   }
 }

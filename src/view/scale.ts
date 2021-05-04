@@ -1,9 +1,16 @@
 import createElement from '../helpers/create-element';
 
 export default class Scale {
-  element: HTMLElement;
+  element!: HTMLElement;
   constructor() {
+    this.element;
+  }
+
+  render(vertical: boolean) {
     this.element = createElement('div', ['slider-scale']);
+    if (vertical) {
+      this.element.classList.add('slider-scale-vertical');
+    }
   }
 
   displayScale(arr: number[], start: string) {
