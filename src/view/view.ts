@@ -14,12 +14,12 @@ export default class View {
   tipTo: Tip;
   track: Track;
   connect: Connect;
-  sliderContainer: HTMLElement;
+  sliderContainer!: HTMLElement;
   scale: Scale;
 
   constructor() {
     this.app = document.querySelector('#root');
-    this.sliderContainer = createElement('div');
+    this.sliderContainer;
     this.thumbFrom = new Thumb();
     this.track = new Track();
     this.thumbTo = new Thumb();
@@ -42,6 +42,7 @@ export default class View {
       connect,
       scale,
     } = props;
+    this.sliderContainer = createElement('div');
     this.app?.append(this.sliderContainer);
     this.track.render(vertical);
     this.thumbFrom.render(vertical);
@@ -80,27 +81,6 @@ export default class View {
   }
 
   destroy() {
-    // this.sliderContainer.remove();
-    const delNodes = (node: ChildNode) => {
-      if (node.firstChild) {
-        // console.log(node.firstChild)
-        delNodes(node.firstChild);
-      }
-      // console.log(node.firstChild)
-
-      node.firstChild?.remove();
-    };
-
-    delNodes(this.sliderContainer);
-    // delNodes(this.scale.element);
-    // this.scale.element.innerHTML = '';
-    // // this.scale.element.remove()
-    // this.tipTo.element.remove();
-    // this.tipFrom.element.remove();
-    // this.thumbTo.element.remove();
-
-    // console.log(this.scale.element.firstChild);
-    // // this.sliderContainer.remove();
-    this.sliderContainer.innerHTML = '';
+    this.sliderContainer.remove();
   }
 }
