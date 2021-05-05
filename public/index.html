@@ -13,17 +13,18 @@
       <div id="root"></div>
       <div class="panel">
         <div class="panel-row">
-          <label class="panel__label-number"><span>min</span><input class="panel-number" type="number"></label>
-          <label class="panel__label-number"><span>max</span><input class="panel-number" type="number"></label>
-          <label class="panel__label-number"><span>from</span><input class="panel-number" type="number"></label>
-          <label class="panel__label-number"><span>to</span><input class="panel-number" type="number"></label>
+          <label class="panel__label-number"><span>min</span><input id='min' class="panel-number" type="number"></label>
+          <label class="panel__label-number"><span>max</span><input id='max' class="panel-number" type="number"></label>
+          <label class="panel__label-number"><span>step</span><input id='step' class="panel-number" type="number" min='1'></label>
+          <label class="panel__label-number"><span>from</span><input id='from' class="panel-number" type="number"></label>
+          <label class="panel__label-number"><span>to</span><input id='to' class="panel-number" type="number"></label>
         </div>
         <div class="panel-row">
-          <label class="panel__toggle">vertical<input class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
-          <label class="panel__toggle">range<input class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
-          <label class="panel__toggle">scale<input class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
-          <label class="panel__toggle">bar<input class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
-          <label class="panel__toggle">tip<input class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
+          <label class="panel__toggle">vertical<input id='vertical' class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
+          <label class="panel__toggle">range<input id='range' class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
+          <label class="panel__toggle">scale<input id='scale' class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
+          <label class="panel__toggle">connect<input id='connect' class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
+          <label class="panel__toggle">tip<input id='tip' class="panel__toggle-input" type="checkbox"><span class="panel__toggle-slider"></span></label>
         </div>
       </div>
     </div>
