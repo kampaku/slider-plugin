@@ -98,15 +98,16 @@ export default class Presenter {
     let startPosition = this.calculatePosition(this.model.getFrom());
     let endPosition = this.calculatePosition(this.model.getTo());
 
-    if (parseInt(startPosition) > parseInt(endPosition)) {
-      [endPosition, startPosition] = [startPosition, endPosition];
-    }
-    
     if (this.model.getRange()) {
+      if (parseInt(startPosition) > parseInt(endPosition)) {
+        [endPosition, startPosition] = [startPosition, endPosition];
+      }
+
       endPosition = 100 - parseInt(endPosition) + '%';
       this.view.connect.setPosition(start, end, startPosition, endPosition);
     } else {
       endPosition = 100 - parseInt(startPosition) + '%';
+      console.log(startPosition)
       startPosition = '0%';
       this.view.connect.setPosition(start, end, startPosition, endPosition);
     }
@@ -200,6 +201,13 @@ export default class Presenter {
     this.render();
   }
 
+  setStep(value: number) {
+    this.destroy();
+    this.model.setStep(value);
+    this.model.setValueArray();
+    this.render();
+  }
+
   setVertical(value: boolean) {
     this.destroy();
     this.model.setVertical(value);
@@ -237,17 +245,19 @@ export default class Presenter {
     const startPos = this.calculatePosition(props.from);
 
     this.view.thumbFrom.addListener(this.thumbHandler);
-    this.view.thumbTo.addListener(this.thumbHandler);
     this.view.thumbFrom.move(start, startPos);
 
     if (props.range) {
+      this.view.thumbTo.addListener(this.thumbHandler);
       const thumbToPos = this.calculatePosition(props.to);
       this.view.thumbTo.move(start, thumbToPos);
     }
 
     if (props.tip) {
       this.view.tipFrom.displayValue(props.from);
-      this.view.tipTo.displayValue(props.to);
+      if (props.range) {
+        this.view.tipTo.displayValue(props.to);
+      }
     }
 
     if (props.scale) {
@@ -264,5 +274,5 @@ export default class Presenter {
 
   private destroy = () => {
     this.view.destroy();
-  }
+  };
 }
