@@ -56,6 +56,7 @@ export default class Model implements ModelInterface {
 
   setRange(value: boolean) {
     this.range = value;
+    this.to = this.max;
   }
 
   setConnect(value: boolean) {
