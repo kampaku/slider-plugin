@@ -17,8 +17,8 @@ export default class View {
   sliderContainer!: HTMLElement;
   scale: Scale;
 
-  constructor() {
-    this.app = document.querySelector('#root');
+  constructor(root) {
+    this.app = root;
     this.sliderContainer;
     this.thumbFrom = new Thumb();
     this.track = new Track();
