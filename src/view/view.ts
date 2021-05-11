@@ -7,7 +7,7 @@ import Connect from './connect';
 import Scale from './scale';
 
 export default class View {
-  app: HTMLElement | null;
+  app: JQuery<HTMLElement> | null;
   thumbFrom: Thumb;
   thumbTo: Thumb;
   tipFrom: Tip;
@@ -17,7 +17,7 @@ export default class View {
   sliderContainer!: HTMLElement;
   scale: Scale;
 
-  constructor(root) {
+  constructor(root: JQuery) {
     this.app = root;
     this.sliderContainer;
     this.thumbFrom = new Thumb();
