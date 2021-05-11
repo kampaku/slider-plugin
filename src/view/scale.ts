@@ -19,7 +19,8 @@ export default class Scale {
     for (let i = 0; i < arr.length; i += x) {
       let pip = createElement('div', ['scale-pip']);
       const y = Math.round((i * 100) / arr.length);
-      pip.style[start] = y + '%';
+      // pip.style[start] = y + '%';
+      pip.setAttribute('style', `${start}: ${y + '%'}`)
 
       pip.textContent = String(arr[i]);
       this.element.append(pip);

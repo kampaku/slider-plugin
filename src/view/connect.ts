@@ -22,8 +22,8 @@ export default class Connect {
     endPosition: string,
   ) {
     if (this.element) {
-      this.element.style[startConnect] = startPosition;
-      this.element.style[endConnect] = endPosition;
+      this.element.style[startConnect as 'top' | 'left' ] = startPosition;
+      this.element.style[endConnect as 'bottom' | 'right' ] = endPosition;
     }
   }
 }

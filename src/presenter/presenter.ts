@@ -15,6 +15,7 @@ type Options = {
   scale?: boolean;
 };
 
+
 export default class Presenter {
   model: any;
   view: any;
@@ -132,14 +133,17 @@ export default class Presenter {
   }
 
   thumbHandler = (event: MouseEvent, thumb: Thumb) => {
+    type Topleft = 'top' | 'left';
+    type Client = 'clientX' | 'clientY';
+    type Offset = 'offsetWidth' | 'offsetHeight';
     const { clientXY, start, offset } = this.getOrientation();
     const shiftThumb =
-      event[clientXY] - thumb.element.getBoundingClientRect()[start];
+      event[clientXY as Client] - thumb.element.getBoundingClientRect()[start as Topleft];
 
     const onMouseMove = (event: MouseEvent) => {
       event.preventDefault();
       let newPosition =
-        event[clientXY] -
+        event[clientXY as Client] -
         shiftThumb -
         this.view.sliderContainer.getBoundingClientRect()[start];
 
@@ -148,7 +152,7 @@ export default class Presenter {
       }
 
       const sliderEnd =
-        this.view.sliderContainer[offset] - thumb.element[offset];
+        this.view.sliderContainer[offset] - thumb.element[offset as Offset];
 
       if (newPosition > sliderEnd) {
         newPosition = sliderEnd;

@@ -1,6 +1,5 @@
 import createElement from '../helpers/create-element';
 
-
 export default class Thumb {
   element!: HTMLElement;
   constructor() {
@@ -21,6 +20,6 @@ export default class Thumb {
   }
 
   move(orientation: string, value: string) {
-    this.element.style[orientation] = value;
+    this.element.setAttribute('style', `${orientation}: ${value}`)
   }
 }
