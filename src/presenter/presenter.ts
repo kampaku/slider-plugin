@@ -1,6 +1,8 @@
 import type Thumb from 'src/view/thumb';
 import type Tip from 'src/view/tip';
 import type { ModelInterface } from '../model/modelInterface';
+import type Model from '../model/model';
+import type View from '../view/view';
 
 type Options = {
   min: number;
@@ -17,9 +19,9 @@ type Options = {
 
 
 export default class Presenter {
-  model: any;
-  view: any;
-  constructor(model: any, view: any) {
+  model: Model;
+  view: View;
+  constructor(model: Model, view: View) {
     this.model = model;
     this.view = view;
   }
@@ -53,7 +55,7 @@ export default class Presenter {
     this.render();
   }
 
-  getProperties() {
+  private getProperties() {
     const props: ModelInterface = {
       min: this.model.getMin(),
       max: this.model.getMax(),
@@ -78,8 +80,8 @@ export default class Presenter {
     const { offset } = this.getOrientation();
     const maxWidthWithoutThumb =
       100 -
-      (this.view.thumbFrom.element[offset] /
-        this.view.sliderContainer[offset]) *
+      (this.view.thumbFrom.element[offset as 'offsetHeight' | 'offsetWidth'] /
+        this.view.sliderContainer[offset as 'offsetHeight' | 'offsetWidth']) *
         100;
     const position = (maxWidthWithoutThumb / (arr.length - 1)) * index;
     return Math.round(position) + '%';
@@ -108,7 +110,7 @@ export default class Presenter {
       this.view.connect.setPosition(start, end, startPosition, endPosition);
     } else {
       endPosition = 100 - parseInt(startPosition) + '%';
-      console.log(startPosition)
+      // console.log(startPosition)
       startPosition = '0%';
       this.view.connect.setPosition(start, end, startPosition, endPosition);
     }
@@ -145,17 +147,18 @@ export default class Presenter {
       let newPosition =
         event[clientXY as Client] -
         shiftThumb -
-        this.view.sliderContainer.getBoundingClientRect()[start];
+        this.view.sliderContainer.getBoundingClientRect()[start as Topleft];
 
       if (newPosition < 0) {
         newPosition = 0;
       }
 
       const sliderEnd =
-        this.view.sliderContainer[offset] - thumb.element[offset as Offset];
+        this.view.sliderContainer[offset as Offset] - thumb.element[offset as Offset];
 
       if (newPosition > sliderEnd) {
         newPosition = sliderEnd;
+
       }
 
       const arr = this.model.getValueArray();
