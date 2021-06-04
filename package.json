@@ -1,13 +1,12 @@
 {
   "scripts": {
-    "start": "snowpack dev",
+    "start": "snowpack dev --open firefox",
     "build": "snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.{ts,js}\"",
     "lint": "prettier --check \"src/**/*.{ts,js}\""
   },
   "dependencies": {
-    "@snowpack/plugin-webpack": "^2.3.1",
     "@types/jquery": "^3.5.5",
     "jquery": "^3.6.0"
   },
