@@ -1,5 +1,6 @@
 .idea
 .vscode
 .snowpack
+coverage
 build
 node_modules
