@@ -12,6 +12,7 @@ const config: Config.InitialOptions = {
   // ],
   verbose: true,
   // extensionsToTreatAsEsm: ['.ts'],
+  testEnvironment: 'jsdom',
   preset: 'ts-jest'
 };
 export default config;
