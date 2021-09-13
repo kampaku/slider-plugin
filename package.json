@@ -3,22 +3,23 @@
     "start": "snowpack dev --open firefox",
     "build": "snowpack build",
     "test": "jest",
+    "coverage": "jest --coverage",
     "format": "prettier --write \"src/**/*.{ts,js}\"",
     "lint": "prettier --check \"src/**/*.{ts,js}\""
   },
   "dependencies": {
-    "@types/jquery": "^3.5.5",
+    "@types/jquery": "^3.5.6",
     "jquery": "^3.6.0"
   },
   "devDependencies": {
     "@snowpack/plugin-typescript": "^1.2.0",
-    "@types/jest": "^26.0.23",
-    "@types/snowpack-env": "^2.3.2",
-    "jest": "^27.0.4",
-    "prettier": "^2.0.5",
-    "snowpack": "^3.0.1",
-    "ts-jest": "^27.0.3",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.0.0"
+    "@types/jest": "^26.0.24",
+    "@types/snowpack-env": "^2.3.4",
+    "jest": "^27.1.0",
+    "prettier": "^2.3.2",
+    "snowpack": "^3.8.8",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   }
 }
