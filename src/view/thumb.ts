@@ -15,11 +15,11 @@ export default class Thumb {
     }
   }
 
-  addListener(func: (event: MouseEvent, thumb: Thumb) => void) {
-    this.element.addEventListener('mousedown', (event) => func(event, this));
+  addListener(func: (event: PointerEvent, thumb: Thumb) => void) {
+    this.element.addEventListener('pointerdown', (event) => func(event, this));
   }
 
   move(orientation: string, value: string) {
-    this.element.setAttribute('style', `${orientation}: ${value}`)
+    this.element.setAttribute('style', `${orientation}: ${value}`);
   }
 }

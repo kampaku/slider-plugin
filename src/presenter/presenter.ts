@@ -1,13 +1,13 @@
 import type Thumb from 'src/view/thumb';
 import type Tip from 'src/view/tip';
-import type { ModelInterface } from '../model/modelInterface';
+// import type { ModelInterface } from '../model/modelInterface';
 import type Model from '../model/model';
 import type View from '../view/view';
 
 type Options = {
   min: number;
   max: number;
-  step?: number;
+  step: number;
   from?: number;
   to?: number;
   vertical?: boolean;
@@ -21,6 +21,7 @@ type Options = {
 export default class Presenter {
   model: Model;
   view: View;
+
   constructor(model: Model, view: View) {
     this.model = model;
     this.view = view;
@@ -42,7 +43,7 @@ export default class Presenter {
 
     this.model.setMin(min);
     this.model.setMax(max);
-    if (step) this.model.setStep(step);
+    this.model.setStep(step);
     this.model.setValueArray();
     if (from) this.model.setFrom(from);
     if (to) this.model.setTo(to);
@@ -56,7 +57,7 @@ export default class Presenter {
   }
 
   private getProperties() {
-    const props: ModelInterface = {
+    const props = {
       min: this.model.getMin(),
       max: this.model.getMax(),
       step: this.model.getStep(),
@@ -73,7 +74,7 @@ export default class Presenter {
     return props;
   }
 
-  calculatePosition(value: number) {
+  private calculatePosition(value: number) {
     const arr = this.model.getValueArray();
     const index = arr.indexOf(value);
 
@@ -82,12 +83,12 @@ export default class Presenter {
       100 -
       (this.view.thumbFrom.element[offset as 'offsetHeight' | 'offsetWidth'] /
         this.view.sliderContainer[offset as 'offsetHeight' | 'offsetWidth']) *
-        100;
+      100;
     const position = (maxWidthWithoutThumb / (arr.length - 1)) * index;
     return Math.round(position) + '%';
   }
 
-  getOrientation() {
+  private getOrientation() {
     return {
       clientXY: this.model.vertical ? 'clientY' : 'clientX',
       start: this.model.vertical ? 'top' : 'left',
@@ -96,12 +97,13 @@ export default class Presenter {
     };
   }
 
-  displayConnect() {
+  private displayConnect() {
     const { start, end } = this.getOrientation();
     let startPosition = this.calculatePosition(this.model.getFrom());
     let endPosition = this.calculatePosition(this.model.getTo());
+    let isRange = this.model.getRange();
 
-    if (this.model.getRange()) {
+    if (isRange) {
       if (parseInt(startPosition) > parseInt(endPosition)) {
         [endPosition, startPosition] = [startPosition, endPosition];
       }
@@ -110,13 +112,12 @@ export default class Presenter {
       this.view.connect.setPosition(start, end, startPosition, endPosition);
     } else {
       endPosition = 100 - parseInt(startPosition) + '%';
-      // console.log(startPosition)
       startPosition = '0%';
       this.view.connect.setPosition(start, end, startPosition, endPosition);
     }
   }
 
-  thumbMove(thumb: Thumb, orientation: string, value: number) {
+  private thumbMove(thumb: Thumb, orientation: string, value: number) {
     const pos = this.calculatePosition(value);
 
     if (thumb === this.view.thumbFrom) {
@@ -134,7 +135,7 @@ export default class Presenter {
     this.displayConnect();
   }
 
-  thumbHandler = (event: MouseEvent, thumb: Thumb) => {
+  private thumbHandler = (event: PointerEvent, thumb: Thumb) => {
     type Topleft = 'top' | 'left';
     type Client = 'clientX' | 'clientY';
     type Offset = 'offsetWidth' | 'offsetHeight';
@@ -142,8 +143,10 @@ export default class Presenter {
     const shiftThumb =
       event[clientXY as Client] - thumb.element.getBoundingClientRect()[start as Topleft];
 
-    const onMouseMove = (event: MouseEvent) => {
+    thumb.element.setPointerCapture(event.pointerId)
+    const onPointerMove = (event: PointerEvent) => {
       event.preventDefault();
+
       let newPosition =
         event[clientXY as Client] -
         shiftThumb -
@@ -167,13 +170,12 @@ export default class Presenter {
       this.thumbMove(thumb, start, arr[index]);
     };
 
-    function onMouseUp() {
-      document.removeEventListener('mouseup', onMouseUp);
-      document.removeEventListener('mousemove', onMouseMove);
+    function onPointerUp() {
+      thumb.element.removeEventListener('pointerup', onPointerUp);
+      thumb.element.removeEventListener('pointermove', onPointerMove);
     }
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    thumb.element.addEventListener('pointermove', onPointerMove)
+    thumb.element.addEventListener('pointerup', onPointerUp)
   };
 
   onScaleClick = (event: MouseEvent, position: string) => {
@@ -245,7 +247,7 @@ export default class Presenter {
     this.render();
   }
 
-  render() {
+  private render() {
     const props = this.getProperties();
     this.view.render(props);
     const { start } = this.getOrientation();
