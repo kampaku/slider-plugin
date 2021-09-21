@@ -1,10 +1,19 @@
 import createElement from '../helpers/create-element';
 import type { ModelInterface } from '../model/modelInterface';
+import type Model from '../model/model';
 import Track from './track';
 import Thumb from './thumb';
 import Tip from './tip';
 import Connect from './connect';
 import Scale from './scale';
+
+interface Option {
+  vertical: boolean,
+  tip: boolean,
+  range: boolean,
+  connect: boolean,
+  scale: boolean,
+}
 
 export default class View {
   app: JQuery<HTMLElement> | null;
@@ -29,13 +38,8 @@ export default class View {
     this.scale = new Scale();
   }
 
-  render(props: ModelInterface) {
+  render(props: Option) {
     const {
-      min,
-      max,
-      step,
-      from,
-      to,
       vertical,
       tip,
       range,
