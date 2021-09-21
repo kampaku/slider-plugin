@@ -1,6 +1,6 @@
 import type { ModelInterface } from './modelInterface';
 
-export default class Model implements ModelInterface {
+export default class Model {
   min: number;
   max: number;
   step: number;
@@ -110,7 +110,6 @@ export default class Model implements ModelInterface {
   setValueArray() {
     if (this.valueArray.length > 0) {
       this.valueArray = [];
-      console.log(this.min)
     }
 
     for (let i = this.min; i <= this.max; i += this.step) {
