@@ -1,14 +1,24 @@
 import './style.css';
 import Model from './model/model';
+
 import View from './view/view';
 import Presenter from './presenter/presenter';
-import $ from 'jquery';
+import jQuery from 'jquery';
+import $ from 'jquery'; 
 
-const superSlider =()=>{
-$.fn.superSlider = function() {
-  return new Presenter(new Model(), new View(this));
-}
+// const superSlider =()=>{
+//   $.fn.superSlider = function() {
+//     return new Presenter(new Model(), new View(this));
+//   }
+// }
 
-}
+// export default superSlider
 
-export default superSlider
+;(function ($) {
+  $.fn.superSlider = function() {
+    const view = new View(this);
+    const model = new Model();
+
+    return new Presenter(model, view);
+  }
+})(jQuery)
