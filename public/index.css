@@ -67,6 +67,10 @@ body {
   height: 100%;
 }
 
+label:focus-within:not(:focus-visible) .panel__toggle-slider, input:focus {
+  outline: 2px solid mediumslateblue;
+}
+
 .panel__toggle-slider {
   --offset: 1px;
   --diameter: 26px;
@@ -80,7 +84,7 @@ body {
   box-sizing: content-box;
   position: relative;
   background-color: crimson;
-  transition: 0.2s;
+  transition: transform 0.2s;
 }
 
 .panel__toggle-slider::before {
