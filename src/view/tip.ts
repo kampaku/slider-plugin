@@ -1,9 +1,9 @@
 import createElement from '../helpers/create-element';
 
 export default class Tip {
-  element!: HTMLElement;
+  element: HTMLElement | null;
   constructor() {
-    this.element;
+    this.element = null;
   }
 
   render(vertical: boolean) {
@@ -13,9 +13,12 @@ export default class Tip {
     } else {
       this.element.classList.add('slider-tip--horizontal');
     }
+    return this.element;
   }
 
   displayValue(value: number) {
-    this.element.textContent = String(value);
+    if (this.element) {
+      this.element.textContent = String(value);
+    }
   }
 }
