@@ -1,18 +1,20 @@
 import createElement from '../helpers/create-element';
 
 export default class Connect {
-  element!: HTMLElement;
+  element!: HTMLElement | null;
   constructor() {
-    this.element;
+    this.element = null;
   }
 
-  render(vertical: boolean) {
+  create(vertical: boolean) {
     this.element = createElement('div', ['slider-connect']);
     if (vertical) {
       this.element.classList.add('slider-connect--vertical');
     } else {
       this.element.classList.add('slider-connect--horizontal');
     }
+
+    return this.element
   }
 
   setPosition(
