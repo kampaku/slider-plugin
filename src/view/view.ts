@@ -28,7 +28,7 @@ export default class View {
 
   constructor(root: JQuery) {
     this.app = root;
-    this.sliderContainer;
+    // this.sliderContainer;
     this.thumbFrom = new Thumb();
     this.track = new Track();
     this.thumbTo = new Thumb();
@@ -50,38 +50,39 @@ export default class View {
     this.app?.append(this.sliderContainer);
     this.track.render(vertical);
     this.thumbFrom.render(vertical);
+    this.thumbFrom.slide(this.sliderContainer)
     if (vertical) {
       this.sliderContainer.classList.add('slider-vertical');
     } else {
       this.sliderContainer.classList.add('slider');
     }
-
     this.sliderContainer.append(this.track.element);
+
     this.track.element.append(this.thumbFrom.element);
-
     if (tip) {
-      this.tipFrom.render(vertical);
-      this.thumbFrom.element.append(this.tipFrom.element);
+      const tipFromElement = this.tipFrom.render(vertical);
+      this.thumbFrom.element.append(tipFromElement);
     }
-
     if (range) {
+
       this.thumbTo.render(vertical);
+      this.thumbTo.slide(this.sliderContainer)
       this.track.element.append(this.thumbTo.element);
       if (tip) {
-        this.tipTo.render(vertical);
-        this.thumbTo.element.append(this.tipTo.element);
+        const tipToElement = this.tipTo.render(vertical);
+        this.thumbTo.element.append(tipToElement);
       }
     }
-
     if (connect) {
-      this.connect.render(vertical);
-      this.track.element.append(this.connect.element);
+      let connectEl = this.connect.create(vertical);
+      this.track.element.append(connectEl);
     }
 
     if (scale) {
       this.scale.render(vertical);
       this.sliderContainer.append(this.scale.element);
     }
+    this.thumbFrom.width(this.sliderContainer)
   }
 
   destroy() {
