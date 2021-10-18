@@ -15,10 +15,9 @@ import $ from 'jquery';
 // export default superSlider
 
 ;(function ($) {
-  $.fn.superSlider = function() {
+  $.fn.superSlider = function(settings) {
     const view = new View(this);
-    const model = new Model();
-
+    const model = new Model(settings);
     return new Presenter(model, view);
   }
 })(jQuery)

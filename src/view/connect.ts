@@ -1,7 +1,7 @@
 import createElement from '../helpers/create-element';
 
 export default class Connect {
-  element!: HTMLElement | null;
+  element: HTMLElement | null;
   constructor() {
     this.element = null;
   }

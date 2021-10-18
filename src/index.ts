@@ -16,10 +16,11 @@ const settings = {
 }
 
 // superSlider();
-const slider: Presenter = $('#root').superSlider();
-slider.create(settings);
-slider.setMin(-100);
-slider.setMax(100);
-let panel = new Panel(slider, '.wrapper')
+let plugin = document.querySelector('.wrapper')
+const slider: Presenter = $('#root').superSlider(settings);
+// slider.create(settings);
+// slider.setMin(-100);
+// slider.setMax(100);
+let panel = new Panel(slider, '.wrapper');
 panel.renderPanel();
 

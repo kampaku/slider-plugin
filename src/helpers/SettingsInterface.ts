@@ -1,4 +1,4 @@
-export interface ModelInterface {
+export interface SettingsInterface {
   min: number;
   max: number;
   step: number;
@@ -9,5 +9,4 @@ export interface ModelInterface {
   range: boolean;
   connect: boolean;
   scale: boolean;
-  valueArray: number[];
 }

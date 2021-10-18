@@ -11,26 +11,26 @@ describe('test connect', () => {
   })
 
   test('connect', () => {
-    connect.render(false);
+    connect.create(false);
     expect(connect.element).toBeDefined();
   });
 
   test('add horizontal class', () => {
-    connect.render(false);
+    connect.create(false);
     expect(
       connect.element.classList.contains('slider-connect--horizontal'),
     ).toBeTruthy();
   });
 
   test('add vertical class', () => {
-    connect.render(true);
+    connect.create(true);
     expect(
       connect.element.classList.contains('slider-connect--vertical'),
     ).toBeTruthy();
   });
 
   test('set connect position', () => {
-    connect.render(false);
+    connect.create(false);
     connect.setPosition('left', 'right', '10%', '20%');
     expect(connect.element.style.left).toBe('10%');
     expect(connect.element.style.right).toBe('20%');

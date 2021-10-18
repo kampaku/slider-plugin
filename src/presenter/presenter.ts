@@ -25,6 +25,14 @@ export default class Presenter {
   constructor(model: Model, view: View) {
     this.model = model;
     this.view = view;
+    this.handleThumbMove = this.handleThumbMove.bind(this)
+    this.view.attach(this.handleThumbMove)
+    this.render();
+  }
+
+  handleThumbMove(eventName: string, coord: { newPosition: number, sliderEnd: number }) {
+    if (eventName !== 'drag') return;
+    this.model.convertToValue(coord);
   }
 
   create(options: Options) {
@@ -161,7 +169,6 @@ export default class Presenter {
 
       if (newPosition > sliderEnd) {
         newPosition = sliderEnd;
-
       }
 
       const arr = this.model.getValueArray();
@@ -249,15 +256,16 @@ export default class Presenter {
 
   private render() {
     const props = this.getProperties();
+    console.log(props);
     this.view.render(props);
     const { start } = this.getOrientation();
     const startPos = this.calculatePosition(props.from);
 
-    this.view.thumbFrom.addListener(this.thumbHandler);
+    // this.view.thumbFrom.addListener(this.thumbHandler);
     this.view.thumbFrom.move(start, startPos);
 
     if (props.range) {
-      this.view.thumbTo.addListener(this.thumbHandler);
+      // this.view.thumbTo.addListener(this.thumbHandler);
       const thumbToPos = this.calculatePosition(props.to);
       this.view.thumbTo.move(start, thumbToPos);
     }

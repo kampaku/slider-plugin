@@ -1,4 +1,4 @@
-import type { ModelInterface } from './modelInterface';
+import type { SettingsInterface } from '../helpers/SettingsInterface';
 
 export default class Model {
   min: number;
@@ -12,18 +12,31 @@ export default class Model {
   connect: boolean;
   scale: boolean;
   valueArray: number[];
-  constructor() {
-    this.min = 0;
-    this.max = 0;
-    this.step = 1;
-    this.from = 0;
-    this.to = 0;
-    this.vertical = false;
-    this.tip = false;
-    this.range = false;
-    this.connect = false;
-    this.scale = false;
+
+  constructor({
+                min = 0,
+                max = 1,
+                step = 1,
+                from = 0,
+                to = 0,
+                vertical = false,
+                tip = false,
+                range = false,
+                connect = false,
+                scale = false,
+              }: SettingsInterface) {
+    this.min = min;
+    this.max = max;
+    this.step = step;
+    this.from = from;
+    this.to = to;
+    this.vertical = vertical;
+    this.tip = tip;
+    this.range = range;
+    this.connect = connect;
+    this.scale = scale;
     this.valueArray = [];
+    this.setValueArray();
   }
 
   setMin(value: number) {
@@ -119,5 +132,14 @@ export default class Model {
 
   getValueArray() {
     return this.valueArray;
+  }
+
+  convertToValue(coord: { newPosition: number, sliderEnd: number }) {
+    // console.log(coord);
+    const {newPosition, sliderEnd} = coord;
+    const arr = this.valueArray;
+    const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
+    this.setFrom(arr[index]);
+    console.log(this.getFrom());
   }
 }

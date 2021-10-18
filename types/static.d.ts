@@ -58,5 +58,5 @@ declare module '*.png' {
 
 /* CUSTOM: ADD YOUR OWN HERE */
 interface JQuery {
-  superSlider();
+  superSlider(settings);
 }

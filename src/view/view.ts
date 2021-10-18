@@ -1,11 +1,12 @@
 import createElement from '../helpers/create-element';
-import type { ModelInterface } from '../model/modelInterface';
+import type { SettingsInterface } from '../helpers/SettingsInterface';
 import type Model from '../model/model';
 import Track from './track';
 import Thumb from './thumb';
 import Tip from './tip';
 import Connect from './connect';
 import Scale from './scale';
+import Observable from '../helpers/Observable';
 
 interface Option {
   vertical: boolean,
@@ -15,10 +16,10 @@ interface Option {
   scale: boolean,
 }
 
-export default class View {
+export default class View extends Observable {
   app: JQuery<HTMLElement> | null;
-  thumbFrom: Thumb;
-  thumbTo: Thumb;
+  thumbFrom: Thumb | undefined;
+  thumbTo: Thumb | undefined;
   tipFrom: Tip;
   tipTo: Tip;
   track: Track;
@@ -27,11 +28,11 @@ export default class View {
   scale: Scale;
 
   constructor(root: JQuery) {
+    super()
     this.app = root;
     // this.sliderContainer;
-    this.thumbFrom = new Thumb();
+
     this.track = new Track();
-    this.thumbTo = new Thumb();
     this.tipFrom = new Tip();
     this.tipTo = new Tip();
     this.connect = new Connect();
@@ -46,6 +47,10 @@ export default class View {
       connect,
       scale,
     } = props;
+    console.log(props);
+    this.thumbFrom = new Thumb(this.notify.bind(this));
+
+
     this.sliderContainer = createElement('div');
     this.app?.append(this.sliderContainer);
     this.track.render(vertical);
@@ -64,9 +69,9 @@ export default class View {
       this.thumbFrom.element.append(tipFromElement);
     }
     if (range) {
-
+      this.thumbTo = new Thumb(this.notify.bind(this));
       this.thumbTo.render(vertical);
-      this.thumbTo.slide(this.sliderContainer)
+      // this.thumbTo.slide(this.sliderContainer)
       this.track.element.append(this.thumbTo.element);
       if (tip) {
         const tipToElement = this.tipTo.render(vertical);
@@ -79,10 +84,12 @@ export default class View {
     }
 
     if (scale) {
+      console.log(scale);
       this.scale.render(vertical);
       this.sliderContainer.append(this.scale.element);
     }
     this.thumbFrom.width(this.sliderContainer)
+    console.log(this.thumbFrom.element);
   }
 
   destroy() {

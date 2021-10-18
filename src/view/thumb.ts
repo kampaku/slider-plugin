@@ -2,8 +2,13 @@ import createElement from '../helpers/create-element';
 
 export default class Thumb {
   element!: HTMLElement;
-  constructor() {
+  notify: (eventName: string, coord: { newPosition: number, sliderEnd: number }) => void;
+
+  constructor(notify: (eventName: string,
+                       coord: { newPosition: number, sliderEnd: number }) => void) {
+    this.notify = notify;
     this.element;
+    // this.slide()
   }
 
   render(vertical: boolean) {
@@ -13,6 +18,7 @@ export default class Thumb {
     } else {
       this.element.classList.add('thumb-horizontal');
     }
+    return this.element;
   }
 
   addListener(func: (event: PointerEvent, thumb: Thumb) => void) {
@@ -26,15 +32,17 @@ export default class Thumb {
   width(element: HTMLElement) {
     this.element.addEventListener('click', () => {
       // console.log(element.offsetWidth)
-    })
+    });
   }
 
   slide(elementX: HTMLElement) {
+    // let elementX = this.element.closest('.track') as HTMLElement;
+    // console.log(this.element.parentElement as HTMLElement);
     this.element.addEventListener('pointerdown', (event: PointerEvent) => {
       const shiftThumb =
         event.clientX - this.element.getBoundingClientRect().left;
 
-      this.element.setPointerCapture(event.pointerId)
+      this.element.setPointerCapture(event.pointerId);
       const onPointerMove = (event: PointerEvent) => {
         event.preventDefault();
 
@@ -53,15 +61,16 @@ export default class Thumb {
         if (newPosition > sliderEnd) {
           newPosition = sliderEnd;
         }
-        this.element.style.left = newPosition + 'px'
+        this.element.style.left = newPosition + 'px';
+        this.notify('drag', { newPosition, sliderEnd });
       };
 
       const onPointerUp = () => {
         this.element.removeEventListener('pointerup', onPointerUp);
         this.element.removeEventListener('pointermove', onPointerMove);
-      }
-      this.element.addEventListener('pointermove', onPointerMove)
-      this.element.addEventListener('pointerup', onPointerUp)
-    })
+      };
+      this.element.addEventListener('pointermove', onPointerMove);
+      this.element.addEventListener('pointerup', onPointerUp);
+    });
   }
 }
