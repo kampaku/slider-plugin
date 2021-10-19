@@ -39,7 +39,7 @@ export default class View extends Observable {
     this.scale = new Scale();
   }
 
-  render(props: Option) {
+  render(props: SettingsInterface) {
     const {
       vertical,
       tip,
@@ -47,14 +47,15 @@ export default class View extends Observable {
       connect,
       scale,
     } = props;
-    console.log(props);
-    this.thumbFrom = new Thumb(this.notify.bind(this));
+
+    this.thumbFrom = new Thumb(this.notify.bind(this), props);
 
 
     this.sliderContainer = createElement('div');
     this.app?.append(this.sliderContainer);
     this.track.render(vertical);
     this.thumbFrom.render(vertical);
+    this.thumbFrom.element.dataset.thumb = 'from';
     this.thumbFrom.slide(this.sliderContainer)
     if (vertical) {
       this.sliderContainer.classList.add('slider-vertical');
@@ -66,11 +67,13 @@ export default class View extends Observable {
     this.track.element.append(this.thumbFrom.element);
     if (tip) {
       const tipFromElement = this.tipFrom.render(vertical);
+      this.tipFrom.displayValue(props.from)
       this.thumbFrom.element.append(tipFromElement);
     }
     if (range) {
-      this.thumbTo = new Thumb(this.notify.bind(this));
+      this.thumbTo = new Thumb(this.notify.bind(this), props);
       this.thumbTo.render(vertical);
+      this.thumbTo.element.dataset.thumb = 'to';
       // this.thumbTo.slide(this.sliderContainer)
       this.track.element.append(this.thumbTo.element);
       if (tip) {
@@ -84,11 +87,9 @@ export default class View extends Observable {
     }
 
     if (scale) {
-      console.log(scale);
       this.scale.render(vertical);
       this.sliderContainer.append(this.scale.element);
     }
-    this.thumbFrom.width(this.sliderContainer)
     console.log(this.thumbFrom.element);
   }
 

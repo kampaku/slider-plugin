@@ -1,13 +1,16 @@
 import createElement from '../helpers/create-element';
+import type { SettingsInterface } from '../helpers/SettingsInterface';
 
 export default class Thumb {
   element!: HTMLElement;
-  notify: (eventName: string, coord: { newPosition: number, sliderEnd: number }) => void;
+  notify: (eventName: string, settings: SettingsInterface) => void;
+  settings: SettingsInterface;
 
-  constructor(notify: (eventName: string,
-                       coord: { newPosition: number, sliderEnd: number }) => void) {
+  constructor(notify: (eventName: string, settings: SettingsInterface) => void,
+              settings: SettingsInterface) {
     this.notify = notify;
     this.element;
+    this.settings = settings;
     // this.slide()
   }
 
@@ -29,15 +32,37 @@ export default class Thumb {
     this.element.setAttribute('style', `${orientation}: ${value}`);
   }
 
-  width(element: HTMLElement) {
-    this.element.addEventListener('click', () => {
-      // console.log(element.offsetWidth)
-    });
+  calculatePosition(value: number) {
+    if (!this.element.parentElement) return;
+    const arr = this.settings.valueArray;
+    const index = arr.indexOf(value);
+    const offset = this.settings.vertical ?
+      'offsetHeight' :
+      'offsetWidth';
+    const maxWidthWithoutThumb =
+      100 -
+      (this.element[offset] /
+        this.element.parentElement[offset]) *
+      100;
+    const position = (maxWidthWithoutThumb / (arr.length - 1)) * index;
+    this.move('left', Math.round(position) + '%')
+  }
+
+  convertToValue(coord: { newPosition: number, sliderEnd: number }) {
+    const {newPosition, sliderEnd} = coord;
+    const arr = this.settings.valueArray;
+    const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
+    if (this.element.dataset.thumb === 'from') {
+      this.notify('move from', {...this.settings, from: arr[index]})
+    } else {
+      this.notify('move to', {...this.settings, to: arr[index]})
+    }
+    return arr[index];
   }
 
   slide(elementX: HTMLElement) {
     // let elementX = this.element.closest('.track') as HTMLElement;
-    // console.log(this.element.parentElement as HTMLElement);
+
     this.element.addEventListener('pointerdown', (event: PointerEvent) => {
       const shiftThumb =
         event.clientX - this.element.getBoundingClientRect().left;
@@ -61,8 +86,8 @@ export default class Thumb {
         if (newPosition > sliderEnd) {
           newPosition = sliderEnd;
         }
-        this.element.style.left = newPosition + 'px';
-        this.notify('drag', { newPosition, sliderEnd });
+        // this.element.style.left = newPosition + 'px';
+        this.convertToValue( { newPosition, sliderEnd });
       };
 
       const onPointerUp = () => {

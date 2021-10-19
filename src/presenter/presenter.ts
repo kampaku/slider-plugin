@@ -3,6 +3,7 @@ import type Tip from 'src/view/tip';
 // import type { ModelInterface } from '../model/modelInterface';
 import type Model from '../model/model';
 import type View from '../view/view';
+import type { SettingsInterface } from '../helpers/SettingsInterface';
 
 type Options = {
   min: number;
@@ -25,16 +26,28 @@ export default class Presenter {
   constructor(model: Model, view: View) {
     this.model = model;
     this.view = view;
-    this.handleThumbMove = this.handleThumbMove.bind(this)
-    this.view.attach(this.handleThumbMove)
-    this.render();
+    this.handleThumbFromMove = this.handleThumbFromMove.bind(this)
+    this.view.attach(this.handleThumbFromMove)
+    this.model.attach(this.onValueChange.bind(this));
+    // this.renderr();
+    this.renderX(this.model.getSettings())
   }
 
-  handleThumbMove(eventName: string, coord: { newPosition: number, sliderEnd: number }) {
-    if (eventName !== 'drag') return;
-    this.model.convertToValue(coord);
+  onValueChange(eventName: string, settings: SettingsInterface) {
+    if (eventName !== 'change from') return
+    const { from } = settings;
+    this.view.thumbFrom?.calculatePosition(from);
   }
 
+  handleThumbFromMove(eventName: string, settings: SettingsInterface) {
+    if (eventName !== 'move from') return;
+    const { from } = settings;
+    this.model.setFrom(from);
+  }
+
+  renderX(settings: SettingsInterface) {
+    this.view.render(settings)
+  }
   create(options: Options) {
     const {
       min,

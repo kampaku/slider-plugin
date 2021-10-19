@@ -1,6 +1,7 @@
 import type { SettingsInterface } from '../helpers/SettingsInterface';
+import Observable from '../helpers/Observable';
 
-export default class Model {
+export default class Model extends Observable {
   min: number;
   max: number;
   step: number;
@@ -25,6 +26,7 @@ export default class Model {
                 connect = false,
                 scale = false,
               }: SettingsInterface) {
+    super();
     this.min = min;
     this.max = max;
     this.step = step;
@@ -49,6 +51,9 @@ export default class Model {
 
   setFrom(value: number) {
     this.from = value;
+    this.notify('change from', { ...this.getSettings(),
+                                             from: value }
+    );
   }
 
   setTo(value: number) {
@@ -135,11 +140,25 @@ export default class Model {
   }
 
   convertToValue(coord: { newPosition: number, sliderEnd: number }) {
-    // console.log(coord);
-    const {newPosition, sliderEnd} = coord;
+    const { newPosition, sliderEnd } = coord;
     const arr = this.valueArray;
     const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
     this.setFrom(arr[index]);
-    console.log(this.getFrom());
+  }
+
+  getSettings() {
+    return {
+      min: this.min,
+      max: this.max,
+      step: this.step,
+      from: this.from,
+      to: this.to,
+      vertical: this.vertical,
+      tip: this.tip,
+      range: this.range,
+      connect: this.connect,
+      scale: this.scale,
+      valueArray: this.valueArray,
+    };
   }
 }
