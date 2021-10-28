@@ -1,20 +1,18 @@
 import createElement from '../helpers/create-element';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
-
+import { Events } from '../helpers/Events';
 export default class Thumb {
   element!: HTMLElement;
-  notify: (eventName: string, settings: SettingsInterface) => void;
+  notify: (eventName: Events, settings: SettingsInterface) => void;
   settings: SettingsInterface;
 
-  constructor(notify: (eventName: string, settings: SettingsInterface) => void,
+  constructor(notify: (eventName: Events, settings: SettingsInterface) => void,
               settings: SettingsInterface) {
     this.notify = notify;
-    this.element;
     this.settings = settings;
-    // this.slide()
   }
 
-  render(vertical: boolean) {
+  createElement(vertical: boolean) {
     this.element = createElement('div', ['thumb']);
     if (vertical) {
       this.element.classList.add('thumb-vertical');
@@ -24,15 +22,16 @@ export default class Thumb {
     return this.element;
   }
 
-  addListener(func: (event: PointerEvent, thumb: Thumb) => void) {
-    this.element.addEventListener('pointerdown', (event) => func(event, this));
+  move(value: number) {
+    const position = this.calculatePosition(value);
+    const start = this.settings.vertical ?
+      'top' :
+      'left';
+    this.element.setAttribute('style',
+      `${start}: ${position?.toFixed(4)}%`);
   }
 
-  move(orientation: string, value: string) {
-    this.element.setAttribute('style', `${orientation}: ${value}`);
-  }
-
-  calculatePosition(value: number) {
+  private calculatePosition(value: number) {
     if (!this.element.parentElement) return;
     const arr = this.settings.valueArray;
     const index = arr.indexOf(value);
@@ -44,50 +43,57 @@ export default class Thumb {
       (this.element[offset] /
         this.element.parentElement[offset]) *
       100;
-    const position = (maxWidthWithoutThumb / (arr.length - 1)) * index;
-    this.move('left', Math.round(position) + '%')
+    return (maxWidthWithoutThumb / (arr.length - 1)) * index;
   }
 
-  convertToValue(coord: { newPosition: number, sliderEnd: number }) {
-    const {newPosition, sliderEnd} = coord;
+  private convertToValue(coord: { newPosition: number, sliderEnd: number }) {
+    const { newPosition, sliderEnd } = coord;
     const arr = this.settings.valueArray;
     const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
     if (this.element.dataset.thumb === 'from') {
-      this.notify('move from', {...this.settings, from: arr[index]})
+      this.notify(Events.moveFrom, { ...this.settings, from: arr[index] });
     } else {
-      this.notify('move to', {...this.settings, to: arr[index]})
+      this.notify(Events.moveTo, { ...this.settings, to: arr[index] });
     }
-    return arr[index];
   }
 
   slide(elementX: HTMLElement) {
     // let elementX = this.element.closest('.track') as HTMLElement;
+    
+    const client = this.settings.vertical ?
+      'clientY' :
+      'clientX';
+    const start = this.settings.vertical ?
+      'top' :
+      'left';
+    const offset = this.settings.vertical ?
+      'offsetHeight' :
+      'offsetWidth';
 
     this.element.addEventListener('pointerdown', (event: PointerEvent) => {
       const shiftThumb =
-        event.clientX - this.element.getBoundingClientRect().left;
+        event[client] - this.element.getBoundingClientRect()[start];
 
       this.element.setPointerCapture(event.pointerId);
       const onPointerMove = (event: PointerEvent) => {
         event.preventDefault();
 
         let newPosition =
-          event.clientX -
+          event[client] -
           shiftThumb -
-          elementX.getBoundingClientRect().left;
+          elementX.getBoundingClientRect()[start];
 
         if (newPosition < 0) {
           newPosition = 0;
         }
 
         const sliderEnd =
-          elementX.offsetWidth - this.element.offsetWidth;
+          elementX[offset] - this.element[offset];
 
         if (newPosition > sliderEnd) {
           newPosition = sliderEnd;
         }
-        // this.element.style.left = newPosition + 'px';
-        this.convertToValue( { newPosition, sliderEnd });
+        this.convertToValue({ newPosition, sliderEnd });
       };
 
       const onPointerUp = () => {
