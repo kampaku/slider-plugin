@@ -4,28 +4,37 @@ import View from '../src/view/view';
 import * as $ from 'jquery';
 
 describe('test presenter', () => {
-  let div = document.createElement('div');
   const settings = {
-    min: -10,
-    max: 10,
+    min: 1,
+    max: 5,
     step: 1,
-    from: -10,
+    from: 1,
+    to: 5,
+    range: true,
     tip: true,
     connect: true,
     scale: true,
+    vertical: false,
   };
   let presenter: Presenter;
   let model: Model;
-  let view = new View($(div));
+  let view: View;
+  jest.useFakeTimers();
   beforeEach(() => {
     document.body.innerHTML = '';
+    let div = document.createElement('div');
     document.body.append(div);
-    model = new Model();
+    view = new View($(div));
+    model = new Model(settings);
     presenter = new Presenter(model, view);
-    presenter.create(settings);
+    jest.runAllTimers();
   });
   test('presenter defined', () => {
     expect(presenter).toBeDefined();
+  });
+
+  test('presenter view', () => {
+    expect(presenter.view.sliderContainer).toBeDefined();
   });
 
   test('should set max', () => {
@@ -91,44 +100,5 @@ describe('test presenter', () => {
   test('should not tip', () => {
     presenter.setTip(false);
     expect(model.getTip()).toBeFalsy();
-  });
-});
-
-describe('test creating presenter', () => {
-  let div = document.createElement('div');
-  const settings = {
-    min: -10,
-    max: 10,
-    step: 1,
-  };
-  let presenter: Presenter;
-  let model: Model;
-  let view = new View($(div));
-
-  beforeEach(() => {
-    document.body.innerHTML = '';
-    document.body.append(div);
-    model = new Model();
-    presenter = new Presenter(model, view);
-  });
-
-  test('should create with vertical', () => {
-    presenter.create({ ...settings, vertical: true });
-    expect(model.getVertical()).toBe(true);
-  });
-
-  test('should create with to', () => {
-    presenter.create({ ...settings, to: 12 });
-    expect(model.getTo()).toBe(12);
-  });
-
-  test('should create with not range', () => {
-    presenter.create({ ...settings, range: true });
-    expect(model.getRange()).toBe(true);
-  });
-
-  test('should create with false tip', () => {
-    presenter.create({ ...settings, tip: false });
-    expect(model.getTip()).toBe(false);
   });
 });

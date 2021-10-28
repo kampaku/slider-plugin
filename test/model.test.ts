@@ -2,7 +2,11 @@ import Model from '../src/model/model';
 // jest.mock('../src/model/model')
 
 describe('test model', () => {
-  let model = new Model();
+  const settings = {
+    min: 0,
+    max: 10,
+  }
+  let model = new Model(settings);
   test('set connect', () => {
     model.setConnect(true);
     expect(model.getConnect()).toBe(true);
@@ -24,8 +28,8 @@ describe('test model', () => {
   });
 
   test('set from', () => {
-    model.setFrom(10);
-    expect(model.getFrom()).toBe(10);
+    model.setFrom(1);
+    expect(model.getFrom()).toBe(1);
   });
 
   test('set to', () => {

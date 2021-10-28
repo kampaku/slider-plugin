@@ -58,5 +58,23 @@ declare module '*.png' {
 
 /* CUSTOM: ADD YOUR OWN HERE */
 interface JQuery {
-  superSlider(settings);
+  superSlider(settings: OptionsInterface);
 }
+interface OptionsInterface {
+  min: number;
+  max: number;
+  step?: number;
+  from?: number;
+  to?: number;
+  vertical?: boolean;
+  tip?: boolean;
+  range?: boolean;
+  connect?: boolean;
+  scale?: boolean;
+}
+// export enum Events {
+//   changeFrom,
+//   changeTo,
+//   moveFrom,
+//   moveTo
+// }
