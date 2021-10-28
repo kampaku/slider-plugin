@@ -1,11 +1,8 @@
-import type Presenter from '../presenter/presenter';
 import type { SettingsInterface } from './SettingsInterface';
-type args = any;
+import type { Events } from './Events';
 interface Observer {
-  (eventName: string, arg: SettingsInterface): void;
+  (eventName: Events, arg: SettingsInterface): void;
 }
-
-// type Observer = <T>(coord: T) => void
 
 export default class Observable {
   observers: Observer[];
@@ -26,7 +23,7 @@ export default class Observable {
     this.observers = this.observers.filter(callback => callback === observer);
   }
 
-  notify(eventName: string, arg: SettingsInterface) {
+  notify(eventName: Events, arg: SettingsInterface) {
     this.observers.forEach(observer => observer(eventName, arg))
   }
 }
