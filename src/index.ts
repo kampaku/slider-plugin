@@ -5,22 +5,21 @@ import './superSlider';
 import Panel from './configuration-panel/panel';
 import type Presenter from './presenter/presenter';
 
-const settings = {
-  min: -10,
-  max: 10,
-  step: 1,
-  from: -10,
-  tip: true,
-  connect: true,
-  scale: true,
-}
-
-// superSlider();
-let plugin = document.querySelector('.wrapper')
-const slider: Presenter = $('#root').superSlider(settings);
-// slider.create(settings);
-// slider.setMin(-100);
-// slider.setMax(100);
-let panel = new Panel(slider, '.wrapper');
-panel.renderPanel();
-
+  const settings = {
+    min: -10,
+    max: 10,
+    step: 1,
+    from: 0,
+    to: 8,
+    range: true,
+    tip: true,
+    connect: true,
+    scale: true,
+  }
+  
+  // superSlider();
+  
+  let plugin = document.querySelector('.wrapper')
+  const slider: Presenter = $('#root').superSlider(settings);
+  let panel = new Panel(slider, '.wrapper');
+  panel.renderPanel();
