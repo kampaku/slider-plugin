@@ -6,7 +6,7 @@ export default class Tip {
     this.element = null;
   }
 
-  render(vertical: boolean) {
+  create(vertical: boolean) {
     this.element = createElement('span', ['slider-tip']);
     if (vertical) {
       this.element.classList.add('slider-tip--vertical');
