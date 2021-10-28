@@ -1,5 +1,7 @@
 import createElement from '../helpers/create-element';
 import type Presenter from '../presenter/presenter';
+import { Events } from '../helpers/Events';
+import type { SettingsInterface } from '../helpers/SettingsInterface';
 
 type NumVal = {
   min: (value: number) => void;
@@ -20,23 +22,27 @@ type BoolVal = {
 export default class Panel {
   slider: Presenter;
   container: HTMLElement;
+  fromInput!: HTMLInputElement;
+  toInput!: HTMLInputElement;
 
   constructor(slider: Presenter, selector: string) {
     this.slider = slider;
     this.container = document.querySelector(selector) as HTMLElement;
+    this.slider.model.attach(this.updateTo.bind(this));
+    this.slider.model.attach(this.updateFrom.bind(this));
   }
 
   setValues = {
-    min: (value: number) => this.slider.setMin(value),
-    max: (value: number) => this.slider.setMax(value),
-    step: (value: number) => this.slider.setStep(value),
-    from: (value: number) => this.slider.setFrom(value),
-    to: (value: number) => this.slider.setTo(value),
-    range: (value: boolean) => this.slider.setRange(value),
-    tip: (value: boolean) => this.slider.setTip(value),
-    vertical: (value: boolean) => this.slider.setVertical(value),
-    connect: (value: boolean) => this.slider.setConnect(value),
-    scale: (value: boolean) => this.slider.setScale(value),
+    min: (value: number) => this.slider.model.setMin(value),
+    max: (value: number) => this.slider.model.setMax(value),
+    step: (value: number) => this.slider.model.setStep(value),
+    from: (value: number) => this.slider.model.setFrom(value),
+    to: (value: number) => this.slider.model.setTo(value),
+    range: (value: boolean) => this.slider.model.setRange(value),
+    tip: (value: boolean) => this.slider.model.setTip(value),
+    vertical: (value: boolean) => this.slider.model.setVertical(value),
+    connect: (value: boolean) => this.slider.model.setConnect(value),
+    scale: (value: boolean) => this.slider.model.setScale(value),
   };
 
   initValues = {
@@ -119,10 +125,24 @@ export default class Panel {
     span.textContent = inputName.label;
     input.value = String(this.initValues[inputName.label as keyof NumVal]());
     input.setAttribute('type', 'number');
+    if(inputName.label === 'from') this.fromInput = input;
+    if(inputName.label === 'to') this.toInput = input;
     label.append(span);
     label.append(input);
     this.changeVal(input, inputName);
     return label;
+  }
+
+  updateFrom(eventName: Events, settings: SettingsInterface) {
+    if(eventName !== Events.changeFrom) return;
+    const {from} = settings
+    this.fromInput.value = String(from);
+  }
+
+  updateTo(eventName: Events, settings: SettingsInterface) {
+    if(eventName !== Events.changeTo) return;
+    const {to} = settings;
+    this.toInput.value = String(to);
   }
 
   renderPanel() {
