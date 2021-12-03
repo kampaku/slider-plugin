@@ -5,7 +5,12 @@
 
 .slider-vertical {
   height: 100%;
+  min-height: 240px;
   position: relative;
+  display: grid;
+  place-items: center;
+  place-content: center;
+  width: max-content;
 }
 
 .slider-tip {
