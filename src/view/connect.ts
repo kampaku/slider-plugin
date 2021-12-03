@@ -29,12 +29,8 @@ export default class Connect {
 
   setPosition(from: number, to: number) {
     if (!this.element) return;
-    const startConnect = this.settings.vertical ?
-      'top' :
-      'left';
-    const endConnect = this.settings.vertical ?
-      'bottom' :
-      'right';
+    const startConnect = this.settings.vertical ? 'top' : 'left';
+    const endConnect = this.settings.vertical ? 'bottom' : 'right';
     const startPosition = this.calculatePosition(from);
     if (this.settings.range) {
       const endPosition = this.calculatePosition(to);
@@ -44,7 +40,5 @@ export default class Connect {
       this.element.style[startConnect] = '0%';
       this.element.style[endConnect] = `${100 - startPosition}%`;
     }
-
-
   }
 }

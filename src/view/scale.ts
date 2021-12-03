@@ -6,8 +6,10 @@ export default class Scale {
   element: HTMLElement | undefined;
   settings: SettingsInterface;
   notify: (eventName: Events, settings: SettingsInterface) => void;
-  constructor(notify: (eventName: Events, settings: SettingsInterface) => void,
-              settings: SettingsInterface) {
+  constructor(
+    notify: (eventName: Events, settings: SettingsInterface) => void,
+    settings: SettingsInterface,
+  ) {
     this.settings = settings;
     this.notify = notify;
     this.onScaleClick = this.onScaleClick.bind(this);
@@ -28,9 +30,7 @@ export default class Scale {
     const arr = this.settings.valueArray;
     const x = Math.round(arr.length / 6);
 
-    const start = this.settings.vertical ?
-      'top' :
-      'left';
+    const start = this.settings.vertical ? 'top' : 'left';
     for (let i = 0; i < arr.length; i += x) {
       let pip = createElement('div', ['scale-pip']);
       pip.dataset.value = String(arr[i]);
@@ -46,17 +46,17 @@ export default class Scale {
     this.settings = settings;
   }
 
-  onScaleClick (event: PointerEvent) {
+  onScaleClick(event: PointerEvent) {
     const target = event.target as HTMLElement;
     if (!target || !target.classList.contains('scale-pip')) return;
     const val = Number(target.dataset.value);
-    const {from, to} = this.settings;
-    const x = Math.abs(val - from);
-    const y = Math.abs(val - to);
-    if (x <= y) {
-      this.notify(Events.moveFrom, { ...this.settings, from: val});
+    const { from, to } = this.settings;
+    const left = Math.abs(val - from);
+    const right = Math.abs(val - to);
+    if (left <= right) {
+      this.notify(Events.moveFrom, { ...this.settings, from: val });
     } else {
-      this.notify(Events.moveTo, {...this.settings, to: val});
+      this.notify(Events.moveTo, { ...this.settings, to: val });
     }
   }
 }
