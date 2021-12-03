@@ -1,5 +1,4 @@
 import createElement from '../helpers/create-element';
-import type { SettingsInterface } from '../helpers/SettingsInterface';
 import Track from './track';
 import Thumb from './thumb';
 import Tip from './tip';
@@ -8,7 +7,7 @@ import Scale from './scale';
 import Observable from '../helpers/Observable';
 
 export default class View extends Observable {
-  app: JQuery<HTMLElement> | null;
+  root: JQuery<HTMLElement> | null;
   thumbFrom: Thumb | undefined;
   thumbTo: Thumb | undefined;
   tipFrom: Tip | undefined;
@@ -19,32 +18,26 @@ export default class View extends Observable {
   scale: Scale | undefined;
 
   constructor(root: JQuery) {
-    super()
-    this.app = root;
+    super();
+    this.root = root;
 
     this.track = new Track();
   }
 
   render(props: SettingsInterface) {
-    const {
-      vertical,
-      tip,
-      range,
-      connect,
-      scale,
-    } = props;
+    const { vertical, tip, range, connect, scale } = props;
 
     this.sliderContainer = createElement('div');
 
     this.thumbFrom = new Thumb(this.notify.bind(this), props);
 
-    this.app?.append(this.sliderContainer);
-    const track = this.track.render(vertical);
+    this.root?.append(this.sliderContainer);
+    const track = this.track.create(vertical);
     this.sliderContainer.append(track);
-    const thumbFrom = this.thumbFrom.createElement(vertical);
+    const thumbFrom = this.thumbFrom.create(vertical);
     thumbFrom.dataset.thumb = 'from';
     track.append(thumbFrom);
-    this.thumbFrom.slide(this.sliderContainer);
+    this.thumbFrom.thumbHandle(this.sliderContainer);
     if (vertical) {
       this.sliderContainer.classList.add('slider-vertical');
     } else {
@@ -59,9 +52,9 @@ export default class View extends Observable {
     }
     if (range) {
       this.thumbTo = new Thumb(this.notify.bind(this), props);
-      const thumbTo = this.thumbTo.createElement(vertical);
+      const thumbTo = this.thumbTo.create(vertical);
       thumbTo.dataset.thumb = 'to';
-      this.thumbTo.slide(this.sliderContainer);
+      this.thumbTo.thumbHandle(this.sliderContainer);
       track.append(thumbTo);
       if (tip) {
         this.tipTo = new Tip();
