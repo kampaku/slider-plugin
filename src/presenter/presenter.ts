@@ -18,7 +18,7 @@ export default class Presenter {
     this.model.attach(this.onTipToUpdate.bind(this));
     this.model.attach(this.onUpdate.bind(this));
     this.model.attach(this.onConnectUpdate.bind(this));
-    this.render(this.model.getSettings());
+    this.init(this.model.getSettings());
   }
 
   private onFromChange(eventName: Events, settings: SettingsInterface) {
@@ -60,65 +60,24 @@ export default class Presenter {
   private onUpdate(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.update) return;
     this.view.destroy();
-    this.render(settings);
+    this.init(settings);
   }
 
   private onConnectUpdate(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.changeFrom && eventName !== Events.changeTo) return;
+    if (eventName !== Events.changeFrom && eventName !== Events.changeTo)
+      return;
     const { from, to } = settings;
     this.view.connect?.setPosition(from, to);
     this.view.scale?.updateSettings(settings);
   }
 
-  private render(settings: SettingsInterface) {
-    setTimeout(() => {
-      const { from, to } = settings;
-      this.view.render(settings);
-      this.view.thumbFrom?.move(from);
-      this.view.thumbTo?.move(to);
-      if (settings.connect) {
-        this.view.connect?.setPosition(from, to);
-      }
-    });
-  }
-
-  setMin(value: number) {
-    this.model.setMin(value);
-  }
-
-  setMax(value: number) {
-    this.model.setMax(value);
-  }
-
-  setFrom(value: number) {
-    this.model.setFrom(value);
-  }
-
-  setTo(value: number) {
-    this.model.setTo(value);
-  }
-
-  setStep(value: number) {
-    this.model.setStep(value);
-  }
-
-  setVertical(value: boolean) {
-    this.model.setVertical(value);
-  }
-
-  setConnect(value: boolean) {
-    this.model.setConnect(value);
-  }
-
-  setRange(value: boolean) {
-    this.model.setRange(value);
-  }
-
-  setScale(value: boolean) {
-    this.model.setScale(value);
-  }
-
-  setTip(value: boolean) {
-    this.model.setTip(value);
+  private init(settings: SettingsInterface) {
+    const { from, to } = settings;
+    this.view.render(settings);
+    this.view.thumbFrom?.move(from);
+    this.view.thumbTo?.move(to);
+    if (settings.connect) {
+      this.view.connect?.setPosition(from, to);
+    }
   }
 }
