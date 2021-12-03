@@ -1,8 +1,7 @@
-import type { SettingsInterface } from '../helpers/SettingsInterface';
 import Observable from '../helpers/Observable';
 import { Events } from '../helpers/Events';
 
-interface OptionsInterface {
+interface SliderOptions {
   min: number;
   max: number;
   step?: number;
@@ -29,17 +28,17 @@ export default class Model extends Observable {
   valueArray: number[];
 
   constructor({
-                min,
-                max,
-                step = 1,
-                from = 0,
-                to = 0,
-                vertical = false,
-                tip = false,
-                range = false,
-                connect = false,
-                scale = false,
-              }: OptionsInterface) {
+    min,
+    max,
+    step = 1,
+    from = 0,
+    to = max,
+    vertical = false,
+    tip = false,
+    range = false,
+    connect = false,
+    scale = false,
+  }: SliderOptions) {
     super();
     this.min = min;
     this.max = max;
@@ -58,13 +57,13 @@ export default class Model extends Observable {
   setMin(value: number) {
     this.min = value;
     this.setValueArray();
-    this.notify(Events.update, {...this.getSettings(), min: value});
+    this.notify(Events.update, { ...this.getSettings(), min: value });
   }
 
   setMax(value: number) {
     this.max = value;
     this.setValueArray();
-    this.notify(Events.update, {...this.getSettings(), max: value});
+    this.notify(Events.update, { ...this.getSettings(), max: value });
   }
 
   setFrom(value: number) {
@@ -82,72 +81,33 @@ export default class Model extends Observable {
   setStep(value: number) {
     this.step = value;
     this.setValueArray();
-    this.notify(Events.update, {...this.getSettings(), step: value});
+    this.notify(Events.update, { ...this.getSettings(), step: value });
   }
 
   setVertical(value: boolean) {
     this.vertical = value;
-    this.notify(Events.update, {...this.getSettings(), vertical: value});
+    this.notify(Events.update, { ...this.getSettings(), vertical: value });
   }
 
   setTip(value: boolean) {
     this.tip = value;
-    this.notify(Events.update, {...this.getSettings(), tip: value});
+    this.notify(Events.update, { ...this.getSettings(), tip: value });
   }
 
   setRange(value: boolean) {
     this.range = value;
-    this.notify(Events.update, {...this.getSettings(), range: value});
+    if (!value) this.setTo(this.max);
+    this.notify(Events.update, { ...this.getSettings(), range: value });
   }
 
   setConnect(value: boolean) {
     this.connect = value;
-    this.notify(Events.update, {...this.getSettings(), connect: value});
+    this.notify(Events.update, { ...this.getSettings(), connect: value });
   }
 
   setScale(value: boolean) {
     this.scale = value;
-    this.notify(Events.update, {...this.getSettings(), scale: value});
-  }
-
-  getMin() {
-    return this.min;
-  }
-
-  getMax() {
-    return this.max;
-  }
-
-  getFrom() {
-    return this.from;
-  }
-
-  getTo() {
-    return this.to;
-  }
-
-  getStep() {
-    return this.step;
-  }
-
-  getVertical() {
-    return this.vertical;
-  }
-
-  getTip() {
-    return this.tip;
-  }
-
-  getRange() {
-    return this.range;
-  }
-
-  getConnect() {
-    return this.connect;
-  }
-
-  getScale() {
-    return this.scale;
+    this.notify(Events.update, { ...this.getSettings(), scale: value });
   }
 
   setValueArray() {
@@ -158,10 +118,6 @@ export default class Model extends Observable {
     for (let i = this.min; i <= this.max; i += this.step) {
       this.valueArray.push(i);
     }
-  }
-
-  getValueArray() {
-    return this.valueArray;
   }
 
   getSettings() {
