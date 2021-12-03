@@ -58,9 +58,9 @@ declare module '*.png' {
 
 /* CUSTOM: ADD YOUR OWN HERE */
 interface JQuery {
-  superSlider(settings: OptionsInterface);
+  superSlider(settings: SliderOptions);
 }
-interface OptionsInterface {
+interface SliderOptions {
   min: number;
   max: number;
   step?: number;
@@ -72,9 +72,19 @@ interface OptionsInterface {
   connect?: boolean;
   scale?: boolean;
 }
-// export enum Events {
-//   changeFrom,
-//   changeTo,
-//   moveFrom,
-//   moveTo
-// }
+interface SettingsInterface {
+  min: number;
+  max: number;
+  step: number;
+  from: number;
+  to: number;
+  vertical: boolean;
+  tip: boolean;
+  range: boolean;
+  connect: boolean;
+  scale: boolean;
+  valueArray: number[]
+}
+interface Observer {
+  (eventName: Events, arg: SettingsInterface): void;
+}
