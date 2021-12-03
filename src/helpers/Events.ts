@@ -3,5 +3,5 @@ export enum Events {
   changeTo,
   moveFrom,
   moveTo,
-  update
+  update,
 }
