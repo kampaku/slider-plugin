@@ -9,5 +9,5 @@ export interface SettingsInterface {
   range: boolean;
   connect: boolean;
   scale: boolean;
-  valueArray: number[]
+  valueArray: number[];
 }
