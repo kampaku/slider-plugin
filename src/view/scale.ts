@@ -28,17 +28,17 @@ export default class Scale {
   displayScale() {
     if (!this.element) return;
     const arr = this.settings.valueArray;
-    const x = Math.round(arr.length / 6);
+    const markerCount = Math.round(arr.length / 6);
 
     const start = this.settings.vertical ? 'top' : 'left';
-    for (let i = 0; i < arr.length; i += x) {
-      let pip = createElement('div', ['scale-pip']);
-      pip.dataset.value = String(arr[i]);
+    for (let i = 0; i < arr.length; i += markerCount) {
+      let marker = createElement('div', ['scale-pip']);
+      marker.dataset.value = String(arr[i]);
       const y = (i * 100) / (arr.length - 1);
-      pip.style[start] = y + '%';
+      marker.style[start] = y + '%';
 
-      pip.textContent = String(arr[i]);
-      this.element.append(pip);
+      marker.textContent = String(arr[i]);
+      this.element.append(marker);
     }
   }
 
