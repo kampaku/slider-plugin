@@ -13,7 +13,8 @@ const config: Config.InitialOptions = {
   verbose: true,
   // extensionsToTreatAsEsm: ['.ts'],
   testEnvironment: 'jsdom',
-  preset: 'ts-jest'
+  preset: 'ts-jest',
+  moduleNameMapper: { "\\.(css|less)$": "<rootDir>/test/__mocks__/styleMock.js" }
 };
 export default config;
 
