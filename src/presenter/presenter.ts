@@ -49,6 +49,8 @@ export default class Presenter {
         this.view.tipTo.element.style.visibility = 'visible';
         this.view.tipFrom?.displayValue(String(from));
       }
+    } else {
+      this.view.tipFrom?.displayValue(String(from));
     }
   }
 
