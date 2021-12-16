@@ -30,7 +30,7 @@ describe('test Tip', () => {
 
   test('tip display value', () => {
     const tipEl = tip.create(false);
-    tip.displayValue(40);
+    tip.displayValue(String(40));
     expect(tipEl.textContent).toBe('40');
   });
 });
