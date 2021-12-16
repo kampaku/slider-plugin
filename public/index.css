@@ -9,9 +9,9 @@ body {
   font-size: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
   place-items: center;
-  padding: 10px 0;
+  padding: 0px 0;
 }
 
 .slider-container {
@@ -27,9 +27,18 @@ body {
 
 .wrapper {
   width: 100%;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 50px;
+}
+
+.wrapper:nth-child(odd) {
+  border-right: 5px solid slateblue;
+}
+
+.wrapper:nth-child(n + 3) {
+  border-top: 5px solid slateblue;
 }
