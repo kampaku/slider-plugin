@@ -1,4 +1,4 @@
-
+import '../public/index.css';
 import $ from 'jquery';
 import './jqueryPlugin';
 import Panel from './configuration-panel/panel';
@@ -24,7 +24,7 @@ const settings2 = {
   tip: true,
   connect: false,
   scale: true,
-  vertical: true
+  vertical: true,
 };
 
 const settings3 = {
@@ -49,10 +49,10 @@ const settings4 = {
   scale: false,
 };
 
-let plugin = document.querySelector('.wrapper1') as HTMLElement;
-let plugin2 = document.querySelector('.wrapper2') as HTMLElement;
-let plugin3 = document.querySelector('.wrapper3') as HTMLElement;
-let plugin4 = document.querySelector('.wrapper4') as HTMLElement;
+const plugin = document.querySelector('.wrapper1') as HTMLElement;
+const plugin2 = document.querySelector('.wrapper2') as HTMLElement;
+const plugin3 = document.querySelector('.wrapper3') as HTMLElement;
+const plugin4 = document.querySelector('.wrapper4') as HTMLElement;
 const slider = $('.slider1').superSlider(settings);
 const slider2 = $('.slider2').superSlider(settings2);
 const slider3 = $('.slider3').superSlider(settings3);
@@ -62,3 +62,4 @@ new Panel(slider, plugin);
 new Panel(slider2, plugin2);
 new Panel(slider3, plugin3);
 new Panel(slider4, plugin4);
+
