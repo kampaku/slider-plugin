@@ -1,6 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const fs = require('fs')
 
 const paths = require('./paths')
 
@@ -56,18 +55,6 @@ module.exports = {
         include: /fonts/,
       },
     ],
-  },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          name: 'vendors',
-          test: /node_modules/,
-          chunks: 'all',
-          enforce: true
-        }
-      }
-    }
   },
 
   resolve: {
