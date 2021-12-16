@@ -2,7 +2,7 @@ import createElement from '../helpers/create-element';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 import { Events } from '../helpers/Events';
 export default class Thumb {
-  element!: HTMLElement;
+  element: HTMLElement | undefined;
   notify: (eventName: Events, settings: SettingsInterface) => void;
   settings: SettingsInterface;
 
@@ -14,8 +14,9 @@ export default class Thumb {
     this.settings = settings;
   }
 
-  create(vertical: boolean) {
+  create(vertical: boolean, type: 'from' | 'to') {
     this.element = createElement('div', ['thumb']);
+    this.element.dataset.thumb = type;
     if (vertical) {
       this.element.classList.add('thumb-vertical');
     } else {
@@ -25,12 +26,19 @@ export default class Thumb {
   }
 
   move(value: number) {
+    if (!this.element) return;
     const position = this.calculatePosition(value);
     const start = this.settings.vertical ? 'top' : 'left';
-    this.element.setAttribute('style', `${start}: ${position?.toFixed(4)}%`);
+    this.element.style[start] = `${position?.toFixed(4)}%`;
+  }
+
+  changeZindex(num: number) {
+    if (!this.element) return;
+    this.element.style.zIndex = String(num);
   }
 
   private calculatePosition(value: number) {
+    if (!this.element) return;
     if (!this.element.parentElement) return;
     const arr = this.settings.valueArray;
     const index = arr.indexOf(value);
@@ -40,8 +48,9 @@ export default class Thumb {
     return (maxWidthWithoutThumb / (arr.length - 1)) * index;
   }
 
-  private convertToValue(coord: { newPosition: number; sliderEnd: number }) {
-    const { newPosition, sliderEnd } = coord;
+  private convertToValue(coords: { newPosition: number; sliderEnd: number }) {
+    if (!this.element) return;
+    const { newPosition, sliderEnd } = coords;
     const arr = this.settings.valueArray;
     const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
     if (this.element.dataset.thumb === 'from') {
@@ -51,29 +60,30 @@ export default class Thumb {
     }
   }
 
-  thumbHandle(elementX: HTMLElement) {
-    // let elementX = this.element.closest('.track') as HTMLElement;
-
+  thumbHandle(parentElement: HTMLElement) {
+    if (!this.element) return;
     const client = this.settings.vertical ? 'clientY' : 'clientX';
     const start = this.settings.vertical ? 'top' : 'left';
     const offset = this.settings.vertical ? 'offsetHeight' : 'offsetWidth';
 
     this.element.addEventListener('pointerdown', (event: PointerEvent) => {
+      if (!this.element) return;
       const shiftThumb =
         event[client] - this.element.getBoundingClientRect()[start];
 
       this.element.setPointerCapture(event.pointerId);
-      const onPointerMove = (event: PointerEvent) => {
-        event.preventDefault();
+      const onPointerMove = (e: PointerEvent) => {
+        if (!this.element) return;
+        e.preventDefault();
 
         let newPosition =
-          event[client] - shiftThumb - elementX.getBoundingClientRect()[start];
+          e[client] - shiftThumb - parentElement.getBoundingClientRect()[start];
 
         if (newPosition < 0) {
           newPosition = 0;
         }
 
-        const sliderEnd = elementX[offset] - this.element[offset];
+        const sliderEnd = parentElement[offset] - this.element[offset];
 
         if (newPosition > sliderEnd) {
           newPosition = sliderEnd;
@@ -82,6 +92,7 @@ export default class Thumb {
       };
 
       const onPointerUp = () => {
+        if (!this.element) return;
         this.element.removeEventListener('pointerup', onPointerUp);
         this.element.removeEventListener('pointermove', onPointerMove);
       };

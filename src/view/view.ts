@@ -20,7 +20,6 @@ export default class View extends Observable {
   constructor(root: JQuery) {
     super();
     this.root = root;
-
     this.track = new Track();
   }
 
@@ -34,8 +33,7 @@ export default class View extends Observable {
     this.root?.append(this.sliderContainer);
     const track = this.track.create(vertical);
     this.sliderContainer.append(track);
-    const thumbFrom = this.thumbFrom.create(vertical);
-    thumbFrom.dataset.thumb = 'from';
+    const thumbFrom = this.thumbFrom.create(vertical, 'from');
     track.append(thumbFrom);
     this.thumbFrom.thumbHandle(this.sliderContainer);
     if (vertical) {
@@ -47,19 +45,18 @@ export default class View extends Observable {
     if (tip) {
       this.tipFrom = new Tip();
       const tipFromElement = this.tipFrom.create(vertical);
-      this.tipFrom.displayValue(props.from);
+      this.tipFrom.displayValue(String(props.from));
       thumbFrom.append(tipFromElement);
     }
     if (range) {
       this.thumbTo = new Thumb(this.notify.bind(this), props);
-      const thumbTo = this.thumbTo.create(vertical);
-      thumbTo.dataset.thumb = 'to';
+      const thumbTo = this.thumbTo.create(vertical, 'to');
       this.thumbTo.thumbHandle(this.sliderContainer);
       track.append(thumbTo);
       if (tip) {
         this.tipTo = new Tip();
         const tipToElement = this.tipTo.create(vertical);
-        this.tipTo.displayValue(props.to);
+        this.tipTo.displayValue(String(props.to));
         thumbTo.append(tipToElement);
       }
     }
