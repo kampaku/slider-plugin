@@ -5,22 +5,29 @@
 }
 
 body {
-  display: flex;
-  align-items: center;
   height: 100vh;
-  justify-content: center;
   font-size: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  place-items: center;
+  padding: 0px 0;
 }
 
-#root {
+.slider-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
+  max-width: 500px;
+  width: 100%;
+  min-width: 240px;
   height: 300px;
+  margin-bottom: 20px;
 }
 
 .wrapper {
+  width: 100%;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,84 +35,10 @@ body {
   gap: 50px;
 }
 
-.panel-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
-  gap: 10px;
+.wrapper:nth-child(odd) {
+  border-right: 5px solid slateblue;
 }
 
-.panel__label-number {
-  background-color: dodgerblue;
-  border: 1px solid dodgerblue;
-}
-
-
-.panel__label-number span {
-  color: mistyrose;
-  padding: 5px 10px;
-}
-
-.panel-number {
-  height: 30px;
-  max-width: 50px;
-}
-
-.panel__toggle {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  gap: 5px;
-}
-
-.panel__toggle-input {
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-}
-
-label:focus-within:not(:focus-visible) .panel__toggle-slider, input:focus {
-  outline: 2px solid mediumslateblue;
-}
-
-.panel__toggle-slider {
-  --offset: 1px;
-  --diameter: 26px;
-  
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-around;
-  width: calc(var(--diameter) * 2 + var(--offset) * 2);
-  height: calc(var(--diameter) + var(--offset) * 2);
-  border: 1px solid navy;
-  box-sizing: content-box;
-  position: relative;
-  background-color: crimson;
-  transition: transform 0.2s;
-}
-
-.panel__toggle-slider::before {
-  content: "";
-  z-index: 2;
-  position: absolute;
-  top: 50%;
-  left: var(--offset);
-  box-sizing: border-box;
-  width: var(--diameter);
-  height: var(--diameter);
-  border: 1px solid navy;
-  background-color: aliceblue;
-  transform: translate(0, -50%);
-  transition: inherit;
-}
-
-.panel__toggle-input:checked + .panel__toggle-slider {
-  background-color: dodgerblue;
-}
-
-.panel__toggle-input:checked + .panel__toggle-slider::before {
-  transform: translate(100%, -50%);
+.wrapper:nth-child(n + 3) {
+  border-top: 5px solid slateblue;
 }

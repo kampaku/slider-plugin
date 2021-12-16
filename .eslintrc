@@ -1,0 +1,25 @@
+{
+  "ignorePatterns": [
+    "config",
+    "test",
+    "jest.config.ts"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": ["airbnb-typescript/base"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "lines-between-class-members": "off",
+        "@typescript-eslint/lines-between-class-members": ["off"]
+      },
+    }
+  ]
+}

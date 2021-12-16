@@ -1,9 +1,9 @@
 import Track from '../src/view/track';
 
 describe('test track', () => {
-  let track: Track
+  let track: Track;
   beforeEach(() => {
-    track = new Track()
+    track = new Track();
   })
   
   test('track to be defined', () => {
@@ -11,17 +11,17 @@ describe('test track', () => {
   })
 
   test('track element to be defined', () => {
-    track.render(false)
-    expect(track.element).toBeDefined()
+    const trackEl = track.create(false)
+    expect(trackEl).toBeDefined();
   })
 
   test('track vertical class', () => {
-    track.render(true)
-    expect(track.element.classList.contains('track-vertical')).toBeTruthy();
+    const trackEl = track.create(true)
+    expect(trackEl.classList.contains('track-vertical')).toBeTruthy();
   })
 
   test('track horisontal class', () => {
-    track.render(false)
-    expect(track.element.classList.contains('track')).toBeTruthy();
+    const trackEl = track.create(false)
+    expect(trackEl.classList.contains('track')).toBeTruthy();
   })
 })

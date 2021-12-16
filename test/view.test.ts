@@ -2,12 +2,17 @@ import View from '../src/view/view';
 import * as $ from 'jquery';
 describe('test view', () => {
   const settings = {
+    min: 1,
+    max: 5,
+    step: 1,
+    from: 0,
+    to: 8,
     tip: true,
     connect: true,
     scale: true,
     vertical: false,
     range: true,
-    valueArray: [1, 2, 3],
+    valueArray: [1, 2, 3, 4, 5],
   };
   let slider: View;
   let container = document.createElement('div');
