@@ -1,9 +1,9 @@
 import createElement from '../helpers/create-element';
 
 export default class Tip {
-  element: HTMLElement | null;
+  element: HTMLElement | undefined;
   constructor() {
-    this.element = null;
+    this.element = undefined;
   }
 
   create(vertical: boolean) {
@@ -16,7 +16,7 @@ export default class Tip {
     return this.element;
   }
 
-  displayValue(value: number) {
+  displayValue(value: string) {
     if (this.element) {
       this.element.textContent = String(value);
     }
