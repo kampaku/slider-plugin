@@ -94,7 +94,7 @@ export default class Panel {
   ];
 
   changeVal(input: HTMLElement, inputName: { label: string; type: string }) {
-    input.addEventListener('change', ({ target }: Event) => {
+    const inputHandler = ({ target }: Event) => {
       if (inputName.type === 'number') {
         let value = Number((<HTMLInputElement>target).value);
         this.setValues[inputName.label as keyof NumVal](value);
@@ -102,7 +102,8 @@ export default class Panel {
         let value = (<HTMLInputElement>target).checked;
         this.setValues[inputName.label as keyof BoolVal](value);
       }
-    });
+    };
+    input.addEventListener('change', inputHandler);
   }
 
   createCheckbox(inputName: { label: string; type: string }) {
@@ -114,8 +115,7 @@ export default class Panel {
     if (this.initValues[inputName.label as keyof BoolVal]()) {
       input.setAttribute('checked', '');
     }
-    label.append(input);
-    label.append(span);
+    label.append(input, span);
     this.changeVal(input, inputName);
     return label;
   }
@@ -129,8 +129,7 @@ export default class Panel {
     input.setAttribute('type', 'number');
     if (inputName.label === 'from') this.fromInput = input;
     if (inputName.label === 'to') this.toInput = input;
-    label.append(span);
-    label.append(input);
+    label.append(span, input);
     this.changeVal(input, inputName);
     return label;
   }
