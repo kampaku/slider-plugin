@@ -32,7 +32,7 @@ export default class Model extends Observable {
     max,
     step = 1,
     from = 0,
-    to = max,
+    to = 0,
     vertical = false,
     tip = false,
     range = false,
@@ -55,30 +55,33 @@ export default class Model extends Observable {
   }
 
   setMin(value: number) {
+    if (value >= this.max - 1) return;
     this.min = value;
     this.setValueArray();
     this.notify(Events.update, { ...this.getSettings(), min: value });
   }
 
   setMax(value: number) {
+    if (value <= this.min - 1) return;
     this.max = value;
     this.setValueArray();
     this.notify(Events.update, { ...this.getSettings(), max: value });
   }
 
   setFrom(value: number) {
-    if (value > this.to) return;
+    if (value > this.to && this.range) return;
     this.from = value;
     this.notify(Events.changeFrom, { ...this.getSettings(), from: value });
   }
 
   setTo(value: number) {
-    if (value < this.from) return;
+    if (value < this.from || value > this.max) return;
     this.to = value;
     this.notify(Events.changeTo, { ...this.getSettings(), to: value });
   }
 
   setStep(value: number) {
+    if (value >= this.max || value <= 0) return;
     this.step = value;
     this.setValueArray();
     this.notify(Events.update, { ...this.getSettings(), step: value });
@@ -96,7 +99,6 @@ export default class Model extends Observable {
 
   setRange(value: boolean) {
     this.range = value;
-    if (!value) this.setTo(this.max);
     this.notify(Events.update, { ...this.getSettings(), range: value });
   }
 
@@ -118,6 +120,9 @@ export default class Model extends Observable {
     for (let i = this.min; i <= this.max; i += this.step) {
       this.valueArray.push(i);
     }
+
+    this.from = this.validateValue(this.from);
+    this.to = this.validateValue(this.to);
   }
 
   getSettings() {
@@ -134,5 +139,11 @@ export default class Model extends Observable {
       scale: this.scale,
       valueArray: this.valueArray,
     };
+  }
+
+  validateValue(value: number) {
+    return this.valueArray.reduce((prev, curr) =>
+      Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev,
+    );
   }
 }

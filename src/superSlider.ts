@@ -4,12 +4,14 @@ import View from './view/view';
 import Model from './model/model';
 
 export default class SuperSlider {
-  protected view: View;
-  protected model: Model;
+  readonly view: View;
+  readonly model: Model;
+  private presenter: Presenter;
+
   constructor(element: JQuery<HTMLElement>, settings: SliderOptions) {
     this.model = new Model(settings);
     this.view = new View(element);
-    new Presenter(this.model, this.view);
+    this.presenter = new Presenter(this.model, this.view);
   }
 
   setMin(value: number) {
@@ -21,11 +23,13 @@ export default class SuperSlider {
   }
 
   setFrom(value: number) {
-    this.model.setFrom(value);
+    const validValue = this.model.validateValue(value);
+    this.model.setFrom(validValue);
   }
 
   setTo(value: number) {
-    this.model.setTo(value);
+    const validValue = this.model.validateValue(value);
+    this.model.setTo(validValue);
   }
 
   setStep(value: number) {
