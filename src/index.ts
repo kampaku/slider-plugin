@@ -49,14 +49,18 @@ const settings4 = {
   scale: false,
 };
 
-const plugin = document.querySelector('.wrapper1') as HTMLElement;
-const plugin2 = document.querySelector('.wrapper2') as HTMLElement;
-const plugin3 = document.querySelector('.wrapper3') as HTMLElement;
-const plugin4 = document.querySelector('.wrapper4') as HTMLElement;
-const slider = $('.slider1').superSlider(settings);
-const slider2 = $('.slider2').superSlider(settings2);
-const slider3 = $('.slider3').superSlider(settings3);
-const slider4 = $('.slider4').superSlider(settings4);
+const plugin = document.querySelector('.js-wrapper1') as HTMLElement;
+const plugin2 = document.querySelector('.js-wrapper2') as HTMLElement;
+const plugin3 = document.querySelector('.js-wrapper3') as HTMLElement;
+const plugin4 = document.querySelector('.js-wrapper4') as HTMLElement;
+const slider1Container = $('.js-slider1');
+const slider2Container = $('.js-slider2');
+const slider3Container = $('.js-slider3');
+const slider4Container = $('.js-slider4');
+const slider = slider1Container.superSlider(settings);
+const slider2 = slider2Container.superSlider(settings2);
+const slider3 = slider3Container.superSlider(settings3);
+const slider4 = slider4Container.superSlider(settings4);
 
 new Panel(slider, plugin);
 new Panel(slider2, plugin2);
