@@ -2,11 +2,11 @@ import type Model from '../model/model';
 import type View from '../view/view';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 import { Events } from '../helpers/Events';
+import isCross from '../helpers/isCross';
 
 export default class Presenter {
   model: Model;
   view: View;
-
   constructor(model: Model, view: View) {
     this.model = model;
     this.view = view;
@@ -24,25 +24,49 @@ export default class Presenter {
   private onFromChange(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.changeFrom) return;
     const { from } = settings;
+    this.view.thumbFrom?.changeZindex(6);
+    this.view.thumbTo?.changeZindex(5);
     this.view.thumbFrom?.move(from);
   }
 
   private onToChange(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.changeTo) return;
     const { to } = settings;
+    this.view.thumbFrom?.changeZindex(5);
+    this.view.thumbTo?.changeZindex(6);
     this.view.thumbTo?.move(to);
   }
 
   private onTipFromUpdate(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.changeFrom) return;
-    const { from } = settings;
-    this.view.tipFrom?.displayValue(from);
+    const { to, from } = settings;
+    if (this.view.tipFrom?.element && this.view.tipTo?.element) {
+      const cross = isCross(this.view.tipFrom.element, this.view.tipTo.element);
+      if (cross) {
+        this.view.tipFrom.displayValue(`${from} − ${to}`);
+        this.view.tipTo.element.style.visibility = 'hidden';
+      } else {
+        this.view.tipTo.element.style.visibility = 'visible';
+        this.view.tipFrom?.displayValue(String(from));
+      }
+    }
   }
 
   private onTipToUpdate(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.changeTo) return;
-    const { to } = settings;
-    this.view.tipTo?.displayValue(to);
+    const { from, to } = settings;
+    if (this.view.tipFrom?.element && this.view.tipTo?.element) {
+      const cross = isCross(this.view.tipFrom.element, this.view.tipTo.element);
+      if (cross) {
+        this.view.tipTo.displayValue(`${from} − ${to}`);
+        this.view.tipFrom.element.style.visibility = 'hidden';
+      } else {
+        this.view.tipFrom.element.style.visibility = 'visible';
+        this.view.tipTo?.displayValue(String(to));
+      }
+    } else {
+      this.view.tipTo?.displayValue(String(to));
+    }
   }
 
   private handleThumbFromMove(eventName: Events, settings: SettingsInterface) {
