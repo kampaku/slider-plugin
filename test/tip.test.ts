@@ -12,25 +12,25 @@ describe('test Tip', () => {
   });
 
   test('tip element to be defined', () => {
-    tip.render(false);
-    expect(tip.element).toBeDefined();
+    const tipEl = tip.create(false);
+    expect(tipEl).toBeDefined();
   });
 
   test('tip has vertical class', () => {
-    tip.render(true);
-    expect(tip.element.classList.contains('slider-tip--vertical')).toBeTruthy();
+    const tipEl = tip.create(true);
+    expect(tipEl.classList.contains('slider-tip--vertical')).toBeTruthy();
   });
 
   test('tip has horizontal class', () => {
-    tip.render(false);
+    const tipEl = tip.create(false);
     expect(
-      tip.element.classList.contains('slider-tip--horizontal'),
+      tipEl.classList.contains('slider-tip--horizontal'),
     ).toBeTruthy();
   });
 
   test('tip display value', () => {
-    tip.render(false);
-    tip.displayValue(40);
-    expect(tip.element.textContent).toBe('40');
+    const tipEl = tip.create(false);
+    tip.displayValue(String(40));
+    expect(tipEl.textContent).toBe('40');
   });
 });

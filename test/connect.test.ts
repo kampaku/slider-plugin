@@ -1,9 +1,22 @@
 import Connect from '../src/view/connect';
 
 describe('test connect', () => {
+  const settings = {
+    min: 1,
+    max: 5,
+    step: 1,
+    from: 0,
+    to: 8,
+    range: true,
+    tip: true,
+    connect: true,
+    scale: true,
+    vertical: false,
+    valueArray: [1, 2, 3, 4, 5]
+  }
   let connect: Connect;
   beforeEach(() => {
-    connect = new Connect();
+    connect = new Connect(settings);
   });
 
   test('connect should be defined', () => {
@@ -11,33 +24,33 @@ describe('test connect', () => {
   })
 
   test('connect', () => {
-    connect.render(false);
-    expect(connect.element).toBeDefined();
+    let connectEl = connect.create(false);
+    expect(connectEl).toBeDefined();
   });
 
   test('add horizontal class', () => {
-    connect.render(false);
+    let connectEl = connect.create(false);
     expect(
-      connect.element.classList.contains('slider-connect--horizontal'),
+      connectEl.classList.contains('slider-connect--horizontal'),
     ).toBeTruthy();
   });
 
   test('add vertical class', () => {
-    connect.render(true);
+    let connectEl = connect.create(true);
     expect(
-      connect.element.classList.contains('slider-connect--vertical'),
+      connectEl.classList.contains('slider-connect--vertical'),
     ).toBeTruthy();
   });
 
   test('set connect position', () => {
-    connect.render(false);
-    connect.setPosition('left', 'right', '10%', '20%');
-    expect(connect.element.style.left).toBe('10%');
-    expect(connect.element.style.right).toBe('20%');
+    let connectEl = connect.create(false);
+    connect.setPosition(1, 5);
+    expect(connectEl.style.left).toBe('0%');
+    expect(connectEl.style.right).toBe('0%');
   });
 
   test('set connect position', () => {
-    connect.setPosition('left', 'right', '10%', '20%');
+    connect.setPosition(2, 3);
     expect(connect.element).toBeUndefined();
     expect(connect.element).toBeUndefined();
   });

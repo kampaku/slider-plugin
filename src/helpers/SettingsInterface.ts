@@ -1,4 +1,4 @@
-export interface ModelInterface {
+export interface SettingsInterface {
   min: number;
   max: number;
   step: number;

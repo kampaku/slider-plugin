@@ -1,11 +1,24 @@
 import Thumb from '../src/view/thumb';
-import * as events from 'events';
-
+import Model from '../src/model/model';
 describe('test thumb', () => {
   let thumb: Thumb;
-
+  const settings = {
+    min: 1,
+    max: 5,
+    step: 1,
+    from: 1,
+    to: 5,
+    range: true,
+    tip: true,
+    connect: true,
+    scale: true,
+    vertical: false,
+    valueArray: [1, 2, 3, 4, 5]
+  }
+  const model = new Model(settings)
+  let func = jest.fn()
   beforeEach(() => {
-    thumb = new Thumb();
+    thumb = new Thumb(func, settings);
   });
 
   test('thumb to be defined', () => {
@@ -13,31 +26,17 @@ describe('test thumb', () => {
   })
 
   test('test render', () => {
-    thumb.render(false);
-    expect(thumb.element).toBeTruthy();
+    const thumbEl = thumb.create(false, 'from');
+    expect(thumbEl).toBeTruthy();
   });
 
   test('thumb has horizontal class', () => {
-    thumb.render(false);
-    expect(thumb.element.classList.contains('thumb-horizontal')).toBeTruthy();
+    const thumbEl = thumb.create(false, 'from');
+    expect(thumbEl.classList.contains('thumb-horizontal')).toBeTruthy();
   });
 
   test('thumb has vertical class', () => {
-    thumb.render(true);
-    expect(thumb.element.classList.contains('thumb-vertical')).toBeTruthy();
-  });
-
-  test('move thumb', () => {
-    thumb.render(false);
-    thumb.move('left', '25%')
-    expect(thumb.element.style.left).toBe('25%');
-  })
-
-  test('should have listener', () => {
-    let mock = jest.fn()
-    thumb.render(false);
-    thumb.addListener(mock)
-
-    expect(thumb.element.getAttribute('listener')).toBeTruthy();
+    const thumbEl = thumb.create(true, 'from');
+    expect(thumbEl.classList.contains('thumb-vertical')).toBeTruthy();
   });
 });

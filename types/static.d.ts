@@ -58,5 +58,33 @@ declare module '*.png' {
 
 /* CUSTOM: ADD YOUR OWN HERE */
 interface JQuery {
-  superSlider();
+  superSlider(settings: SliderOptions);
+}
+interface SliderOptions {
+  min: number;
+  max: number;
+  step?: number;
+  from?: number;
+  to?: number;
+  vertical?: boolean;
+  tip?: boolean;
+  range?: boolean;
+  connect?: boolean;
+  scale?: boolean;
+}
+interface SettingsInterface {
+  min: number;
+  max: number;
+  step: number;
+  from: number;
+  to: number;
+  vertical: boolean;
+  tip: boolean;
+  range: boolean;
+  connect: boolean;
+  scale: boolean;
+  valueArray: number[]
+}
+interface Observer {
+  (eventName: Events, arg: SettingsInterface): void;
 }

@@ -1,5 +1,8 @@
+import './panel.css';
 import createElement from '../helpers/create-element';
-import type Presenter from '../presenter/presenter';
+import type SuperSlider from '../superSlider';
+import { Events } from '../helpers/Events';
+import type { SettingsInterface } from '../helpers/SettingsInterface';
 
 type NumVal = {
   min: (value: number) => void;
@@ -18,12 +21,17 @@ type BoolVal = {
 };
 
 export default class Panel {
-  slider: Presenter;
+  slider: SuperSlider;
   container: HTMLElement;
+  fromInput!: HTMLInputElement;
+  toInput!: HTMLInputElement;
 
-  constructor(slider: Presenter, selector: string) {
+  constructor(slider: SuperSlider, container: HTMLElement) {
     this.slider = slider;
-    this.container = document.querySelector(selector) as HTMLElement;
+    this.container = container;
+    this.slider.attach(this.updateTo.bind(this));
+    this.slider.attach(this.updateFrom.bind(this));
+    this.renderPanel();
   }
 
   setValues = {
@@ -41,34 +49,34 @@ export default class Panel {
 
   initValues = {
     min: () => {
-      return this.slider.model.getMin();
+      return this.slider.getMin();
     },
     max: () => {
-      return this.slider.model.getMax();
+      return this.slider.getMax();
     },
     step: () => {
-      return this.slider.model.getStep();
+      return this.slider.getStep();
     },
     from: () => {
-      return this.slider.model.getFrom();
+      return this.slider.getFrom();
     },
     to: () => {
-      return this.slider.model.getTo();
+      return this.slider.getTo();
     },
     range: () => {
-      return this.slider.model.getRange();
+      return this.slider.getRange();
     },
     tip: () => {
-      return this.slider.model.getTip();
+      return this.slider.getTip();
     },
     connect: () => {
-      return this.slider.model.getConnect();
+      return this.slider.getConnect();
     },
     scale: () => {
-      return this.slider.model.getScale();
+      return this.slider.getScale();
     },
     vertical: () => {
-      return this.slider.model.getVertical();
+      return this.slider.getVertical();
     },
   };
 
@@ -82,11 +90,11 @@ export default class Panel {
     { label: 'tip', type: 'boolean' },
     { label: 'connect', type: 'boolean' },
     { label: 'scale', type: 'boolean' },
-    { label: 'vertical', type: 'boolean' }
+    { label: 'vertical', type: 'boolean' },
   ];
 
   changeVal(input: HTMLElement, inputName: { label: string; type: string }) {
-    input.addEventListener('change', ({ target }: Event) => {
+    const inputHandler = ({ target }: Event) => {
       if (inputName.type === 'number') {
         let value = Number((<HTMLInputElement>target).value);
         this.setValues[inputName.label as keyof NumVal](value);
@@ -94,7 +102,8 @@ export default class Panel {
         let value = (<HTMLInputElement>target).checked;
         this.setValues[inputName.label as keyof BoolVal](value);
       }
-    });
+    };
+    input.addEventListener('change', inputHandler);
   }
 
   createCheckbox(inputName: { label: string; type: string }) {
@@ -106,8 +115,7 @@ export default class Panel {
     if (this.initValues[inputName.label as keyof BoolVal]()) {
       input.setAttribute('checked', '');
     }
-    label.append(input);
-    label.append(span);
+    label.append(input, span);
     this.changeVal(input, inputName);
     return label;
   }
@@ -119,10 +127,23 @@ export default class Panel {
     span.textContent = inputName.label;
     input.value = String(this.initValues[inputName.label as keyof NumVal]());
     input.setAttribute('type', 'number');
-    label.append(span);
-    label.append(input);
+    if (inputName.label === 'from') this.fromInput = input;
+    if (inputName.label === 'to') this.toInput = input;
+    label.append(span, input);
     this.changeVal(input, inputName);
     return label;
+  }
+
+  updateFrom(eventName: Events, settings: SettingsInterface) {
+    if (eventName !== Events.changeFrom) return;
+    const { from } = settings;
+    this.fromInput.value = String(from);
+  }
+
+  updateTo(eventName: Events, settings: SettingsInterface) {
+    if (eventName !== Events.changeTo) return;
+    const { to } = settings;
+    this.toInput.value = String(to);
   }
 
   renderPanel() {
@@ -131,7 +152,7 @@ export default class Panel {
     const secondRow = createElement('div', ['panel-row']);
     panel.append(firstRow, secondRow);
     this.container.append(panel);
-    this.inputNames.forEach(inputName => {
+    this.inputNames.forEach((inputName) => {
       let { type } = inputName;
       if (type === 'number') {
         let input = this.createInput(inputName);
