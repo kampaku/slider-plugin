@@ -16,44 +16,54 @@ export default class SuperSlider {
 
   setMin(value: number) {
     this.model.setMin(value);
+    return this;
   }
 
   setMax(value: number) {
     this.model.setMax(value);
+    return this;
   }
 
   setFrom(value: number) {
     const validValue = this.model.validateValue(value);
     this.model.setFrom(validValue);
+    return this;
   }
 
   setTo(value: number) {
     const validValue = this.model.validateValue(value);
     this.model.setTo(validValue);
+    return this;
   }
 
   setStep(value: number) {
     this.model.setStep(value);
+    return this;
   }
 
   setVertical(value: boolean) {
     this.model.setVertical(value);
+    return this;
   }
 
   setConnect(value: boolean) {
     this.model.setConnect(value);
+    return this;
   }
 
   setRange(value: boolean) {
     this.model.setRange(value);
+    return this;
   }
 
   setScale(value: boolean) {
     this.model.setScale(value);
+    return this;
   }
 
   setTip(value: boolean) {
     this.model.setTip(value);
+    return this;
   }
 
   getMin() {
