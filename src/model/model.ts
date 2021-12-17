@@ -25,7 +25,7 @@ export default class Model extends Observable {
   range: boolean;
   connect: boolean;
   scale: boolean;
-  valueArray: number[];
+  valuesArray: number[];
 
   constructor({
     min,
@@ -50,21 +50,21 @@ export default class Model extends Observable {
     this.range = range;
     this.connect = connect;
     this.scale = scale;
-    this.valueArray = [];
-    this.setValueArray();
+    this.valuesArray = [];
+    this.setValuesArray();
   }
 
   setMin(value: number) {
     if (value >= this.max - 1) return;
     this.min = value;
-    this.setValueArray();
+    this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), min: value });
   }
 
   setMax(value: number) {
     if (value <= this.min - 1) return;
     this.max = value;
-    this.setValueArray();
+    this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), max: value });
   }
 
@@ -81,9 +81,9 @@ export default class Model extends Observable {
   }
 
   setStep(value: number) {
-    if (value >= this.max || value <= 0) return;
+    if (Math.abs(this.max) + Math.abs(this.min) <= value || value <= 0) return;
     this.step = value;
-    this.setValueArray();
+    this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), step: value });
   }
 
@@ -98,6 +98,9 @@ export default class Model extends Observable {
   }
 
   setRange(value: boolean) {
+    if (this.from > this.to) {
+      [this.to, this.from] = [this.from, this.to];
+    }
     this.range = value;
     this.notify(Events.update, { ...this.getSettings(), range: value });
   }
@@ -112,13 +115,16 @@ export default class Model extends Observable {
     this.notify(Events.update, { ...this.getSettings(), scale: value });
   }
 
-  setValueArray() {
-    if (this.valueArray.length > 0) {
-      this.valueArray = [];
+  setValuesArray() {
+    if (this.valuesArray.length > 0) {
+      this.valuesArray = [];
     }
 
     for (let i = this.min; i <= this.max; i += this.step) {
-      this.valueArray.push(i);
+      this.valuesArray.push(i);
+    }
+    if (this.valuesArray[this.valuesArray.length - 1] !== this.max) {
+      this.valuesArray.push(this.max);
     }
 
     this.from = this.validateValue(this.from);
@@ -137,12 +143,13 @@ export default class Model extends Observable {
       range: this.range,
       connect: this.connect,
       scale: this.scale,
-      valueArray: this.valueArray,
+      valueArray: this.valuesArray,
     };
   }
 
   validateValue(value: number) {
-    return this.valueArray.reduce((prev, curr) =>
+    value = Math.round(value);
+    return this.valuesArray.reduce((prev, curr) =>
       Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev,
     );
   }
