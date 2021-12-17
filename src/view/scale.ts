@@ -32,7 +32,7 @@ export default class Scale {
 
     const start = this.settings.vertical ? 'top' : 'left';
     for (let i = 0; i < arr.length; i += markerCount) {
-      let marker = createElement('div', ['scale-pip']);
+      let marker = createElement('div', ['scale-marker']);
       marker.dataset.value = String(arr[i]);
       const y = (i * 100) / (arr.length - 1);
       marker.style[start] = y + '%';
@@ -48,15 +48,19 @@ export default class Scale {
 
   onScaleClick(event: PointerEvent) {
     const target = event.target as HTMLElement;
-    if (!target || !target.classList.contains('scale-pip')) return;
-    const val = Number(target.dataset.value);
-    const { from, to } = this.settings;
-    const left = Math.abs(val - from);
-    const right = Math.abs(val - to);
-    if (left <= right) {
-      this.notify(Events.moveFrom, { ...this.settings, from: val });
+    if (!target || !target.classList.contains('scale-marker')) return;
+    const value = Number(target.dataset.value);
+    const { from, to, range } = this.settings;
+    const left = Math.abs(value - from);
+    const right = Math.abs(value - to);
+    if (!range) {
+      this.notify(Events.moveFrom, { ...this.settings, from: value });
+      return;
+    }
+    if (left <= right && value < from ) {
+      this.notify(Events.moveFrom, { ...this.settings, from: value });
     } else {
-      this.notify(Events.moveTo, { ...this.settings, to: val });
+      this.notify(Events.moveTo, { ...this.settings, to: value });
     }
   }
 }
