@@ -71,11 +71,11 @@ describe('test model', () => {
     model.setMax(10);
     model.setStep(1);
     let step = model.step;
-    model.setValueArray();
+    model.setValuesArray();
     let arr = [];
     for (let i = -10; i <= 10; i+=step) {
       arr.push(i)
     }
-    expect(model.valueArray).toEqual(arr);
+    expect(model.valuesArray).toEqual(arr);
   });
 });
