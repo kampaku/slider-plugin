@@ -103,7 +103,7 @@
 }
 
 
-.slider-scale .scale-pip {
+.slider-scale .scale-marker {
   position: absolute;
   font-size: 16px;
   cursor: pointer;
@@ -111,7 +111,7 @@
   transform: translateX(-50%);
 }
 
-.slider-scale-vertical .scale-pip {
+.slider-scale-vertical .scale-marker {
   right: 20px;
   transform: translateY(-50%);
 }
