@@ -14,8 +14,7 @@ export default class Presenter {
     this.view.attach(this.handleThumbToMove.bind(this));
     this.model.attach(this.onFromChange.bind(this));
     this.model.attach(this.onToChange.bind(this));
-    this.model.attach(this.onTipFromUpdate.bind(this));
-    this.model.attach(this.onTipToUpdate.bind(this));
+    this.model.attach(this.onTipUpdate.bind(this));
     this.model.attach(this.onUpdate.bind(this));
     this.model.attach(this.onConnectUpdate.bind(this));
     this.init(this.model.getSettings());
@@ -37,9 +36,13 @@ export default class Presenter {
     this.view.thumbTo?.move(to);
   }
 
-  private onTipFromUpdate(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.changeFrom) return;
-    const { to, from } = settings;
+  private onTipUpdate(eventName: Events, settings: SettingsInterface) {
+    if (eventName !== Events.changeFrom && eventName !== Events.changeTo) return;
+    const { from, to, range } = settings;
+    if (!range) {
+      this.view.tipFrom?.displayValue(String(from));
+      return;
+    }
     if (this.view.tipFrom?.element && this.view.tipTo?.element) {
       const cross = isCross(this.view.tipFrom.element, this.view.tipTo.element);
       if (cross) {
@@ -48,26 +51,8 @@ export default class Presenter {
       } else {
         this.view.tipTo.element.style.visibility = 'visible';
         this.view.tipFrom?.displayValue(String(from));
-      }
-    } else {
-      this.view.tipFrom?.displayValue(String(from));
-    }
-  }
-
-  private onTipToUpdate(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.changeTo) return;
-    const { from, to } = settings;
-    if (this.view.tipFrom?.element && this.view.tipTo?.element) {
-      const cross = isCross(this.view.tipFrom.element, this.view.tipTo.element);
-      if (cross) {
-        this.view.tipTo.displayValue(`${from} − ${to}`);
-        this.view.tipFrom.element.style.visibility = 'hidden';
-      } else {
-        this.view.tipFrom.element.style.visibility = 'visible';
         this.view.tipTo?.displayValue(String(to));
       }
-    } else {
-      this.view.tipTo?.displayValue(String(to));
     }
   }
 
