@@ -48,7 +48,7 @@ export default class Scale {
 
   onScaleClick(event: PointerEvent) {
     const target = event.target as HTMLElement;
-    if (!target || !target.classList.contains('scale-marker')) return;
+    if (!target || !target.matches('.scale-marker')) return;
     const value = Number(target.dataset.value);
     const { from, to, range } = this.settings;
     const left = Math.abs(value - from);
@@ -57,7 +57,15 @@ export default class Scale {
       this.notify(Events.moveFrom, { ...this.settings, from: value });
       return;
     }
-    if (left <= right && value < from ) {
+    if (left === right) {
+      if (value > from) {
+        this.notify(Events.moveTo, { ...this.settings, to: value });
+      } else {
+        this.notify(Events.moveFrom, { ...this.settings, from: value });
+      }
+      return;
+    }
+    if (left < right) {
       this.notify(Events.moveFrom, { ...this.settings, from: value });
     } else {
       this.notify(Events.moveTo, { ...this.settings, to: value });
