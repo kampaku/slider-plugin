@@ -1,8 +1,10 @@
 {
   "ignorePatterns": [
+    "dist",
     "config",
     "test",
-    "jest.config.ts"
+    "*.config.*",
+    "coverage"
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": [
@@ -19,7 +21,7 @@
       "rules": {
         "lines-between-class-members": "off",
         "@typescript-eslint/lines-between-class-members": ["off"]
-      },
+      }
     }
   ]
 }
