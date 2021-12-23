@@ -1,7 +1,7 @@
 import createElement from '../helpers/create-element';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 
-export default class Connect {
+class Connect {
   element: HTMLElement | undefined;
   settings: SettingsInterface;
 
@@ -19,14 +19,7 @@ export default class Connect {
 
     return this.element;
   }
-
-  private calculatePosition(value: number) {
-    const arr = this.settings.valueArray;
-    const index = arr.indexOf(value);
-
-    return (100 / (arr.length - 1)) * index;
-  }
-
+  
   setPosition(from: number, to: number) {
     if (!this.element) return;
     const startConnect = this.settings.vertical ? 'top' : 'left';
@@ -41,4 +34,13 @@ export default class Connect {
       this.element.style[endConnect] = `${100 - startPosition}%`;
     }
   }
+  
+  private calculatePosition(value: number) {
+    const arr = this.settings.valueArray;
+    const index = arr.indexOf(value);
+  
+    return (100 / (arr.length - 1)) * index;
+  }
 }
+
+export default Connect;

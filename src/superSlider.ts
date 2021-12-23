@@ -1,9 +1,9 @@
 import './style.css';
-import Presenter from './presenter/presenter';
-import View from './view/view';
-import Model from './model/model';
+import Presenter from './presenter/Presenter';
+import View from './view/View';
+import Model from './model/Model';
 
-export default class SuperSlider {
+class SuperSlider {
   readonly view: View;
   readonly model: Model;
   private presenter: Presenter;
@@ -110,3 +110,5 @@ export default class SuperSlider {
     this.model.attach(observer);
   }
 }
+
+export default SuperSlider;

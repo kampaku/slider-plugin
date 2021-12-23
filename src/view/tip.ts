@@ -1,6 +1,6 @@
 import createElement from '../helpers/create-element';
 
-export default class Tip {
+class Tip {
   element: HTMLElement | undefined;
   constructor() {
     this.element = undefined;
@@ -22,3 +22,5 @@ export default class Tip {
     }
   }
 }
+
+export default Tip;

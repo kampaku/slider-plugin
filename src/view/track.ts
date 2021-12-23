@@ -1,6 +1,6 @@
 import createElement from '../helpers/create-element';
 
-export default class Track {
+class Track {
   element: HTMLElement | undefined;
 
   create(vertical: boolean) {
@@ -13,3 +13,5 @@ export default class Track {
     return this.element;
   }
 }
+
+export default Track;

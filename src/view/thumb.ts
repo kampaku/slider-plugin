@@ -1,7 +1,8 @@
 import createElement from '../helpers/create-element';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 import { Events } from '../helpers/Events';
-export default class Thumb {
+
+class Thumb {
   element: HTMLElement | undefined;
   notify: (eventName: Events, settings: SettingsInterface) => void;
   settings: SettingsInterface;
@@ -35,29 +36,6 @@ export default class Thumb {
   changeZindex(num: number) {
     if (!this.element) return;
     this.element.style.zIndex = String(num);
-  }
-
-  private calculatePosition(value: number) {
-    if (!this.element) return;
-    if (!this.element.parentElement) return;
-    const arr = this.settings.valueArray;
-    const index = arr.indexOf(value);
-    const offset = this.settings.vertical ? 'offsetHeight' : 'offsetWidth';
-    const maxWidthWithoutThumb =
-      100 - (this.element[offset] / this.element.parentElement[offset]) * 100;
-    return (maxWidthWithoutThumb / (arr.length - 1)) * index;
-  }
-
-  private convertToValue(coords: { newPosition: number; sliderEnd: number }) {
-    if (!this.element) return;
-    const { newPosition, sliderEnd } = coords;
-    const arr = this.settings.valueArray;
-    const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
-    if (this.element.dataset.thumb === 'from') {
-      this.notify(Events.moveFrom, { ...this.settings, from: arr[index] });
-    } else {
-      this.notify(Events.moveTo, { ...this.settings, to: arr[index] });
-    }
   }
 
   thumbHandle(parentElement: HTMLElement) {
@@ -100,4 +78,31 @@ export default class Thumb {
       this.element.addEventListener('pointerup', onPointerUp);
     });
   }
+
+  private calculatePosition(value: number) {
+    if (!this.element) return;
+    if (!this.element.parentElement) return;
+    const arr = this.settings.valueArray;
+    const index = arr.indexOf(value);
+    const offset = this.settings.vertical ? 'offsetHeight' : 'offsetWidth';
+    const maxWidthWithoutThumb =
+      100 - (this.element[offset] / this.element.parentElement[offset]) * 100;
+    return (maxWidthWithoutThumb / (arr.length - 1)) * index;
+  }
+
+  private convertToValue(coords: { newPosition: number; sliderEnd: number }) {
+    if (!this.element) return;
+    const { newPosition, sliderEnd } = coords;
+    const arr = this.settings.valueArray;
+    const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
+    if (this.element.dataset.thumb === 'from') {
+      this.notify(Events.moveFrom, { ...this.settings, from: arr[index] });
+    } else {
+      this.notify(Events.moveTo, { ...this.settings, to: arr[index] });
+    }
+  }
+
+  
 }
+
+export default Thumb;

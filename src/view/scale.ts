@@ -2,7 +2,7 @@ import createElement from '../helpers/create-element';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 import { Events } from '../helpers/Events';
 
-export default class Scale {
+class Scale {
   element: HTMLElement | undefined;
   settings: SettingsInterface;
   notify: (eventName: Events, settings: SettingsInterface) => void;
@@ -72,3 +72,5 @@ export default class Scale {
     }
   }
 }
+
+export default Scale;

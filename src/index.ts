@@ -57,6 +57,7 @@ const slider1Container = $('.js-slider1');
 const slider2Container = $('.js-slider2');
 const slider3Container = $('.js-slider3');
 const slider4Container = $('.js-slider4');
+
 const slider = slider1Container.superSlider(settings);
 const slider2 = slider2Container.superSlider(settings2);
 const slider3 = slider3Container.superSlider(settings3);

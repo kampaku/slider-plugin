@@ -20,7 +20,7 @@ type BoolVal = {
   scale: (value: boolean) => void;
 };
 
-export default class Panel {
+class Panel {
   slider: SuperSlider;
   container: HTMLElement;
   fromInput!: HTMLInputElement;
@@ -165,3 +165,5 @@ export default class Panel {
     });
   }
 }
+
+export default Panel;

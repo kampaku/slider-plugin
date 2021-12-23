@@ -1,12 +1,12 @@
 import createElement from '../helpers/create-element';
-import Track from './track';
-import Thumb from './thumb';
-import Tip from './tip';
-import Connect from './connect';
-import Scale from './scale';
+import Track from './Track';
+import Thumb from './Thumb';
+import Tip from './Tip';
+import Connect from './Connect';
+import Scale from './Scale';
 import Observable from '../helpers/Observable';
 
-export default class View extends Observable {
+class View extends Observable {
   root: JQuery<HTMLElement> | null;
   thumbFrom: Thumb | undefined;
   thumbTo: Thumb | undefined;
@@ -77,3 +77,5 @@ export default class View extends Observable {
     this.sliderContainer.remove();
   }
 }
+
+export default View;

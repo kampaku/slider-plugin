@@ -1,22 +1,16 @@
-import type Model from '../model/model';
-import type View from '../view/view';
+import type Model from '../model/Model';
+import type View from '../view/View';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 import { Events } from '../helpers/Events';
 import isCross from '../helpers/isCross';
 
-export default class Presenter {
+class Presenter {
   model: Model;
   view: View;
   constructor(model: Model, view: View) {
     this.model = model;
     this.view = view;
-    this.view.attach(this.handleThumbFromMove.bind(this));
-    this.view.attach(this.handleThumbToMove.bind(this));
-    this.model.attach(this.onFromChange.bind(this));
-    this.model.attach(this.onToChange.bind(this));
-    this.model.attach(this.onTipUpdate.bind(this));
-    this.model.attach(this.onUpdate.bind(this));
-    this.model.attach(this.onConnectUpdate.bind(this));
+    this.makeAttach();
     this.init(this.model.getSettings());
   }
 
@@ -91,4 +85,16 @@ export default class Presenter {
       this.view.connect?.setPosition(from, to);
     }
   }
+
+  private makeAttach() {
+    this.view.attach(this.handleThumbFromMove.bind(this));
+    this.view.attach(this.handleThumbToMove.bind(this));
+    this.model.attach(this.onFromChange.bind(this));
+    this.model.attach(this.onToChange.bind(this));
+    this.model.attach(this.onTipUpdate.bind(this));
+    this.model.attach(this.onUpdate.bind(this));
+    this.model.attach(this.onConnectUpdate.bind(this));
+  }
 }
+
+export default Presenter;
