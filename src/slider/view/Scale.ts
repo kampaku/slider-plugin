@@ -28,7 +28,8 @@ class Scale {
   displayScale() {
     if (!this.element) return;
     const arr = this.settings.valueArray;
-    const markerCount = Math.round(arr.length / 6);
+    let markerCount = Math.round(arr.length / 6);
+    if (markerCount < 1) markerCount = 1;
 
     const start = this.settings.vertical ? 'top' : 'left';
     for (let i = 0; i < arr.length; i += markerCount) {
