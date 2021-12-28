@@ -55,14 +55,14 @@ export default class Model extends Observable {
   }
 
   setMin(value: number) {
-    if (value >= this.max - 1) return;
+    if (value >= this.max) return;
     this.min = value;
     this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), min: value });
   }
 
   setMax(value: number) {
-    if (value <= this.min - 1) return;
+    if (value <= this.min) return;
     this.max = value;
     this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), max: value });
@@ -116,11 +116,9 @@ export default class Model extends Observable {
   }
 
   setValuesArray() {
-    if (this.valuesArray.length > 0) {
-      this.valuesArray = [];
-    }
+    this.valuesArray = [];
 
-    for (let i = this.min; i <= this.max; i += this.step) {
+    for (let i = this.min; i < this.max; i += this.step) {
       this.valuesArray.push(i);
     }
     if (this.valuesArray[this.valuesArray.length - 1] !== this.max) {
