@@ -31,6 +31,7 @@ class Panel {
     this.container = container;
     this.slider.attach(this.updateTo.bind(this));
     this.slider.attach(this.updateFrom.bind(this));
+    this.slider.attach(this.updateValues.bind(this));
     this.renderPanel();
   }
 
@@ -95,9 +96,10 @@ class Panel {
 
   changeVal(input: HTMLElement, inputName: { label: string; type: string }) {
     const inputHandler = ({ target }: Event) => {
-      if (inputName.type === 'number') {
+      if (inputName.type === 'number' && input instanceof HTMLInputElement) {
         let value = Number((<HTMLInputElement>target).value);
         this.setValues[inputName.label as keyof NumVal](value);
+        input.value = String(this.initValues[inputName.label as keyof NumVal]());
       } else if (inputName.type === 'boolean') {
         let value = (<HTMLInputElement>target).checked;
         this.setValues[inputName.label as keyof BoolVal](value);
@@ -143,6 +145,13 @@ class Panel {
   updateTo(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.changeTo) return;
     const { to } = settings;
+    this.toInput.value = String(to);
+  }
+
+  updateValues(eventName: Events, settings: SettingsInterface) {
+    if (eventName !== Events.update) return;
+    const { from, to } = settings;
+    this.fromInput.value = String(from);
     this.toInput.value = String(to);
   }
 
