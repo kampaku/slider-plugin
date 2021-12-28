@@ -1,7 +1,8 @@
-import Track from '../src/slider/view/track';
+import Track from '../src/slider/view/Track';
 
 describe('test track', () => {
   let track: Track;
+  const div = document.createElement('div');
   beforeEach(() => {
     track = new Track();
   })
@@ -11,17 +12,17 @@ describe('test track', () => {
   })
 
   test('track element to be defined', () => {
-    const trackEl = track.create(false)
-    expect(trackEl).toBeDefined();
+    track.render(false, div);
+    expect(track.element).toBeDefined();
   })
 
   test('track vertical class', () => {
-    const trackEl = track.create(true)
-    expect(trackEl.classList.contains('track-vertical')).toBeTruthy();
+    track.render(true, div);
+    expect(track.element?.classList.contains('slider__track_vertical')).toBeTruthy();
   })
 
   test('track horisontal class', () => {
-    const trackEl = track.create(false)
-    expect(trackEl.classList.contains('track')).toBeTruthy();
+    track.render(false, div);
+    expect(track.element?.classList.contains('slider__track')).toBeTruthy();
   })
 })

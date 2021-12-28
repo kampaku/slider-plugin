@@ -1,5 +1,5 @@
-import Thumb from '../src/slider/view/thumb';
-import Model from '../src/slider/model/model';
+import Thumb from '../src/slider/view/Thumb';
+import Model from '../src/slider/model/Model';
 describe('test thumb', () => {
   let thumb: Thumb;
   const settings = {
@@ -15,7 +15,8 @@ describe('test thumb', () => {
     vertical: false,
     valueArray: [1, 2, 3, 4, 5]
   }
-  const model = new Model(settings)
+  const model = new Model(settings);
+  const div = document.createElement('div');
   let func = jest.fn()
   beforeEach(() => {
     thumb = new Thumb(func, settings);
@@ -26,17 +27,17 @@ describe('test thumb', () => {
   })
 
   test('test render', () => {
-    const thumbEl = thumb.render(false, 'from');
-    expect(thumbEl).toBeTruthy();
+    thumb.render(false, 'from', div);
+    expect(thumb.element).toBeTruthy();
   });
 
   test('thumb has horizontal class', () => {
-    const thumbEl = thumb.render(false, 'from');
-    expect(thumbEl.classList.contains('thumb-horizontal')).toBeTruthy();
+    thumb.render(false, 'from', div);
+    expect(thumb.element?.classList.contains('slider__thumb_horizontal')).toBeTruthy();
   });
 
   test('thumb has vertical class', () => {
-    const thumbEl = thumb.render(true, 'from');
-    expect(thumbEl.classList.contains('thumb-vertical')).toBeTruthy();
+    thumb.render(true, 'from', div);
+    expect(thumb.element?.classList.contains('slider__thumb_vertical')).toBeTruthy();
   });
 });

@@ -1,5 +1,4 @@
-import Model from '../src/slider/model/model';
-// jest.mock('../src/model/model')
+import Model from '../src/slider/model/Model';
 
 describe('test model', () => {
   const settings = {
@@ -19,6 +18,16 @@ describe('test model', () => {
   test('set min', () => {
     model.setMin(0);
     expect(model.min).toBe(0);
+  });
+
+  test('min must less max', () => {
+    model.setMin(12);
+    expect(model.min).toBe(0);
+  });
+
+  test('max mast more than min', () => {
+    model.setMax(-10);
+    expect(model.max).toBe(10);
   });
 
   test('set max', () => {
@@ -71,7 +80,6 @@ describe('test model', () => {
     model.setMax(10);
     model.setStep(1);
     let step = model.step;
-    model.setValuesArray();
     let arr = [];
     for (let i = -10; i <= 10; i+=step) {
       arr.push(i)

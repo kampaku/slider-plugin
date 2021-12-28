@@ -1,4 +1,4 @@
-import View from '../src/slider/view/view';
+import View from '../src/slider/view/View';
 import * as $ from 'jquery';
 describe('test view', () => {
   const settings = {
@@ -29,12 +29,12 @@ describe('test view', () => {
 
   test('horizontal class', () => {
     slider.render(settings)
-    expect(slider.sliderContainer.classList.contains('slider')).toBe(true)
+    expect(slider.sliderContainer?.classList.contains('slider')).toBe(true)
   })
 
   test('vertical class', () => {
     slider.render({...settings, vertical: true})
-    expect(slider.sliderContainer.classList.contains('slider-vertical')).toBe(true)
+    expect(slider.sliderContainer?.classList.contains('slider-vertical')).toBe(true)
   })
 
   test('destroy', () => {

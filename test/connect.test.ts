@@ -1,4 +1,4 @@
-import Connect from '../src/slider/view/connect';
+import Connect from '../src/slider/view/Connect';
 
 describe('test connect', () => {
   const settings = {
@@ -15,6 +15,7 @@ describe('test connect', () => {
     valueArray: [1, 2, 3, 4, 5]
   }
   let connect: Connect;
+  let div = document.createElement('div');
   beforeEach(() => {
     connect = new Connect(settings);
   });
@@ -24,29 +25,29 @@ describe('test connect', () => {
   })
 
   test('connect', () => {
-    let connectEl = connect.render(false);
-    expect(connectEl).toBeDefined();
+    connect.render(false, div);
+    expect(connect.element).toBeDefined();
   });
 
   test('add horizontal class', () => {
-    let connectEl = connect.render(false);
+    connect.render(false, div);
     expect(
-      connectEl.classList.contains('slider-connect--horizontal'),
+      connect.element?.classList.contains('slider__connect_horizontal'),
     ).toBeTruthy();
   });
 
   test('add vertical class', () => {
-    let connectEl = connect.render(true);
+    connect.render(true, div);
     expect(
-      connectEl.classList.contains('slider-connect--vertical'),
+      connect.element?.classList.contains('slider__connect_vertical'),
     ).toBeTruthy();
   });
 
   test('set connect position', () => {
-    let connectEl = connect.render(false);
+    connect.render(false, div);
     connect.setPosition(1, 5);
-    expect(connectEl.style.left).toBe('0%');
-    expect(connectEl.style.right).toBe('0%');
+    expect(connect.element?.style.left).toBe('0%');
+    expect(connect.element?.style.right).toBe('0%');
   });
 
   test('set connect position', () => {

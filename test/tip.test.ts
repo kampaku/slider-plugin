@@ -1,7 +1,8 @@
-import Tip from '../src/slider/view/tip';
+import Tip from '../src/slider/view/Tip';
 
 describe('test Tip', () => {
   let tip: Tip;
+  const div = document.createElement('div');
 
   beforeEach(() => {
     tip = new Tip();
@@ -12,25 +13,25 @@ describe('test Tip', () => {
   });
 
   test('tip element to be defined', () => {
-    const tipEl = tip.render(false);
-    expect(tipEl).toBeDefined();
+    tip.render(false, div);
+    expect(tip.element).toBeDefined();
   });
 
   test('tip has vertical class', () => {
-    const tipEl = tip.render(true);
-    expect(tipEl.classList.contains('slider-tip--vertical')).toBeTruthy();
+    tip.render(true, div);
+    expect(tip.element?.classList.contains('slider__tip_vertical')).toBeTruthy();
   });
 
   test('tip has horizontal class', () => {
-    const tipEl = tip.render(false);
+    tip.render(false, div);
     expect(
-      tipEl.classList.contains('slider-tip--horizontal'),
+      tip.element?.classList.contains('slider__tip_horizontal'),
     ).toBeTruthy();
   });
 
   test('tip display value', () => {
-    const tipEl = tip.render(false);
+    tip.render(false, div);
     tip.displayValue(String(40));
-    expect(tipEl.textContent).toBe('40');
+    expect(tip.element?.textContent).toBe('40');
   });
 });
