@@ -1,4 +1,4 @@
-import Tip from '../src/view/tip';
+import Tip from '../src/slider/view/tip';
 
 describe('test Tip', () => {
   let tip: Tip;

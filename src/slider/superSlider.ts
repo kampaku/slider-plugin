@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 import Presenter from './presenter/Presenter';
 import View from './view/View';
 import Model from './model/Model';

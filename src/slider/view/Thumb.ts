@@ -1,6 +1,6 @@
-import createElement from '../helpers/create-element';
-import type { SettingsInterface } from '../helpers/SettingsInterface';
-import { Events } from '../helpers/Events';
+import createElement from '../../helpers/create-element';
+import type { SettingsInterface } from '../../helpers/SettingsInterface';
+import { Events } from '../../helpers/Events';
 
 class Thumb {
   element: HTMLElement | undefined;
@@ -16,12 +16,12 @@ class Thumb {
   }
 
   render(vertical: boolean, type: 'from' | 'to', parent: HTMLElement) {
-    this.element = createElement('div', ['thumb']);
+    this.element = createElement('div', ['slider__thumb']);
     this.element.dataset.thumb = type;
     if (vertical) {
-      this.element.classList.add('thumb-vertical');
+      this.element.classList.add('slider__thumb_vertical');
     } else {
-      this.element.classList.add('thumb-horizontal');
+      this.element.classList.add('slider__thumb_horizontal');
     }
     parent.append(this.element);
   }

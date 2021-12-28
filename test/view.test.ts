@@ -1,4 +1,4 @@
-import View from '../src/view/view';
+import View from '../src/slider/view/view';
 import * as $ from 'jquery';
 describe('test view', () => {
   const settings = {

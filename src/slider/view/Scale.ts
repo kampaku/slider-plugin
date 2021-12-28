@@ -1,6 +1,6 @@
-import createElement from '../helpers/create-element';
-import type { SettingsInterface } from '../helpers/SettingsInterface';
-import { Events } from '../helpers/Events';
+import createElement from '../../helpers/create-element';
+import type { SettingsInterface } from '../../helpers/SettingsInterface';
+import { Events } from '../../helpers/Events';
 
 class Scale {
   element: HTMLElement | undefined;
@@ -16,9 +16,9 @@ class Scale {
   }
 
   render(vertical: boolean, parent: HTMLElement) {
-    this.element = createElement('div', ['slider-scale']);
+    this.element = createElement('div', ['slider__scale']);
     if (vertical) {
-      this.element.classList.add('slider-scale-vertical');
+      this.element.classList.add('slider__scale_vertical');
     }
     this.displayScale();
     this.element.addEventListener('pointerdown', this.onScaleClick);
@@ -32,7 +32,7 @@ class Scale {
 
     const start = this.settings.vertical ? 'top' : 'left';
     for (let i = 0; i < arr.length; i += markerCount) {
-      let marker = createElement('div', ['scale-marker']);
+      let marker = createElement('div', ['slider__scale-marker']);
       marker.dataset.value = String(arr[i]);
       const y = (i * 100) / (arr.length - 1);
       marker.style[start] = y + '%';
@@ -48,7 +48,7 @@ class Scale {
 
   onScaleClick(event: PointerEvent) {
     const target = event.target as HTMLElement;
-    if (!target || !target.matches('.scale-marker')) return;
+    if (!target || !target.matches('.slider__scale-marker')) return;
     const value = Number(target.dataset.value);
     const { from, to, range } = this.settings;
     const left = Math.abs(value - from);

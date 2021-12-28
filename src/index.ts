@@ -1,4 +1,4 @@
-import '../public/index.css';
+import '../public/index.scss';
 import $ from 'jquery';
 import './jqueryPlugin';
 import Panel from './configuration-panel/panel';

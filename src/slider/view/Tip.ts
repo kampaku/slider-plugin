@@ -1,4 +1,4 @@
-import createElement from '../helpers/create-element';
+import createElement from '../../helpers/create-element';
 
 class Tip {
   element: HTMLElement | undefined;
@@ -7,11 +7,11 @@ class Tip {
   }
 
   render(vertical: boolean, parent: HTMLElement) {
-    this.element = createElement('span', ['slider-tip']);
+    this.element = createElement('span', ['slider__tip']);
     if (vertical) {
-      this.element.classList.add('slider-tip--vertical');
+      this.element.classList.add('slider__tip_vertical');
     } else {
-      this.element.classList.add('slider-tip--horizontal');
+      this.element.classList.add('slider__tip_horizontal');
     }
     parent.append(this.element);
   }

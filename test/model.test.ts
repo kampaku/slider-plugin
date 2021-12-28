@@ -1,4 +1,4 @@
-import Model from '../src/model/model';
+import Model from '../src/slider/model/model';
 // jest.mock('../src/model/model')
 
 describe('test model', () => {

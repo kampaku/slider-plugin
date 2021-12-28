@@ -1,8 +1,8 @@
 import type Model from '../model/Model';
 import type View from '../view/View';
-import type { SettingsInterface } from '../helpers/SettingsInterface';
-import { Events } from '../helpers/Events';
-import isCross from '../helpers/isCross';
+import type { SettingsInterface } from '../../helpers/SettingsInterface';
+import { Events } from '../../helpers/Events';
+import isCross from '../../helpers/isCross';
 
 class Presenter {
   model: Model;

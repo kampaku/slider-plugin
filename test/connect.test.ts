@@ -1,4 +1,4 @@
-import Connect from '../src/view/connect';
+import Connect from '../src/slider/view/connect';
 
 describe('test connect', () => {
   const settings = {

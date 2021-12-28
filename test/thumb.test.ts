@@ -1,5 +1,5 @@
-import Thumb from '../src/view/thumb';
-import Model from '../src/model/model';
+import Thumb from '../src/slider/view/thumb';
+import Model from '../src/slider/model/model';
 describe('test thumb', () => {
   let thumb: Thumb;
   const settings = {

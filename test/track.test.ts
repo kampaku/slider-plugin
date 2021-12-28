@@ -1,4 +1,4 @@
-import Track from '../src/view/track';
+import Track from '../src/slider/view/track';
 
 describe('test track', () => {
   let track: Track;

@@ -1,5 +1,5 @@
-import createElement from '../helpers/create-element';
-import type { SettingsInterface } from '../helpers/SettingsInterface';
+import createElement from '../../helpers/create-element';
+import type { SettingsInterface } from '../../helpers/SettingsInterface';
 
 class Connect {
   element: HTMLElement | undefined;
@@ -10,11 +10,11 @@ class Connect {
   }
 
   render(vertical: boolean, parent: HTMLElement) {
-    this.element = createElement('div', ['slider-connect']);
+    this.element = createElement('div', ['slider__connect']);
     if (vertical) {
-      this.element.classList.add('slider-connect--vertical');
+      this.element.classList.add('slider__connect_vertical');
     } else {
-      this.element.classList.add('slider-connect--horizontal');
+      this.element.classList.add('slider__connect_horizontal');
     }
     parent.append(this.element);
   }

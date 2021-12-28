@@ -1,6 +1,6 @@
 import './panel.css';
 import createElement from '../helpers/create-element';
-import type SuperSlider from '../superSlider';
+import type SuperSlider from '../slider/superSlider';
 import { Events } from '../helpers/Events';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 

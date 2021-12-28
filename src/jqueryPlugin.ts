@@ -1,6 +1,6 @@
-import './style.css';
+import './slider/style.scss';
 import jQuery from 'jquery';
-import SuperSlider from './superSlider';
+import SuperSlider from './slider/superSlider';
 
 (function ($) {
   $.fn.superSlider = function (settings) {
