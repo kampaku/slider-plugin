@@ -15,14 +15,14 @@ class Scale {
     this.onScaleClick = this.onScaleClick.bind(this);
   }
 
-  create(vertical: boolean) {
+  render(vertical: boolean, parent: HTMLElement) {
     this.element = createElement('div', ['slider-scale']);
     if (vertical) {
       this.element.classList.add('slider-scale-vertical');
     }
     this.displayScale();
     this.element.addEventListener('pointerdown', this.onScaleClick);
-    return this.element;
+    parent.append(this.element);
   }
 
   displayScale() {

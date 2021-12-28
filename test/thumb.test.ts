@@ -26,17 +26,17 @@ describe('test thumb', () => {
   })
 
   test('test render', () => {
-    const thumbEl = thumb.create(false, 'from');
+    const thumbEl = thumb.render(false, 'from');
     expect(thumbEl).toBeTruthy();
   });
 
   test('thumb has horizontal class', () => {
-    const thumbEl = thumb.create(false, 'from');
+    const thumbEl = thumb.render(false, 'from');
     expect(thumbEl.classList.contains('thumb-horizontal')).toBeTruthy();
   });
 
   test('thumb has vertical class', () => {
-    const thumbEl = thumb.create(true, 'from');
+    const thumbEl = thumb.render(true, 'from');
     expect(thumbEl.classList.contains('thumb-vertical')).toBeTruthy();
   });
 });

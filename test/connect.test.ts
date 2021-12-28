@@ -24,26 +24,26 @@ describe('test connect', () => {
   })
 
   test('connect', () => {
-    let connectEl = connect.create(false);
+    let connectEl = connect.render(false);
     expect(connectEl).toBeDefined();
   });
 
   test('add horizontal class', () => {
-    let connectEl = connect.create(false);
+    let connectEl = connect.render(false);
     expect(
       connectEl.classList.contains('slider-connect--horizontal'),
     ).toBeTruthy();
   });
 
   test('add vertical class', () => {
-    let connectEl = connect.create(true);
+    let connectEl = connect.render(true);
     expect(
       connectEl.classList.contains('slider-connect--vertical'),
     ).toBeTruthy();
   });
 
   test('set connect position', () => {
-    let connectEl = connect.create(false);
+    let connectEl = connect.render(false);
     connect.setPosition(1, 5);
     expect(connectEl.style.left).toBe('0%');
     expect(connectEl.style.right).toBe('0%');

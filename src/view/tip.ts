@@ -6,14 +6,14 @@ class Tip {
     this.element = undefined;
   }
 
-  create(vertical: boolean) {
+  render(vertical: boolean, parent: HTMLElement) {
     this.element = createElement('span', ['slider-tip']);
     if (vertical) {
       this.element.classList.add('slider-tip--vertical');
     } else {
       this.element.classList.add('slider-tip--horizontal');
     }
-    return this.element;
+    parent.append(this.element);
   }
 
   displayValue(value: string) {

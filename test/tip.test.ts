@@ -12,24 +12,24 @@ describe('test Tip', () => {
   });
 
   test('tip element to be defined', () => {
-    const tipEl = tip.create(false);
+    const tipEl = tip.render(false);
     expect(tipEl).toBeDefined();
   });
 
   test('tip has vertical class', () => {
-    const tipEl = tip.create(true);
+    const tipEl = tip.render(true);
     expect(tipEl.classList.contains('slider-tip--vertical')).toBeTruthy();
   });
 
   test('tip has horizontal class', () => {
-    const tipEl = tip.create(false);
+    const tipEl = tip.render(false);
     expect(
       tipEl.classList.contains('slider-tip--horizontal'),
     ).toBeTruthy();
   });
 
   test('tip display value', () => {
-    const tipEl = tip.create(false);
+    const tipEl = tip.render(false);
     tip.displayValue(String(40));
     expect(tipEl.textContent).toBe('40');
   });

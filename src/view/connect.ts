@@ -9,15 +9,14 @@ class Connect {
     this.settings = settings;
   }
 
-  create(vertical: boolean) {
+  render(vertical: boolean, parent: HTMLElement) {
     this.element = createElement('div', ['slider-connect']);
     if (vertical) {
       this.element.classList.add('slider-connect--vertical');
     } else {
       this.element.classList.add('slider-connect--horizontal');
     }
-
-    return this.element;
+    parent.append(this.element);
   }
   
   setPosition(from: number, to: number) {

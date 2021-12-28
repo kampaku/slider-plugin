@@ -15,7 +15,7 @@ class Thumb {
     this.settings = settings;
   }
 
-  create(vertical: boolean, type: 'from' | 'to') {
+  render(vertical: boolean, type: 'from' | 'to', parent: HTMLElement) {
     this.element = createElement('div', ['thumb']);
     this.element.dataset.thumb = type;
     if (vertical) {
@@ -23,7 +23,7 @@ class Thumb {
     } else {
       this.element.classList.add('thumb-horizontal');
     }
-    return this.element;
+    parent.append(this.element);
   }
 
   move(value: number) {
@@ -102,7 +102,7 @@ class Thumb {
     }
   }
 
-  
+
 }
 
 export default Thumb;
