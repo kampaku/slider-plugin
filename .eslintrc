@@ -14,13 +14,40 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "extends": ["airbnb-typescript/base"],
+  "extends": [
+    "airbnb-typescript/base",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "unknown",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "newlines-between": "always",
+        "warnOnUnassignedImports": true
+      }
+    ],
+    "import/newline-after-import": "error"
+  },
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "rules": {
         "lines-between-class-members": "off",
-        "@typescript-eslint/lines-between-class-members": ["off"]
+        "@typescript-eslint/lines-between-class-members": [
+          "off"
+        ]
       }
     }
   ]

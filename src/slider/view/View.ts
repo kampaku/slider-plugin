@@ -1,5 +1,6 @@
 import createElement from '../../helpers/create-element';
 import Observable from '../../helpers/Observable';
+
 import Track from './Track';
 import Thumb from './Thumb';
 import Tip from './Tip';
