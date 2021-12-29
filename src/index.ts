@@ -1,5 +1,7 @@
-import '../public/index.scss';
 import $ from 'jquery';
+
+import '../public/index.scss';
+
 import './jqueryPlugin';
 import Panel from './configuration-panel/panel';
 
