@@ -20,7 +20,7 @@
 
 + **Presenter** 
    
-  Обеспечевает передачу данных между моделью и видом 
+  Обеспечивает передачу данных между моделью и видом 
 
 + **Observable**
 
@@ -30,6 +30,41 @@
 
   Создаёт апи для управления слайдером
 
+### Использование
+`(#element).superSlider(settings)`
+#### Settings
+
+```
+interface SliderOptions {
+  min: number; //обязательный параметр
+  max: number; //обязательный параметр
+  step?: number; // по-умолчанию - 1
+  from?: number; // по-умолчанию min
+  to?: number; // по-умолчанию max
+  vertical?: boolean; // по-умолчанию false
+  tip?: boolean; // по-умолчанию false
+  range?: boolean; // по-умолчанию false
+  connect?: boolean; // по-умолчанию false
+  scale?: boolean; // по-умолчанию false
+}
+```
+### API
++ `attach(observer)` - подписывает наблюдателя 
++ `detach(observer)` - отписывает наблюдателя
++ `setMin(number)` / `getMin()` - устанавливает / получает минимальное значение
++ `setMax(number)` / `getMax()` - устанавливает / получает максимальное значение
++ `setFrom(number)` / `getFrom()` - устанавливает / получает значение "от"
++ `setTo(number)` / `getTo()` - устанавливает / получает значение "до"
++ `setStep(number)` / `getStep()` - устанавливает / получает значение шага
++ `setVertical(boolean)` / `getVertical()` - устанавливает / получает ориентацию слайдера
++ `setConnect(boolean)` / `getConnect()` - устанавливает / получает шкалу, которая заполняет выбранный промежуток значений
++ `setRange(boolean)` / `getRange()` - устанавливает / получает вид бегунка: одиночный или интервал
++ `setScale(boolean)` / `getScale()` - устанавливает / получает шкалу со значениями под слайдером
++ `setTip(boolean)` / `getTip()` - устанавливает / получает элемент над бегунком с настоящим значением
+
+#### Совместимость:
+  + jquery 3.6.0
+  + Node 16.13.0
 ### UML диаграмма:
 
 ![](https://files.catbox.moe/bqpt63.png)
