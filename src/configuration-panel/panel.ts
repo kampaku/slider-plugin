@@ -1,5 +1,5 @@
 import createElement from '../helpers/create-element';
-import type SuperSlider from '../slider/superSlider';
+import type SuperSlider from '../slider/SuperSlider';
 import { Events } from '../helpers/Events';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 
@@ -131,7 +131,11 @@ class Panel {
     input.value = String(this.initValues[inputName.label as keyof NumVal]());
     input.setAttribute('type', 'number');
     if (inputName.label === 'from') this.fromInput = input;
-    if (inputName.label === 'to') this.toInput = input;
+    if (inputName.label === 'to') {
+      const range = this.slider.getRange();
+      this.toInput = input;
+      this.toInput.disabled = !range;
+    }
     label.append(span, input);
     this.changeVal(input, inputName);
     return label;
@@ -151,9 +155,14 @@ class Panel {
 
   updateValues(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.update) return;
-    const { from, to } = settings;
+    const { from, to, range } = settings;
     this.fromInput.value = String(from);
     this.toInput.value = String(to);
+    if (range) {
+      this.toInput.disabled = false;
+    } else {
+      this.toInput.disabled = true;
+    }
   }
 
   renderPanel() {
