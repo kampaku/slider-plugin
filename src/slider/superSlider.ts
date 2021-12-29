@@ -109,6 +109,10 @@ class SuperSlider {
   attach(observer: Observer) {
     this.model.attach(observer);
   }
+
+  detach(observer: Observer) {
+    this.model.detach(observer);
+  }
 }
 
 export default SuperSlider;
