@@ -1,4 +1,4 @@
-import SuperSlider from '../src/slider/superSlider';
+import SuperSlider from '../src/slider/SuperSlider';
 import * as $ from 'jquery';
 
 describe('test slider', () => {
