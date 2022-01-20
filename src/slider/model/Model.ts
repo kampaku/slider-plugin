@@ -14,7 +14,7 @@ interface SliderOptions {
   scale?: boolean;
 }
 
-export default class Model extends Observable {
+class Model extends Observable {
   min: number;
   max: number;
   step: number;
@@ -152,3 +152,5 @@ export default class Model extends Observable {
     );
   }
 }
+
+export default Model;

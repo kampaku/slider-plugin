@@ -1,6 +1,6 @@
 import type { Events } from './Events';
 
-export default class Observable {
+class Observable {
   observers: Observer[];
 
   constructor() {
@@ -23,3 +23,5 @@ export default class Observable {
     this.observers.forEach((observer) => observer(eventName, arg));
   }
 }
+
+export default Observable;

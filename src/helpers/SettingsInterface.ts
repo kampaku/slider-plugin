@@ -1,4 +1,4 @@
-export interface SettingsInterface {
+interface SettingsInterface {
   min: number;
   max: number;
   step: number;
@@ -11,3 +11,5 @@ export interface SettingsInterface {
   scale: boolean;
   valueArray: number[];
 }
+
+export type { SettingsInterface };
