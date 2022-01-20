@@ -3,7 +3,7 @@ import type SuperSlider from '../slider/SuperSlider';
 import { Events } from '../helpers/Events';
 import type { SettingsInterface } from '../helpers/SettingsInterface';
 
-import './panel.css';
+import './panel.scss';
 
 type NumVal = {
   min: (value: number) => void;
