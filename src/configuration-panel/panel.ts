@@ -126,7 +126,7 @@ class Panel {
   createInput(inputName: { label: string; type: string }) {
     let label = createElement('label', ['panel__label-number']);
     let span = createElement('span', ['label-number']);
-    let input = createElement('input', ['panel-number']) as HTMLInputElement;
+    let input = createElement('input', ['panel__number']) as HTMLInputElement;
     span.textContent = inputName.label;
     input.value = String(this.initValues[inputName.label as keyof NumVal]());
     input.setAttribute('type', 'number');
@@ -158,17 +158,13 @@ class Panel {
     const { from, to, range } = settings;
     this.fromInput.value = String(from);
     this.toInput.value = String(to);
-    if (range) {
-      this.toInput.disabled = false;
-    } else {
-      this.toInput.disabled = true;
-    }
+    this.toInput.disabled = !range;
   }
 
   renderPanel() {
     const panel = createElement('div', ['panel']);
-    const firstRow = createElement('div', ['panel-row']);
-    const secondRow = createElement('div', ['panel-row']);
+    const firstRow = createElement('div', ['panel__row']);
+    const secondRow = createElement('div', ['panel__row']);
     panel.append(firstRow, secondRow);
     this.container.append(panel);
     this.inputNames.forEach((inputName) => {
