@@ -2,7 +2,7 @@ import type Model from '../model/Model';
 import type View from '../view/View';
 import type { SettingsInterface } from '../../helpers/SettingsInterface';
 import { Events } from '../../helpers/Events';
-import isCross from '../../helpers/isCross';
+import isCrossed from '../../helpers/isCrossed';
 
 class Presenter {
   model: Model;
@@ -38,7 +38,7 @@ class Presenter {
       return;
     }
     if (this.view.tipFrom?.element && this.view.tipTo?.element) {
-      const cross = isCross(this.view.tipFrom.element, this.view.tipTo.element);
+      const cross = isCrossed(this.view.tipFrom.element, this.view.tipTo.element);
       if (cross) {
         this.view.tipFrom.displayValue(`${from} − ${to}`);
         this.view.tipTo.element.style.visibility = 'hidden';
