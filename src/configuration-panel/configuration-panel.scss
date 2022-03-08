@@ -1,4 +1,4 @@
-.panel {
+.configuration-panel {
 
   &__row {
     display: flex;
@@ -7,18 +7,19 @@
     gap: 10px;
   }
 
-  &__label-number {
+  &__number {
     background-color: dodgerblue;
     border: 1px solid dodgerblue;
+    display: flex;
   }
 
-  &__label-number span {
+  &__number span {
     color: mistyrose;
     padding: 5px 10px;
   }
 
-  &__number {
-    height: 30px;
+  &__number-input {
+    height: 100%;
     max-width: 50px;
   }
 
@@ -36,6 +37,8 @@
     opacity: 0;
     width: 100%;
     height: 100%;
+    cursor: pointer;
+    z-index: 5;
   }
 
   &__toggle-slider {
@@ -69,15 +72,15 @@
     transition: inherit;
   }
 
-  &__toggle-input:checked + .panel__toggle-slider {
+  &__toggle-input:checked + .configuration-panel__toggle-slider {
     background-color: dodgerblue;
   }
 
-  &__toggle-input:checked + .panel__toggle-slider::before {
+  &__toggle-input:checked + .configuration-panel__toggle-slider::before {
     transform: translate(100%, -50%);
   }
 }
 
-label:focus-within:not(:focus-visible) .panel__toggle-slider, input:focus {
-  outline: 2px solid mediumslateblue;
-}
+//label:focus-within:not(:focus-visible) .panel__toggle-slider, input:focus {
+//  outline: 2px solid mediumslateblue;
+//}

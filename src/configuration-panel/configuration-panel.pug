@@ -1,0 +1,13 @@
+include components/toggle
+include components/number
+mixin configuration-panel
+  -
+    const inputs = ['min', 'max', 'step', 'from', 'to'];
+    const toggles = ['range', 'tip', 'connect', 'scale', 'vertical'];
+  .configuration-panel
+    .configuration-panel__row
+      each input in inputs
+        +number(input)
+    .configuration-panel__row
+      each toggle in toggles
+        +toggle(toggle)
