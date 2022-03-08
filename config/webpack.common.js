@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     index: `${paths.src}/index.ts`,
     slider: `${paths.src}/slider/SuperSlider.ts`,
-    panel: `${paths.src}/configuration-panel/panel.ts`,
+    panel: `${paths.src}/configuration-panel/configuration-panel.ts`,
   },
   // Where webpack outputs the assets and bundles
   output: {
@@ -27,7 +27,7 @@ module.exports = {
     // Generates an HTML file from a template
     // Generates deprecation warning: https://github.com/jantimon/html-webpack-plugin/issues/1501
     new HtmlWebpackPlugin({
-      template: `${paths.public}/index.html`,
+      template: `${paths.public}/index.pug`,
       filename: `./index.html`,
       favicon: `${paths.public}/favicon.ico`,
     })
@@ -37,6 +37,10 @@ module.exports = {
   module: {
     rules: [
       // JavaScript: Use Babel to transpile JavaScript files
+      {
+        test: /\.pug$/,
+        loader: '@webdiscus/pug-loader',
+      },
       { test: /\.(js|ts)$/, use: ['babel-loader'], exclude: /node_modules/ },
 
       // Images: Copy image files to build folder
