@@ -18,7 +18,9 @@ class Scale {
   render(vertical: boolean, parent: HTMLElement) {
     this.element = createElement('div', ['slider__scale']);
     if (vertical) {
-      this.element.classList.add('slider__scale_vertical');
+      this.element.classList.add('slider__scale_type_vertical');
+    } else {
+      this.element.classList.add('slider__scale_type_horizontal');
     }
     this.displayScale();
     this.element.addEventListener('pointerdown', this.onScaleClick);

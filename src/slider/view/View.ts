@@ -25,12 +25,12 @@ class View extends Observable {
 
   render(props: SettingsInterface) {
     const { vertical, tip, range, connect, scale } = props;
-    this.sliderContainer = createElement('div');
+    this.sliderContainer = createElement('div', ['slider']);
     this.root?.append(this.sliderContainer);
     if (vertical) {
-      this.sliderContainer.classList.add('slider-vertical');
+      this.sliderContainer.classList.add('slider_type_vertical');
     } else {
-      this.sliderContainer.classList.add('slider');
+      // this.sliderContainer.classList.add('slider');
     }
 
     this.renderTrack(vertical);

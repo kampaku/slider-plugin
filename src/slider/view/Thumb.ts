@@ -19,9 +19,9 @@ class Thumb {
     this.element = createElement('div', ['slider__thumb']);
     this.element.dataset.thumb = type;
     if (vertical) {
-      this.element.classList.add('slider__thumb_vertical');
+      this.element.classList.add('slider__thumb_type_vertical');
     } else {
-      this.element.classList.add('slider__thumb_horizontal');
+      this.element.classList.add('slider__thumb_type_horizontal');
     }
     parent.append(this.element);
   }

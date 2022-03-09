@@ -4,11 +4,11 @@ class Track {
   element: HTMLElement | undefined;
 
   render(vertical: boolean, parent: HTMLElement) {
-    this.element = createElement('div');
+    this.element = createElement('div', ['slider__track']);
     if (vertical) {
-      this.element.classList.add('slider__track_vertical');
+      this.element.classList.add('slider__track_type_vertical');
     } else {
-      this.element.classList.add('slider__track');
+      this.element.classList.add('slider__track_type_horizontal');
     }
     parent.append(this.element);
   }
