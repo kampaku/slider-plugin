@@ -1,5 +1,6 @@
 import createElement from '../../helpers/create-element';
 import Observable from '../../helpers/Observable';
+import isCrossed from '../../helpers/isCrossed';
 
 import Track from './Track';
 import Thumb from './Thumb';
@@ -9,14 +10,14 @@ import Scale from './Scale';
 
 class View extends Observable {
   root: JQuery<HTMLElement> | null;
-  thumbFrom: Thumb | undefined;
-  thumbTo: Thumb | undefined;
-  tipFrom: Tip | undefined;
-  tipTo: Tip | undefined;
-  track: Track | undefined;
-  connect: Connect | undefined;
   sliderContainer: HTMLElement | undefined;
-  scale: Scale | undefined;
+  protected thumbFrom: Thumb | undefined;
+  protected thumbTo: Thumb | undefined;
+  protected tipFrom: Tip | undefined;
+  protected tipTo: Tip | undefined;
+  protected track: Track | undefined;
+  protected connect: Connect | undefined;
+  protected scale: Scale | undefined;
 
   constructor(root: JQuery) {
     super();
@@ -29,8 +30,6 @@ class View extends Observable {
     this.root?.append(this.sliderContainer);
     if (vertical) {
       this.sliderContainer.classList.add('slider_type_vertical');
-    } else {
-      // this.sliderContainer.classList.add('slider');
     }
 
     this.renderTrack(vertical);
@@ -46,6 +45,44 @@ class View extends Observable {
 
   destroy() {
     this.sliderContainer?.remove();
+  }
+
+  moveThumb(thumb: 'from' | 'to', value: number) {
+    if (thumb === 'from') {
+      this.thumbFrom?.changeZIndex(6);
+      this.thumbTo?.changeZIndex(5);
+      this.thumbFrom?.move(value);
+    } else if (thumb === 'to') {
+      this.thumbFrom?.changeZIndex(5);
+      this.thumbTo?.changeZIndex(6);
+      this.thumbTo?.move(value);
+    }
+  }
+
+  updateTip(from:number, to:number, range: boolean) {
+    if (!range) {
+      this.tipFrom?.displayValue(String(from));
+      return;
+    }
+    if (this.tipFrom?.element && this.tipTo?.element) {
+      const cross = isCrossed(this.tipFrom.element, this.tipTo.element);
+      if (cross) {
+        this.tipFrom.displayValue(`${from} − ${to}`);
+        this.tipTo.element.style.visibility = 'hidden';
+      } else {
+        this.tipTo.element.style.visibility = 'visible';
+        this.tipFrom?.displayValue(String(from));
+        this.tipTo?.displayValue(String(to));
+      }
+    }
+  }
+
+  updateConnect(from: number, to: number) {
+    this.connect?.setPosition(from, to);
+  }
+
+  updateScale(settings: SettingsInterface) {
+    this.scale?.updateSettings(settings);
   }
 
   private renderTrack(vertical: boolean) {

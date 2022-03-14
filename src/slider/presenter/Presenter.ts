@@ -2,7 +2,6 @@ import type Model from '../model/Model';
 import type View from '../view/View';
 import type { SettingsInterface } from '../../helpers/SettingsInterface';
 import { Events } from '../../helpers/Events';
-import isCrossed from '../../helpers/isCrossed';
 
 class Presenter {
   model: Model;
@@ -17,36 +16,27 @@ class Presenter {
   private onFromChange(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.changeFrom) return;
     const { from } = settings;
-    this.view.thumbFrom?.changeZindex(6);
-    this.view.thumbTo?.changeZindex(5);
-    this.view.thumbFrom?.move(from);
+    this.view.moveThumb('from', from);
   }
 
   private onToChange(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.changeTo) return;
     const { to } = settings;
-    this.view.thumbFrom?.changeZindex(5);
-    this.view.thumbTo?.changeZindex(6);
-    this.view.thumbTo?.move(to);
+    this.view.moveThumb('to', to);
   }
 
-  private onTipUpdate(eventName: Events, settings: SettingsInterface) {
+  private onUpdateValues(eventName: Events, settings: SettingsInterface) {
     if (eventName !== Events.changeFrom && eventName !== Events.changeTo) return;
-    const { from, to, range } = settings;
-    if (!range) {
-      this.view.tipFrom?.displayValue(String(from));
-      return;
+    const { from, to, range, tip, connect, scale } = settings;
+
+    if (tip) {
+      this.view.updateTip(from, to, range);
     }
-    if (this.view.tipFrom?.element && this.view.tipTo?.element) {
-      const cross = isCrossed(this.view.tipFrom.element, this.view.tipTo.element);
-      if (cross) {
-        this.view.tipFrom.displayValue(`${from} − ${to}`);
-        this.view.tipTo.element.style.visibility = 'hidden';
-      } else {
-        this.view.tipTo.element.style.visibility = 'visible';
-        this.view.tipFrom?.displayValue(String(from));
-        this.view.tipTo?.displayValue(String(to));
-      }
+    if (connect) {
+      this.view.updateConnect(from, to);
+    }
+    if (scale) {
+      this.view.updateScale(settings);
     }
   }
 
@@ -68,21 +58,15 @@ class Presenter {
     this.init(settings);
   }
 
-  private onConnectUpdate(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.changeFrom && eventName !== Events.changeTo)
-      return;
-    const { from, to } = settings;
-    this.view.connect?.setPosition(from, to);
-    this.view.scale?.updateSettings(settings);
-  }
-
   private init(settings: SettingsInterface) {
-    const { from, to } = settings;
+    const { from, to, range, connect } = settings;
     this.view.render(settings);
-    this.view.thumbFrom?.move(from);
-    this.view.thumbTo?.move(to);
-    if (settings.connect) {
-      this.view.connect?.setPosition(from, to);
+    if (range) {
+      this.view.moveThumb('to', to);
+    }
+    this.view.moveThumb('from', from);
+    if (connect) {
+      this.view.updateConnect(from, to);
     }
   }
 
@@ -91,9 +75,8 @@ class Presenter {
     this.view.attach(this.handleThumbToMove.bind(this));
     this.model.attach(this.onFromChange.bind(this));
     this.model.attach(this.onToChange.bind(this));
-    this.model.attach(this.onTipUpdate.bind(this));
+    this.model.attach(this.onUpdateValues.bind(this));
     this.model.attach(this.onUpdate.bind(this));
-    this.model.attach(this.onConnectUpdate.bind(this));
   }
 }
 
