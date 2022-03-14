@@ -33,7 +33,7 @@ class Thumb {
     this.element.style[start] = `${position?.toFixed(4)}%`;
   }
 
-  changeZindex(num: number) {
+  changeZIndex(num: number) {
     if (!this.element) return;
     this.element.style.zIndex = String(num);
   }
