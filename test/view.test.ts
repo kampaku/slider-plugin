@@ -34,7 +34,7 @@ describe('test view', () => {
 
   test('vertical class', () => {
     slider.render({...settings, vertical: true})
-    expect(slider.sliderContainer?.classList.contains('slider-vertical')).toBe(true)
+    expect(slider.sliderContainer?.classList.contains('slider_type_vertical')).toBe(true)
   })
 
   test('destroy', () => {

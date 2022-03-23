@@ -19,13 +19,13 @@ describe('test Tip', () => {
 
   test('tip has vertical class', () => {
     tip.render(true, div);
-    expect(tip.element?.classList.contains('slider__tip_vertical')).toBeTruthy();
+    expect(tip.element?.classList.contains('slider__tip_type_vertical')).toBeTruthy();
   });
 
   test('tip has horizontal class', () => {
     tip.render(false, div);
     expect(
-      tip.element?.classList.contains('slider__tip_horizontal'),
+      tip.element?.classList.contains('slider__tip_type_horizontal'),
     ).toBeTruthy();
   });
 

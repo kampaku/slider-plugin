@@ -32,14 +32,14 @@ describe('test connect', () => {
   test('add horizontal class', () => {
     connect.render(false, div);
     expect(
-      connect.element?.classList.contains('slider__connect_horizontal'),
+      connect.element?.classList.contains('slider__connect_type_horizontal'),
     ).toBeTruthy();
   });
 
   test('add vertical class', () => {
     connect.render(true, div);
     expect(
-      connect.element?.classList.contains('slider__connect_vertical'),
+      connect.element?.classList.contains('slider__connect_type_vertical'),
     ).toBeTruthy();
   });
 

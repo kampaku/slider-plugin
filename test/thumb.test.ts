@@ -33,11 +33,11 @@ describe('test thumb', () => {
 
   test('thumb has horizontal class', () => {
     thumb.render(false, 'from', div);
-    expect(thumb.element?.classList.contains('slider__thumb_horizontal')).toBeTruthy();
+    expect(thumb.element?.classList.contains('slider__thumb_type_horizontal')).toBeTruthy();
   });
 
   test('thumb has vertical class', () => {
     thumb.render(true, 'from', div);
-    expect(thumb.element?.classList.contains('slider__thumb_vertical')).toBeTruthy();
+    expect(thumb.element?.classList.contains('slider__thumb_type_vertical')).toBeTruthy();
   });
 });
