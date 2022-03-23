@@ -32,7 +32,7 @@ class View extends Observable {
       this.sliderContainer.classList.add('slider_type_vertical');
     }
 
-    this.renderTrack(vertical);
+    this.renderTrack(props, vertical);
     this.renderThumb(props, range);
 
     if (tip) this.renderTip(props);
@@ -85,9 +85,13 @@ class View extends Observable {
     this.scale?.updateSettings(settings);
   }
 
-  private renderTrack(vertical: boolean) {
+  updateTrack(settings: SettingsInterface) {
+    this.track?.updateSettings(settings);
+  }
+
+  private renderTrack(props: SettingsInterface, vertical: boolean) {
     if (!this.sliderContainer) return;
-    this.track = new Track();
+    this.track = new Track(this.notify.bind(this), props);
     this.track.render(vertical, this.sliderContainer);
   }
 

@@ -38,6 +38,8 @@ class Presenter {
     if (scale) {
       this.view.updateScale(settings);
     }
+
+    this.view.updateTrack(settings);
   }
 
   private handleThumbFromMove(eventName: Events, settings: SettingsInterface) {
