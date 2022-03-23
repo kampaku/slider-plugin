@@ -25,13 +25,13 @@ class SuperSlider {
   }
 
   setFrom(value: number) {
-    const validValue = this.model.validateValue(value);
+    const validValue = this.model.closestValue(value);
     this.model.setFrom(validValue);
     return this;
   }
 
   setTo(value: number) {
-    const validValue = this.model.validateValue(value);
+    const validValue = this.model.closestValue(value);
     this.model.setTo(validValue);
     return this;
   }

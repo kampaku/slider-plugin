@@ -56,33 +56,33 @@ class Model extends Observable {
 
   setMin(value: number) {
     if (value >= this.max) return;
-    this.min = value;
+    this.min = this.roundValue(value);
     this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), min: value });
   }
 
   setMax(value: number) {
     if (value <= this.min) return;
-    this.max = value;
+    this.max = this.roundValue(value);
     this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), max: value });
   }
 
   setFrom(value: number) {
     if (value > this.to && this.range) return;
-    this.from = value;
+    this.from = this.roundValue(value);
     this.notify(Events.changeFrom, { ...this.getSettings(), from: value });
   }
 
   setTo(value: number) {
     if (value < this.from || value > this.max) return;
-    this.to = value;
+    this.to = this.roundValue(value);
     this.notify(Events.changeTo, { ...this.getSettings(), to: value });
   }
 
   setStep(value: number) {
     if (Math.abs(this.max) + Math.abs(this.min) <= value || value <= 0) return;
-    this.step = value;
+    this.step = this.roundValue(value);
     this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), step: value });
   }
@@ -119,14 +119,14 @@ class Model extends Observable {
     this.valuesArray = [];
 
     for (let i = this.min; i < this.max; i += this.step) {
-      this.valuesArray.push(i);
+      this.valuesArray.push(this.roundValue(i));
     }
     if (this.valuesArray[this.valuesArray.length - 1] !== this.max) {
       this.valuesArray.push(this.max);
     }
 
-    this.from = this.validateValue(this.from);
-    this.to = this.validateValue(this.to);
+    this.from = this.closestValue(this.from);
+    this.to = this.closestValue(this.to);
   }
 
   getSettings() {
@@ -145,11 +145,14 @@ class Model extends Observable {
     };
   }
 
-  validateValue(value: number) {
-    value = Math.round(value);
+  closestValue(value: number) {
     return this.valuesArray.reduce((prev, curr) =>
       Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev,
     );
+  }
+
+  private roundValue(value: number) {
+    return Number(value.toFixed(3));
   }
 }
 
