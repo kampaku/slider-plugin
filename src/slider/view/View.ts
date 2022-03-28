@@ -100,12 +100,10 @@ class View extends Observable {
 
     this.thumbFrom = new Thumb(this.notify.bind(this), props);
     this.thumbFrom.render(props.vertical, 'from', this.track.element);
-    this.thumbFrom.thumbHandle(this.sliderContainer);
 
     if (range) {
       this.thumbTo = new Thumb(this.notify.bind(this), props);
       this.thumbTo.render(props.vertical, 'to', this.track.element);
-      this.thumbTo.thumbHandle(this.sliderContainer);
     }
   }
 

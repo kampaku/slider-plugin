@@ -24,6 +24,7 @@ class Thumb {
       this.element.classList.add('slider__thumb_type_horizontal');
     }
     parent.append(this.element);
+    this.thumbHandle(parent);
   }
 
   move(value: number) {
@@ -38,7 +39,7 @@ class Thumb {
     this.element.style.zIndex = String(num);
   }
 
-  thumbHandle(parentElement: HTMLElement) {
+  private thumbHandle(parentElement: HTMLElement) {
     if (!this.element) return;
     const client = this.settings.vertical ? 'clientY' : 'clientX';
     const start = this.settings.vertical ? 'top' : 'left';
