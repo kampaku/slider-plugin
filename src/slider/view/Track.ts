@@ -34,12 +34,12 @@ class Track {
     if (!this.element) return;
     const client = this.settings.vertical ? 'clientY' : 'clientX';
     const start = this.settings.vertical ? 'top' : 'left';
-    const offset = this.settings.vertical ? 'offsetHeight' : 'offsetWidth';
+    const side = this.settings.vertical ? 'height' : 'width';
 
     const { from, to, range, valueArray } = this.settings;
 
     const index = Math.floor(((e[client] - this.element.getBoundingClientRect()[start])
-                  / this.element[offset]) * (valueArray.length));
+                  / this.element.getBoundingClientRect()[side]) * (valueArray.length));
     const value = valueArray[index];
     const left = Math.abs(value - from);
     const right = Math.abs(value - to);
