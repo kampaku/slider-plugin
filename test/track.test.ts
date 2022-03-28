@@ -1,31 +1,32 @@
+import { Events } from '../src/helpers/Events';
 import Track from '../src/slider/view/Track';
 
 describe('test track', () => {
   let track: Track;
   const div = document.createElement('div');
-  let func = jest.fn();
+  let callback = jest.fn();
   const settings = {
     min: 1,
     max: 5,
     step: 1,
-    from: 0,
-    to: 8,
+    from: 2,
+    to: 5,
     tip: true,
     connect: true,
     scale: true,
     vertical: false,
-    range: true,
+    range: false,
     valueArray: [1, 2, 3, 4, 5],
   };
   beforeEach(() => {
-    track = new Track(func, settings);
+    track = new Track(callback, settings);
   })
 
   test('track to be defined', () => {
     expect(track).toBeDefined();
   })
 
-  test('track element to be defined', () => {
+  test('track element should be defined', () => {
     track.render(false, div);
     expect(track.element).toBeDefined();
   })
@@ -35,8 +36,26 @@ describe('test track', () => {
     expect(track.element?.classList.contains('slider__track_type_vertical')).toBeTruthy();
   })
 
-  test('track horizontal class', () => {
+  test('track should have horizontal class', () => {
     track.render(false, div);
     expect(track.element?.classList.contains('slider__track')).toBeTruthy();
+  })
+
+  test('test click', () => {
+    track.render(false, div);
+    if(!track.element) return;
+    const rect: DOMRect = {
+      ...track.element.getBoundingClientRect(),
+      left: 0,
+      width: 100,
+      height: 40
+    }
+    track.element.getBoundingClientRect = jest.fn(() => rect);
+    const event = new MouseEvent('pointerdown', {
+      clientX: 50,
+      clientY: 0
+    });
+    track.element.dispatchEvent(event);
+    expect(track.notify).toHaveBeenCalledWith(Events.moveFrom, { ...settings, from: 3 });
   })
 })

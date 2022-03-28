@@ -13,18 +13,18 @@ describe('test thumb', () => {
     connect: true,
     scale: true,
     vertical: false,
-    valueArray: [1, 2, 3, 4, 5]
-  }
+    valueArray: [1, 2, 3, 4, 5],
+  };
   const model = new Model(settings);
   const div = document.createElement('div');
-  let func = jest.fn()
+  let callback = jest.fn();
   beforeEach(() => {
-    thumb = new Thumb(func, settings);
+    thumb = new Thumb(callback, settings);
   });
 
   test('thumb to be defined', () => {
     expect(thumb).toBeDefined();
-  })
+  });
 
   test('test render', () => {
     thumb.render(false, 'from', div);
@@ -33,11 +33,43 @@ describe('test thumb', () => {
 
   test('thumb has horizontal class', () => {
     thumb.render(false, 'from', div);
-    expect(thumb.element?.classList.contains('slider__thumb_type_horizontal')).toBeTruthy();
+    expect(
+      thumb.element?.classList.contains('slider__thumb_type_horizontal'),
+    ).toBeTruthy();
   });
 
   test('thumb has vertical class', () => {
     thumb.render(true, 'from', div);
-    expect(thumb.element?.classList.contains('slider__thumb_type_vertical')).toBeTruthy();
+    expect(
+      thumb.element?.classList.contains('slider__thumb_type_vertical'),
+    ).toBeTruthy();
+  });
+
+  test('thumb move', () => {
+    thumb.render(false, 'from', div);
+    if (!thumb.element) return;
+    const divRect: DOMRect = {
+      ...div.getBoundingClientRect(),
+      left: 0,
+      width: 100,
+      height: 40,
+    };
+    const thumbRect: DOMRect = {
+      ...thumb.element.getBoundingClientRect(),
+      left: 0,
+      width: 20,
+      height: 40,
+    };
+
+    thumb.element.setPointerCapture = jest.fn();
+    div.getBoundingClientRect = jest.fn(() => divRect);
+    thumb.element.getBoundingClientRect = jest.fn(() => thumbRect);
+    const event = new MouseEvent('pointerdown');
+    const moveEvent = new MouseEvent('pointermove');
+    const upEvent = new MouseEvent('pointerup');
+    thumb.element.dispatchEvent(event);
+    thumb.element.dispatchEvent(moveEvent);
+    thumb.element.dispatchEvent(upEvent);
+    expect(thumb.notify).toHaveBeenCalled();
   });
 });
