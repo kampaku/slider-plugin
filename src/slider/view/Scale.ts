@@ -27,7 +27,11 @@ class Scale {
     parent.append(this.element);
   }
 
-  displayScale() {
+  updateSettings(settings: SettingsInterface) {
+    this.settings = settings;
+  }
+
+  private displayScale() {
     if (!this.element) return;
     const arr = this.settings.valueArray;
     let markerCount = Math.round(arr.length / 6);
@@ -45,11 +49,7 @@ class Scale {
     }
   }
 
-  updateSettings(settings: SettingsInterface) {
-    this.settings = settings;
-  }
-
-  onScaleClick(event: PointerEvent) {
+  private onScaleClick(event: PointerEvent) {
     const target = event.target as HTMLElement;
     if (!target || !target.matches('.slider__scale-marker')) return;
     const value = Number(target.dataset.value);
