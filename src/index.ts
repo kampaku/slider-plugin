@@ -8,7 +8,7 @@ import ConfigurationPanel from './configuration-panel/configuration-panel';
 const settings = [
   {
     min: -10,
-    max: -1,
+    max: 10,
   },
   {
     min: -10,
