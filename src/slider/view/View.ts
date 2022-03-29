@@ -24,22 +24,22 @@ class View extends Observable {
     this.root = root;
   }
 
-  render(props: SettingsInterface) {
-    const { vertical, tip, range, connect, scale } = props;
+  render(settings: SettingsInterface) {
+    const { vertical, tip, range, connect, scale } = settings;
     this.sliderContainer = createElement('div', ['slider']);
     this.root?.append(this.sliderContainer);
     if (vertical) {
       this.sliderContainer.classList.add('slider_type_vertical');
     }
 
-    this.renderTrack(props, vertical);
-    this.renderThumb(props, range);
+    this.renderTrack(settings, vertical);
+    this.renderThumb(settings, range);
 
-    if (tip) this.renderTip(props);
+    if (tip) this.renderTip(settings);
 
-    if (connect) this.renderConnect(vertical, props);
+    if (connect) this.renderConnect(vertical, settings);
 
-    if (scale) this.renderScale(vertical, props);
+    if (scale) this.renderScale(vertical, settings);
   }
 
 
@@ -89,26 +89,26 @@ class View extends Observable {
     this.track?.updateSettings(settings);
   }
 
-  private renderTrack(props: SettingsInterface, vertical: boolean) {
+  private renderTrack(settings: SettingsInterface, vertical: boolean) {
     if (!this.sliderContainer) return;
-    this.track = new Track(this.notify.bind(this), props);
+    this.track = new Track(this.notify.bind(this), settings);
     this.track.render(vertical, this.sliderContainer);
   }
 
-  private renderThumb(props: SettingsInterface, range: boolean) {
+  private renderThumb(settings: SettingsInterface, range: boolean) {
     if (!this.track?.element || !this.sliderContainer) return;
 
-    this.thumbFrom = new Thumb(this.notify.bind(this), props);
-    this.thumbFrom.render(props.vertical, 'from', this.track.element);
+    this.thumbFrom = new Thumb(this.notify.bind(this), settings);
+    this.thumbFrom.render('from', this.track.element);
 
     if (range) {
-      this.thumbTo = new Thumb(this.notify.bind(this), props);
-      this.thumbTo.render(props.vertical, 'to', this.track.element);
+      this.thumbTo = new Thumb(this.notify.bind(this), settings);
+      this.thumbTo.render('to', this.track.element);
     }
   }
 
-  private renderTip(props: SettingsInterface) {
-    const { vertical, range, from, to } = props;
+  private renderTip(settings: SettingsInterface) {
+    const { vertical, range, from, to } = settings;
     if (!this.thumbFrom?.element) return;
     this.tipFrom = new Tip();
     this.tipFrom.render(vertical, this.thumbFrom.element);
@@ -121,15 +121,15 @@ class View extends Observable {
     }
   }
 
-  private renderConnect(vertical: boolean, props: SettingsInterface) {
+  private renderConnect(vertical: boolean, settings: SettingsInterface) {
     if (!this.track?.element) return;
-    this.connect = new Connect(props);
+    this.connect = new Connect(settings);
     this.connect.render(vertical, this.track?.element);
   }
 
-  private renderScale(vertical: boolean, props: SettingsInterface) {
+  private renderScale(vertical: boolean, settings: SettingsInterface) {
     if (!this.sliderContainer) return;
-    this.scale = new Scale(this.notify.bind(this), props);
+    this.scale = new Scale(this.notify.bind(this), settings);
     this.scale.render(vertical, this.sliderContainer);
   }
 }
