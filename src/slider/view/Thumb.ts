@@ -15,10 +15,10 @@ class Thumb {
     this.settings = settings;
   }
 
-  render(vertical: boolean, type: 'from' | 'to', parent: HTMLElement) {
+  render(type: 'from' | 'to', parent: HTMLElement) {
     this.element = createElement('div', ['slider__thumb']);
     this.element.dataset.thumb = type;
-    if (vertical) {
+    if (this.settings.vertical) {
       this.element.classList.add('slider__thumb_type_vertical');
     } else {
       this.element.classList.add('slider__thumb_type_horizontal');
@@ -45,7 +45,7 @@ class Thumb {
     const start = this.settings.vertical ? 'top' : 'left';
     const offset = this.settings.vertical ? 'offsetHeight' : 'offsetWidth';
 
-    this.element.addEventListener('pointerdown', (event: PointerEvent) => {
+    const onPointerDown = (event: PointerEvent) => {
       if (!this.element) return;
       const shiftThumb =
         event[client] - this.element.getBoundingClientRect()[start];
@@ -77,7 +77,8 @@ class Thumb {
       };
       this.element.addEventListener('pointermove', onPointerMove);
       this.element.addEventListener('pointerup', onPointerUp);
-    });
+    };
+    this.element.addEventListener('pointerdown', onPointerDown);
   }
 
   private calculatePosition(value: number) {
@@ -102,8 +103,6 @@ class Thumb {
       this.notify(Events.moveTo, { ...this.settings, to: arr[index] });
     }
   }
-
-
 }
 
 export default Thumb;
