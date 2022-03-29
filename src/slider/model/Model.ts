@@ -81,7 +81,7 @@ class Model extends Observable {
   }
 
   setStep(value: number) {
-    if (Math.abs(this.max) + Math.abs(this.min) <= value || value <= 0) return;
+    if (Math.abs(this.max - this.min) <= value || value <= 0) return;
     this.step = this.roundValue(value);
     this.setValuesArray();
     this.notify(Events.update, { ...this.getSettings(), step: value });
