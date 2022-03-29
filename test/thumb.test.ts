@@ -27,26 +27,26 @@ describe('test thumb', () => {
   });
 
   test('test render', () => {
-    thumb.render(false, 'from', div);
+    thumb.render('from', div);
     expect(thumb.element).toBeTruthy();
   });
 
   test('thumb has horizontal class', () => {
-    thumb.render(false, 'from', div);
+    thumb.render('from', div);
     expect(
       thumb.element?.classList.contains('slider__thumb_type_horizontal'),
     ).toBeTruthy();
   });
 
   test('thumb has vertical class', () => {
-    thumb.render(true, 'from', div);
+    thumb.render('from', div);
     expect(
       thumb.element?.classList.contains('slider__thumb_type_vertical'),
     ).toBeTruthy();
   });
 
   test('thumb move', () => {
-    thumb.render(false, 'from', div);
+    thumb.render('from', div);
     if (!thumb.element) return;
     const divRect: DOMRect = {
       ...div.getBoundingClientRect(),
