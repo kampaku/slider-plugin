@@ -2,7 +2,7 @@ import createElement from '../../helpers/create-element';
 import { Events } from '../../helpers/Events';
 
 class Track {
-  element: HTMLElement | undefined;
+  element: HTMLElement;
   notify: (eventName: Events, settings: SettingsInterface) => void;
   settings: SettingsInterface;
 
@@ -31,7 +31,6 @@ class Track {
   }
 
   private onTrackClick(e: PointerEvent) {
-    if (!this.element) return;
     const client = this.settings.vertical ? 'clientY' : 'clientX';
     const start = this.settings.vertical ? 'top' : 'left';
     const side = this.settings.vertical ? 'height' : 'width';

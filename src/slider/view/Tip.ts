@@ -1,10 +1,7 @@
 import createElement from '../../helpers/create-element';
 
 class Tip {
-  element: HTMLElement | undefined;
-  constructor() {
-    this.element = undefined;
-  }
+  element: HTMLElement;
 
   render(vertical: boolean, parent: HTMLElement) {
     this.element = createElement('span', ['slider__tip']);
@@ -17,9 +14,7 @@ class Tip {
   }
 
   displayValue(value: string) {
-    if (this.element) {
-      this.element.textContent = String(value);
-    }
+    this.element.textContent = String(value);
   }
 }
 

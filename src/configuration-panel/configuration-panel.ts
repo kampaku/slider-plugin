@@ -22,16 +22,16 @@ type BoolVal = {
 class ConfigurationPanel {
   slider: SuperSlider;
   container: HTMLElement;
-  minInput!: HTMLInputElement;
-  maxInput!: HTMLInputElement;
-  stepInput!: HTMLInputElement;
-  fromInput!: HTMLInputElement;
-  toInput!: HTMLInputElement;
-  rangeInput!: HTMLInputElement;
-  tipInput!: HTMLInputElement;
-  connectInput!: HTMLInputElement;
-  scaleInput!: HTMLInputElement;
-  verticalInput!: HTMLInputElement;
+  minInput: HTMLInputElement;
+  maxInput: HTMLInputElement;
+  stepInput: HTMLInputElement;
+  fromInput: HTMLInputElement;
+  toInput: HTMLInputElement;
+  rangeInput: HTMLInputElement;
+  tipInput: HTMLInputElement;
+  connectInput: HTMLInputElement;
+  scaleInput: HTMLInputElement;
+  verticalInput: HTMLInputElement;
 
   constructor(slider: SuperSlider, container: HTMLElement) {
     this.slider = slider;

@@ -3,7 +3,7 @@ import type { SettingsInterface } from '../../helpers/SettingsInterface';
 import { Events } from '../../helpers/Events';
 
 class Thumb {
-  element: HTMLElement | undefined;
+  element: HTMLElement;
   notify: (eventName: Events, settings: SettingsInterface) => void;
   settings: SettingsInterface;
 
@@ -28,31 +28,26 @@ class Thumb {
   }
 
   move(value: number) {
-    if (!this.element) return;
     const position = this.calculatePosition(value);
     const start = this.settings.vertical ? 'top' : 'left';
     this.element.style[start] = `${position?.toFixed(4)}%`;
   }
 
   changeZIndex(num: number) {
-    if (!this.element) return;
     this.element.style.zIndex = String(num);
   }
 
   private thumbHandle(parentElement: HTMLElement) {
-    if (!this.element) return;
     const client = this.settings.vertical ? 'clientY' : 'clientX';
     const start = this.settings.vertical ? 'top' : 'left';
     const offset = this.settings.vertical ? 'offsetHeight' : 'offsetWidth';
 
     const onPointerDown = (event: PointerEvent) => {
-      if (!this.element) return;
       const shiftThumb =
         event[client] - this.element.getBoundingClientRect()[start];
 
       this.element.setPointerCapture(event.pointerId);
       const onPointerMove = (e: PointerEvent) => {
-        if (!this.element) return;
         e.preventDefault();
 
         let newPosition =
@@ -71,7 +66,6 @@ class Thumb {
       };
 
       const onPointerUp = () => {
-        if (!this.element) return;
         this.element.removeEventListener('pointerup', onPointerUp);
         this.element.removeEventListener('pointermove', onPointerMove);
       };
@@ -82,7 +76,6 @@ class Thumb {
   }
 
   private calculatePosition(value: number) {
-    if (!this.element) return;
     if (!this.element.parentElement) return;
     const arr = this.settings.valueArray;
     const index = arr.indexOf(value);
@@ -93,7 +86,6 @@ class Thumb {
   }
 
   private convertToValue(coords: { newPosition: number; sliderEnd: number }) {
-    if (!this.element) return;
     const { newPosition, sliderEnd } = coords;
     const arr = this.settings.valueArray;
     const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));

@@ -3,7 +3,7 @@ import type { SettingsInterface } from '../../helpers/SettingsInterface';
 import { Events } from '../../helpers/Events';
 
 class Scale {
-  element: HTMLElement | undefined;
+  element: HTMLElement;
   settings: SettingsInterface;
   notify: (eventName: Events, settings: SettingsInterface) => void;
   constructor(
@@ -32,7 +32,6 @@ class Scale {
   }
 
   private displayScale() {
-    if (!this.element) return;
     const arr = this.settings.valueArray;
     let markerCount = Math.round(arr.length / 6);
     if (markerCount < 1) markerCount = 1;
