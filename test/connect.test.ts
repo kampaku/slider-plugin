@@ -24,7 +24,7 @@ describe('test connect', () => {
     expect(connect).toBeDefined();
   })
 
-  test('connect', () => {
+  test('connect should render', () => {
     connect.render(false, div);
     expect(connect.element).toBeDefined();
   });
@@ -48,11 +48,5 @@ describe('test connect', () => {
     connect.setPosition(1, 5);
     expect(connect.element?.style.left).toBe('0%');
     expect(connect.element?.style.right).toBe('0%');
-  });
-
-  test('set connect position', () => {
-    connect.setPosition(2, 3);
-    expect(connect.element).toBeUndefined();
-    expect(connect.element).toBeUndefined();
   });
 });

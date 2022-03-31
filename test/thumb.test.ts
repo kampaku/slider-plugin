@@ -39,9 +39,10 @@ describe('test thumb', () => {
   });
 
   test('thumb has vertical class', () => {
+    thumb.settings.vertical = true;
     thumb.render('from', div);
     expect(
-      thumb.element?.classList.contains('slider__thumb_type_vertical'),
+      thumb.element.classList.contains('slider__thumb_type_vertical'),
     ).toBeTruthy();
   });
 
