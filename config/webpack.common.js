@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     index: `${paths.src}/index.ts`,
     slider: `${paths.src}/slider/SuperSlider.ts`,
-    panel: `${paths.src}/configuration-panel/configuration-panel.ts`,
+    panel: `${paths.src}/configuration-panel/ConfigurationPanel.ts`,
   },
   // Where webpack outputs the assets and bundles
   output: {

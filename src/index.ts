@@ -3,7 +3,7 @@ import $ from 'jquery';
 import '../public/index.scss';
 
 import './jqueryPlugin';
-import ConfigurationPanel from './configuration-panel/configuration-panel';
+import ConfigurationPanel from './configuration-panel/ConfigurationPanel';
 
 const settings = [
   {

@@ -3,21 +3,21 @@ import { Events } from '../helpers/Events';
 
 import './configuration-panel.scss';
 
-type NumVal = {
-  min: (value: number) => void;
+interface NumVal {
   max: (value: number) => void;
+  min: (value: number) => void;
   step: (value: number) => void;
   from: (value: number) => void;
   to: (value: number) => void;
-};
+}
 
-type BoolVal = {
+interface BoolVal {
   range: (value: boolean) => void;
   tip: (value: boolean) => void;
   vertical: (value: boolean) => void;
   connect: (value: boolean) => void;
   scale: (value: boolean) => void;
-};
+}
 
 class ConfigurationPanel {
   slider: SuperSlider;
@@ -56,16 +56,36 @@ class ConfigurationPanel {
   };
 
   private findElements() {
-    this.minInput = this.container.querySelector('[data-name="min"]') as HTMLInputElement;
-    this.maxInput = this.container.querySelector('[data-name="max"]') as HTMLInputElement;
-    this.stepInput = this.container.querySelector('[data-name="step"]') as HTMLInputElement;
-    this.fromInput = this.container.querySelector('[data-name="from"]') as HTMLInputElement;
-    this.toInput = this.container.querySelector('[data-name="to"]') as HTMLInputElement;
-    this.rangeInput = this.container.querySelector('[data-name="range"]') as HTMLInputElement;
-    this.tipInput = this.container.querySelector('[data-name="tip"]') as HTMLInputElement;
-    this.connectInput = this.container.querySelector('[data-name="connect"]') as HTMLInputElement;
-    this.scaleInput = this.container.querySelector('[data-name="scale"]') as HTMLInputElement;
-    this.verticalInput = this.container.querySelector('[data-name="vertical"]') as HTMLInputElement;
+    this.minInput = this.container.querySelector(
+      '[data-name="min"]',
+    ) as HTMLInputElement;
+    this.maxInput = this.container.querySelector(
+      '[data-name="max"]',
+    ) as HTMLInputElement;
+    this.stepInput = this.container.querySelector(
+      '[data-name="step"]',
+    ) as HTMLInputElement;
+    this.fromInput = this.container.querySelector(
+      '[data-name="from"]',
+    ) as HTMLInputElement;
+    this.toInput = this.container.querySelector(
+      '[data-name="to"]',
+    ) as HTMLInputElement;
+    this.rangeInput = this.container.querySelector(
+      '[data-name="range"]',
+    ) as HTMLInputElement;
+    this.tipInput = this.container.querySelector(
+      '[data-name="tip"]',
+    ) as HTMLInputElement;
+    this.connectInput = this.container.querySelector(
+      '[data-name="connect"]',
+    ) as HTMLInputElement;
+    this.scaleInput = this.container.querySelector(
+      '[data-name="scale"]',
+    ) as HTMLInputElement;
+    this.verticalInput = this.container.querySelector(
+      '[data-name="vertical"]',
+    ) as HTMLInputElement;
   }
 
   private initValues() {
@@ -85,7 +105,9 @@ class ConfigurationPanel {
 
   private setValue = ({ target }: Event) => {
     if (!target) return;
-    const input = (<HTMLInputElement>target).closest('[data-name]') as HTMLInputElement;
+    const input = (<HTMLInputElement>target).closest(
+      '[data-name]',
+    ) as HTMLInputElement;
     if (!input) return;
 
     const name = input.dataset.name;
@@ -102,9 +124,10 @@ class ConfigurationPanel {
   };
 
   private update(eventName: Events) {
-    const shouldUpdate = eventName === Events.changeFrom
-      || eventName === Events.changeTo
-      || eventName === Events.update;
+    const shouldUpdate =
+      eventName === Events.changeFrom ||
+      eventName === Events.changeTo ||
+      eventName === Events.update;
     if (!shouldUpdate) return;
     this.initValues();
   }
