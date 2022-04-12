@@ -5,7 +5,7 @@ describe('test track', () => {
   let track: Track;
   const div = document.createElement('div');
   let callback = jest.fn();
-  const settings = {
+  let settings = {
     min: 1,
     max: 5,
     step: 1,
@@ -53,9 +53,51 @@ describe('test track', () => {
     track.element.getBoundingClientRect = jest.fn(() => rect);
     const event = new MouseEvent('pointerdown', {
       clientX: 50,
-      clientY: 0
+      clientY: 10
     });
     track.element.dispatchEvent(event);
     expect(track.notify).toHaveBeenCalledWith(Events.moveFrom, { ...settings, from: 3 });
+  })
+
+  test('should click', () => {
+    track.settings.to = 4
+    track.settings.from = 2
+    track.settings.range = true
+    track.render(false, div);
+    if(!track.element) return;
+    const rect: DOMRect = {
+      ...track.element.getBoundingClientRect(),
+      left: 0,
+      width: 100,
+      height: 40
+    }
+    track.element.getBoundingClientRect = jest.fn(() => rect);
+    const event = new MouseEvent('pointerdown', {
+      clientX: 10,
+      clientY: 0
+    });
+    track.element.dispatchEvent(event);
+    expect(track.notify).toHaveBeenCalled();
+  })
+
+  test('should click', () => {
+    track.settings.to = 2
+    track.settings.from = 2
+    track.settings.range = true
+    track.render(false, div);
+    if(!track.element) return;
+    const rect: DOMRect = {
+      ...track.element.getBoundingClientRect(),
+      left: 0,
+      width: 100,
+      height: 40
+    }
+    track.element.getBoundingClientRect = jest.fn(() => rect);
+    const event = new MouseEvent('pointerdown', {
+      clientX: 10,
+      clientY: 0
+    });
+    track.element.dispatchEvent(event);
+    expect(track.notify).toHaveBeenCalled();
   })
 })
