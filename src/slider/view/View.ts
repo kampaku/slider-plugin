@@ -53,7 +53,7 @@ class View extends Observable {
       this.thumbTo?.changeZIndex(5);
       this.thumbFrom.move(value);
     } else if (thumb === 'to') {
-      this.thumbFrom?.changeZIndex(5);
+      this.thumbFrom.changeZIndex(5);
       this.thumbTo.changeZIndex(6);
       this.thumbTo.move(value);
     }
@@ -71,8 +71,8 @@ class View extends Observable {
         this.tipTo.element.style.visibility = 'hidden';
       } else {
         this.tipTo.element.style.visibility = 'visible';
-        this.tipFrom?.displayValue(String(from));
-        this.tipTo?.displayValue(String(to));
+        this.tipFrom.displayValue(String(from));
+        this.tipTo.displayValue(String(to));
       }
     }
   }
@@ -119,7 +119,7 @@ class View extends Observable {
 
   private renderConnect(vertical: boolean, settings: SettingsInterface) {
     this.connect = new Connect(settings);
-    this.connect.render(vertical, this.track?.element);
+    this.connect.render(vertical, this.track.element);
   }
 
   private renderScale(vertical: boolean, settings: SettingsInterface) {
