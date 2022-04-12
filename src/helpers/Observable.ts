@@ -16,7 +16,7 @@ class Observable {
   }
 
   detach(observer: Observer) {
-    this.observers = this.observers.filter((callback) => callback === observer);
+    this.observers = this.observers.filter((callback) => callback !== observer);
   }
 
   notify(eventName: Events, arg: SettingsInterface) {
