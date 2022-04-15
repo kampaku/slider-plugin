@@ -23,29 +23,44 @@ class Scale {
     } else {
       this.element.classList.add('slider__scale_type_horizontal');
     }
-    this.displayScale();
     this.element.addEventListener('pointerdown', this.onScaleClick);
     parent.append(this.element);
+    this.makeMarks();
   }
 
   updateSettings(settings: SettingsInterface) {
     this.settings = settings;
   }
 
-  private displayScale() {
+  private makeMarks() {
     const arr = this.settings.valueArray;
-    let markerCount = Math.round(arr.length / 6);
-    if (markerCount < 1) markerCount = 1;
+    const lastElement = arr[arr.length - 1];
+    let marksCount = Math.floor(arr.length / 6);
+    if (marksCount < 1) marksCount = 1;
+    const marks = [];
 
     const start = this.settings.vertical ? 'top' : 'left';
-    for (let i = 0; i < arr.length; i += markerCount) {
-      let marker = createElement('div', ['slider__scale-marker']);
-      marker.dataset.value = String(arr[i]);
+    for (let i = 0; i < arr.length; i += marksCount) {
+      let mark = createElement('div', ['slider__scale-marker']);
+      mark.dataset.value = String(arr[i]);
       const y = (i * 100) / (arr.length - 1);
-      marker.style[start] = y + '%';
+      mark.style[start] = y + '%';
 
-      marker.textContent = String(arr[i]);
-      this.element.append(marker);
+      mark.textContent = String(arr[i]);
+      marks.push(mark);
+
+      if (i + marksCount >= arr.length) {
+        let lastMark = createElement('div', ['slider__scale-marker']);
+        lastMark.dataset.value = String(lastElement);
+        lastMark.style[start] = '100%';
+
+        lastMark.textContent = String(lastElement);
+        marks.push(lastMark);
+      }
+    }
+    this.element.append(...marks);
+    if (isCollide(marks[marks.length - 2], marks[marks.length - 1])) {
+      marks[marks.length - 2].remove();
     }
   }
 
