@@ -79,9 +79,11 @@ class Thumb {
     if (!this.element.parentElement) return;
     const arr = this.settings.valueArray;
     const index = arr.indexOf(value);
-    const offset = this.settings.vertical ? 'offsetHeight' : 'offsetWidth';
-    const maxWidthWithoutThumb =
-      100 - (this.element[offset] / this.element.parentElement[offset]) * 100;
+    const offset = this.settings.vertical ? 'height' : 'width';
+    const elemWidth = this.element.getBoundingClientRect()[offset];
+    const parentWidth =
+      this.element.parentElement.getBoundingClientRect()[offset];
+    const maxWidthWithoutThumb = 100 - (elemWidth / parentWidth) * 100;
     return (maxWidthWithoutThumb / (arr.length - 1)) * index;
   }
 
