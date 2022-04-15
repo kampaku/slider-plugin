@@ -1,6 +1,6 @@
 import createElement from '../../helpers/create-element';
 import Observable from '../../helpers/Observable';
-import isCrossed from '../../helpers/isCrossed';
+import isCollide from '../../helpers/isCollide';
 
 import Track from './Track';
 import Thumb from './Thumb';
@@ -65,7 +65,7 @@ class View extends Observable {
       return;
     }
     if (this.tipFrom.element && this.tipTo.element) {
-      const cross = isCrossed(this.tipFrom.element, this.tipTo.element);
+      const cross = isCollide(this.tipFrom.element, this.tipTo.element);
       if (cross) {
         this.tipFrom.displayValue(`${from} − ${to}`);
         this.tipTo.element.style.visibility = 'hidden';
