@@ -39,4 +39,18 @@ describe('test scale', () => {
     marker.dispatchEvent(event);
     expect(scale.notify).toHaveBeenCalled();
   })
+
+  test('scale should click 2', () => {
+    scale.settings.to = 2
+    scale.settings.from = 2
+    scale.settings.range = true
+    scale.render(false, div);
+    scale.render(false, div);
+    if(!scale.element) return;
+    const marker = scale.element.querySelector('.slider__scale-marker') as HTMLElement;
+    if (!marker) return;
+    const event = new MouseEvent('pointerdown', { bubbles: true });
+    marker.dispatchEvent(event);
+    expect(scale.notify).toHaveBeenCalled();
+  })
 })
