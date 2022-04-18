@@ -1,7 +1,7 @@
 import isCollide from '../../helpers/isCollide';
 import createElement from '../../helpers/create-element';
-import type { SettingsInterface } from '../../helpers/SettingsInterface';
-import { Events } from '../../helpers/Events';
+import type SettingsInterface from '../../helpers/SettingsInterface';
+import Events from '../../helpers/Events';
 
 class Scale {
   element: HTMLElement;

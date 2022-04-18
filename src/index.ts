@@ -1,14 +1,14 @@
 import $ from 'jquery';
 
 import '../public/index.scss';
-
-import './jqueryPlugin';
 import ConfigurationPanel from './configuration-panel/ConfigurationPanel';
+import './jqueryPlugin';
 
 const settings = [
   {
     min: -10,
-    max: 10,
+    max: 12,
+    scale: true,
   },
   {
     min: -10,

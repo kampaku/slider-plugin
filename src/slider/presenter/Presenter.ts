@@ -1,7 +1,7 @@
+import type SettingsInterface from '../../helpers/SettingsInterface';
+import Events from '../../helpers/Events';
 import type Model from '../model/Model';
 import type View from '../view/View';
-import type { SettingsInterface } from '../../helpers/SettingsInterface';
-import { Events } from '../../helpers/Events';
 
 class Presenter {
   model: Model;

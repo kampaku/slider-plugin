@@ -28,8 +28,7 @@
           "unknown",
           "external",
           "internal",
-          "parent",
-          "sibling",
+          ["parent", "sibling"],
           "index"
         ],
         "newlines-between": "always",

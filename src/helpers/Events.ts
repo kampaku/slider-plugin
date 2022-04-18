@@ -6,4 +6,4 @@ enum Events {
   update,
 }
 
-export { Events };
+export default Events;

@@ -1,7 +1,6 @@
 import createElement from '../../helpers/create-element';
 import Observable from '../../helpers/Observable';
 import isCollide from '../../helpers/isCollide';
-
 import Track from './Track';
 import Thumb from './Thumb';
 import Tip from './Tip';

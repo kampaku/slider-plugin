@@ -1,4 +1,4 @@
-import type { Events } from './Events';
+import type Events from './Events';
 
 class Observable {
   observers: Observer[];

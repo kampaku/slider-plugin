@@ -1,5 +1,5 @@
 import createElement from '../../helpers/create-element';
-import { Events } from '../../helpers/Events';
+import Events from '../../helpers/Events';
 
 class Track {
   element: HTMLElement;

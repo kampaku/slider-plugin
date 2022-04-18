@@ -12,4 +12,4 @@ interface SettingsInterface {
   valueArray: number[];
 }
 
-export type { SettingsInterface };
+export default SettingsInterface;

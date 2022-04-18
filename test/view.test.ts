@@ -1,5 +1,6 @@
-import View from '../src/slider/view/View';
 import * as $ from 'jquery';
+import View from '../src/slider/view/View';
+
 describe('test view', () => {
   const settings = {
     min: 1,

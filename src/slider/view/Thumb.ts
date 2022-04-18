@@ -1,6 +1,6 @@
 import createElement from '../../helpers/create-element';
-import type { SettingsInterface } from '../../helpers/SettingsInterface';
-import { Events } from '../../helpers/Events';
+import type SettingsInterface from '../../helpers/SettingsInterface';
+import Events from '../../helpers/Events';
 
 class Thumb {
   element: HTMLElement;

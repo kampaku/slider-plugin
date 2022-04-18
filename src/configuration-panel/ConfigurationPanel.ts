@@ -1,6 +1,5 @@
 import type SuperSlider from '../slider/SuperSlider';
-import { Events } from '../helpers/Events';
-
+import Events from '../helpers/Events';
 import './configuration-panel.scss';
 
 interface NumVal {

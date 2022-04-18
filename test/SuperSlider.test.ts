@@ -1,5 +1,5 @@
-import SuperSlider from '../src/slider/SuperSlider';
 import * as $ from 'jquery';
+import SuperSlider from '../src/slider/SuperSlider';
 
 describe('test slider', () => {
   const settings = {
@@ -13,7 +13,7 @@ describe('test slider', () => {
     connect: true,
     scale: true,
     vertical: false,
-  }
+  };
   let slider: SuperSlider;
   beforeEach(() => {
     document.body.innerHTML = '';

@@ -1,5 +1,6 @@
 import Thumb from '../src/slider/view/Thumb';
 import Model from '../src/slider/model/Model';
+
 describe('test thumb', () => {
   let thumb: Thumb;
   const settings = {

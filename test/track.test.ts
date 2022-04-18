@@ -1,4 +1,4 @@
-import { Events } from '../src/helpers/Events';
+import Events from '../src/helpers/Events';
 import Track from '../src/slider/view/Track';
 
 describe('test track', () => {

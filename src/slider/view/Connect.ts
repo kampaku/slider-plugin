@@ -1,5 +1,5 @@
 import createElement from '../../helpers/create-element';
-import type { SettingsInterface } from '../../helpers/SettingsInterface';
+import type SettingsInterface from '../../helpers/SettingsInterface';
 
 class Connect {
   element: HTMLElement;

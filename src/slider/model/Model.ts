@@ -1,5 +1,5 @@
 import Observable from '../../helpers/Observable';
-import { Events } from '../../helpers/Events';
+import Events from '../../helpers/Events';
 
 interface SliderOptions {
   min: number;
