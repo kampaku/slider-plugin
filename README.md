@@ -81,4 +81,4 @@ interface SliderOptions {
   + Node 16.13.0
 ### UML диаграмма:
 
-![](https://files.catbox.moe/bqpt63.png)
+![](https://files.catbox.moe/oja187.png)
