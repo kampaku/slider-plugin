@@ -1,14 +1,14 @@
 import $ from 'jquery';
 
-import '../public/index.scss';
 import ConfigurationPanel from './configuration-panel/ConfigurationPanel';
+import type SuperSlider from './slider/SuperSlider';
+import '../public/index.scss';
 import './jqueryPlugin';
 
 const settings = [
   {
     min: -10,
-    max: 12,
-    scale: true,
+    max: 10,
   },
   {
     min: -10,
@@ -48,7 +48,8 @@ const plugins = document.querySelectorAll('.js-wrapper') as NodeListOf<HTMLEleme
 const sliders = document.querySelectorAll('.js-slider-container') as NodeListOf<HTMLElement>;
 
 settings.forEach((setting, i) => {
-  const slider = $(sliders[i]).superSlider(setting);
+  const slider: SuperSlider = $(sliders[i]).superSlider(setting);
+
   const wrapper = plugins[i];
   new ConfigurationPanel(slider, wrapper);
 });
