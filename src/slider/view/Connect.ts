@@ -9,9 +9,9 @@ class Connect {
     this.settings = settings;
   }
 
-  render(vertical: boolean, parent: HTMLElement) {
+  render(parent: HTMLElement) {
     this.element = createElement('div', ['slider__connect']);
-    if (vertical) {
+    if (this.settings.vertical) {
       this.element.classList.add('slider__connect_type_vertical');
     } else {
       this.element.classList.add('slider__connect_type_horizontal');

@@ -15,9 +15,9 @@ class Track {
     this.onTrackClick = this.onTrackClick.bind(this);
   }
 
-  render(vertical: boolean, parent: HTMLElement) {
+  render(parent: HTMLElement) {
     this.element = createElement('div', ['slider__track']);
-    if (vertical) {
+    if (this.settings.vertical) {
       this.element.classList.add('slider__track_type_vertical');
     } else {
       this.element.classList.add('slider__track_type_horizontal');

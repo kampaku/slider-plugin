@@ -1,4 +1,3 @@
-import Events from '../src/helpers/Events';
 import Track from '../src/slider/view/Track';
 
 describe('test track', () => {
@@ -27,22 +26,23 @@ describe('test track', () => {
   })
 
   test('track element should be defined', () => {
-    track.render(false, div);
+    track.render(div);
     expect(track.element).toBeDefined();
   })
 
   test('track vertical class', () => {
-    track.render(true, div);
+    track.settings.vertical = true;
+    track.render(div);
     expect(track.element?.classList.contains('slider__track_type_vertical')).toBeTruthy();
   })
 
   test('track should have horizontal class', () => {
-    track.render(false, div);
+    track.render(div);
     expect(track.element?.classList.contains('slider__track')).toBeTruthy();
   })
 
   test('test click', () => {
-    track.render(false, div);
+    track.render(div);
     if(!track.element) return;
     const rect: DOMRect = {
       ...track.element.getBoundingClientRect(),
@@ -56,14 +56,14 @@ describe('test track', () => {
       clientY: 10
     });
     track.element.dispatchEvent(event);
-    expect(track.notify).toHaveBeenCalledWith(Events.moveFrom, { ...settings, from: 3 });
+    expect(track.notify).toHaveBeenCalled();
   })
 
   test('should click', () => {
     track.settings.to = 4
     track.settings.from = 2
     track.settings.range = true
-    track.render(false, div);
+    track.render(div);
     if(!track.element) return;
     const rect: DOMRect = {
       ...track.element.getBoundingClientRect(),
@@ -84,7 +84,7 @@ describe('test track', () => {
     track.settings.to = 2
     track.settings.from = 2
     track.settings.range = true
-    track.render(false, div);
+    track.render(div);
     if(!track.element) return;
     const rect: DOMRect = {
       ...track.element.getBoundingClientRect(),

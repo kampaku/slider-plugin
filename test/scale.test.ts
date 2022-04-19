@@ -26,12 +26,12 @@ describe('test scale', () => {
   })
 
   test('scale should render', () => {
-    scale.render(false, div);
+    scale.render(div);
     expect(scale.element).toBeTruthy();
   })
 
   test('scale should click', () => {
-    scale.render(false, div);
+    scale.render(div);
     if(!scale.element) return;
     const marker = scale.element.querySelector('.slider__scale-marker') as HTMLElement;
     if (!marker) return;
@@ -44,8 +44,7 @@ describe('test scale', () => {
     scale.settings.to = 2
     scale.settings.from = 2
     scale.settings.range = true
-    scale.render(false, div);
-    scale.render(false, div);
+    scale.render(div);
     if(!scale.element) return;
     const marker = scale.element.querySelector('.slider__scale-marker') as HTMLElement;
     if (!marker) return;

@@ -24,21 +24,21 @@ class View extends Observable {
   }
 
   render(settings: SettingsInterface) {
-    const { vertical, tip, range, connect, scale } = settings;
+    const { vertical, tip, connect, scale } = settings;
     this.sliderContainer = createElement('div', ['slider']);
     this.root.append(this.sliderContainer);
     if (vertical) {
       this.sliderContainer.classList.add('slider_type_vertical');
     }
 
-    this.renderTrack(settings, vertical);
-    this.renderThumb(settings, range);
+    this.renderTrack(settings);
+    this.renderThumb(settings);
 
     if (tip) this.renderTip(settings);
 
-    if (connect) this.renderConnect(vertical, settings);
+    if (connect) this.renderConnect(settings);
 
-    if (scale) this.renderScale(vertical, settings);
+    if (scale) this.renderScale(settings);
   }
 
 
@@ -88,16 +88,16 @@ class View extends Observable {
     this.track.updateSettings(settings);
   }
 
-  private renderTrack(settings: SettingsInterface, vertical: boolean) {
+  private renderTrack(settings: SettingsInterface) {
     this.track = new Track(this.notify.bind(this), settings);
-    this.track.render(vertical, this.sliderContainer);
+    this.track.render(this.sliderContainer);
   }
 
-  private renderThumb(settings: SettingsInterface, range: boolean) {
+  private renderThumb(settings: SettingsInterface) {
     this.thumbFrom = new Thumb(this.notify.bind(this), settings);
     this.thumbFrom.render('from', this.track.element);
 
-    if (range) {
+    if (settings.range) {
       this.thumbTo = new Thumb(this.notify.bind(this), settings);
       this.thumbTo.render('to', this.track.element);
     }
@@ -116,14 +116,14 @@ class View extends Observable {
     }
   }
 
-  private renderConnect(vertical: boolean, settings: SettingsInterface) {
+  private renderConnect(settings: SettingsInterface) {
     this.connect = new Connect(settings);
-    this.connect.render(vertical, this.track.element);
+    this.connect.render(this.track.element);
   }
 
-  private renderScale(vertical: boolean, settings: SettingsInterface) {
+  private renderScale(settings: SettingsInterface) {
     this.scale = new Scale(this.notify.bind(this), settings);
-    this.scale.render(vertical, this.sliderContainer);
+    this.scale.render(this.sliderContainer);
   }
 }
 
