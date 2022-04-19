@@ -8,15 +8,15 @@ import Connect from './Connect';
 import Scale from './Scale';
 
 class View extends Observable {
-  root: JQuery<HTMLElement>;
   sliderContainer: HTMLElement;
-  protected thumbFrom: Thumb;
-  protected thumbTo: Thumb;
-  protected tipFrom: Tip;
-  protected tipTo: Tip;
-  protected track: Track;
-  protected connect: Connect;
-  protected scale: Scale;
+  private root: JQuery<HTMLElement>;
+  private thumbFrom: Thumb;
+  private thumbTo: Thumb;
+  private tipFrom: Tip;
+  private tipTo: Tip;
+  private track: Track;
+  private connect: Connect;
+  private scale: Scale;
 
   constructor(root: JQuery) {
     super();

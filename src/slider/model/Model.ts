@@ -115,20 +115,6 @@ class Model extends Observable {
     this.notify(Events.update, { ...this.getSettings(), scale: value });
   }
 
-  setValuesArray() {
-    this.valuesArray = [];
-
-    for (let i = this.min; i < this.max; i += this.step) {
-      this.valuesArray.push(this.roundValue(i));
-    }
-    if (this.valuesArray[this.valuesArray.length - 1] !== this.max) {
-      this.valuesArray.push(this.max);
-    }
-
-    this.from = this.closestValue(this.from);
-    this.to = this.closestValue(this.to);
-  }
-
   getSettings() {
     return {
       min: this.min,
@@ -149,6 +135,20 @@ class Model extends Observable {
     return this.valuesArray.reduce((prev, curr) =>
       Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev,
     );
+  }
+
+  private setValuesArray() {
+    this.valuesArray = [];
+
+    for (let i = this.min; i < this.max; i += this.step) {
+      this.valuesArray.push(this.roundValue(i));
+    }
+    if (this.valuesArray[this.valuesArray.length - 1] !== this.max) {
+      this.valuesArray.push(this.max);
+    }
+
+    this.from = this.closestValue(this.from);
+    this.to = this.closestValue(this.to);
   }
 
   private roundValue(value: number) {

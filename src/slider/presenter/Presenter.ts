@@ -4,9 +4,7 @@ import type Model from '../model/Model';
 import type View from '../view/View';
 
 class Presenter {
-  model: Model;
-  view: View;
-  constructor(model: Model, view: View) {
+  constructor(private model: Model, private view: View) {
     this.model = model;
     this.view = view;
     this.makeAttach();

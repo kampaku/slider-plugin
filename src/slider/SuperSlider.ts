@@ -4,8 +4,8 @@ import Model from './model/Model';
 import './style.scss';
 
 class SuperSlider {
-  readonly view: View;
-  readonly model: Model;
+  private view: View;
+  private model: Model;
   private presenter: Presenter;
 
   constructor(element: JQuery<HTMLElement>, settings: SliderOptions) {
