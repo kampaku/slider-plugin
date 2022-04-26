@@ -30,6 +30,7 @@ module.exports = {
       template: `${paths.public}/index.pug`,
       filename: `./index.html`,
       favicon: `${paths.public}/favicon.ico`,
+      inject: 'body'
     })
   ],
 
