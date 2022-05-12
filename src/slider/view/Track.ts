@@ -1,13 +1,13 @@
 import createElement from '../../helpers/create-element';
-import Events from '../../helpers/Events';
+import type { ViewEvents } from '../../helpers/Events';
 
 class Track {
   element: HTMLElement;
-  notify: (eventName: Events, settings: SettingsInterface) => void;
+  notify: (arg: ViewEvents) => void;
   settings: SettingsInterface;
 
   constructor(
-    notify: (eventName: Events, settings: SettingsInterface) => void,
+    notify: (arg: ViewEvents) => void,
     settings: SettingsInterface,
   ) {
     this.notify = notify;
@@ -44,21 +44,21 @@ class Track {
     const right = Math.abs(value - to);
 
     if (!range) {
-      this.notify(Events.moveFrom, { ...this.settings, from: value });
+      this.notify({ kind: 'moveFrom', value });
       return;
     }
     if (left === right) {
       if (value > from) {
-        this.notify(Events.moveTo, { ...this.settings, to: value });
+        this.notify({ kind: 'moveTo', value });
       } else {
-        this.notify(Events.moveFrom, { ...this.settings, from: value });
+        this.notify({ kind: 'moveFrom', value });
       }
       return;
     }
     if (left < right) {
-      this.notify(Events.moveFrom, { ...this.settings, from: value });
+      this.notify({ kind: 'moveFrom', value });
     } else {
-      this.notify(Events.moveTo, { ...this.settings, to: value });
+      this.notify({ kind: 'moveTo', value });
     }
   }
 }

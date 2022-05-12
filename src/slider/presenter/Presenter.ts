@@ -1,5 +1,4 @@
-import type SettingsInterface from '../../helpers/SettingsInterface';
-import Events from '../../helpers/Events';
+import type { ModelEvents, ViewEvents } from '../../helpers/Events';
 import type Model from '../model/Model';
 import type View from '../view/View';
 
@@ -11,22 +10,20 @@ class Presenter {
     this.init(this.model.getSettings());
   }
 
-  private onFromChange(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.changeFrom) return;
-    const { from } = settings;
-    this.view.moveThumb('from', from);
+  private onFromChange(args: ModelEvents) {
+    if (args.kind !== 'changeFrom') return;
+    this.view.moveThumb('from', args.value);
   }
 
-  private onToChange(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.changeTo) return;
-    const { to } = settings;
-    this.view.moveThumb('to', to);
+  private onToChange(args: ModelEvents) {
+    if (args.kind !== 'changeTo') return;
+    this.view.moveThumb('to', args.value);
   }
 
-  private onUpdateValues(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.changeFrom && eventName !== Events.changeTo) return;
+  private onUpdateValues(args: ModelEvents) {
+    if (args.kind !== 'changeFrom' && args.kind !== 'changeTo') return;
+    const settings = this.model.getSettings();
     const { from, to, range, tip, connect, scale } = settings;
-
     if (tip) {
       this.view.updateTip(from, to, range);
     }
@@ -40,22 +37,20 @@ class Presenter {
     this.view.updateTrack(settings);
   }
 
-  private handleThumbFromMove(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.moveFrom) return;
-    const { from } = settings;
-    this.model.setFrom(from);
+  private handleThumbFromMove(args: ViewEvents) {
+    if (args.kind !== 'moveFrom') return;
+    this.model.setFrom(args.value);
   }
 
-  private handleThumbToMove(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.moveTo) return;
-    const { to } = settings;
-    this.model.setTo(to);
+  private handleThumbToMove(args: ViewEvents) {
+    if (args.kind !== 'moveTo') return;
+    this.model.setTo(args.value);
   }
 
-  private onUpdate(eventName: Events, settings: SettingsInterface) {
-    if (eventName !== Events.update) return;
+  private onUpdate(args: ModelEvents) {
+    if (args.kind !== 'stateUpdate') return;
     this.view.destroy();
-    this.init(settings);
+    this.init(args.state);
   }
 
   private init(settings: SettingsInterface) {

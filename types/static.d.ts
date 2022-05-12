@@ -85,6 +85,6 @@ interface SettingsInterface {
   scale: boolean;
   valueArray: number[]
 }
-interface Observer {
-  (eventName: Events, arg: SettingsInterface): void;
+interface Observer<T> {
+  (args: T): void;
 }

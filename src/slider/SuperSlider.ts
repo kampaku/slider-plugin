@@ -1,3 +1,5 @@
+import type { ModelEvents } from 'src/helpers/Events';
+
 import Presenter from './presenter/Presenter';
 import View from './view/View';
 import Model from './model/Model';
@@ -106,11 +108,11 @@ class SuperSlider {
     return this.model.tip;
   }
 
-  attach(observer: Observer) {
+  attach(observer: Observer<ModelEvents>) {
     this.model.attach(observer);
   }
 
-  detach(observer: Observer) {
+  detach(observer: Observer<ModelEvents>) {
     this.model.detach(observer);
   }
 }

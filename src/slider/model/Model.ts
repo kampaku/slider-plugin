@@ -1,5 +1,5 @@
 import Observable from '../../helpers/Observable';
-import Events from '../../helpers/Events';
+import type { ModelEvents } from '../../helpers/Events';
 
 interface SliderOptions {
   min: number;
@@ -14,7 +14,7 @@ interface SliderOptions {
   scale?: boolean;
 }
 
-class Model extends Observable {
+class Model extends Observable<ModelEvents> {
   min: number;
   max: number;
   step: number;
@@ -58,43 +58,43 @@ class Model extends Observable {
     if (value >= this.max) return;
     this.min = this.roundValue(value);
     this.setValuesArray();
-    this.notify(Events.update, { ...this.getSettings(), min: value });
+    this.notify({ kind: 'stateUpdate', state: { ...this.getSettings() } });
   }
 
   setMax(value: number) {
     if (value <= this.min) return;
     this.max = this.roundValue(value);
     this.setValuesArray();
-    this.notify(Events.update, { ...this.getSettings(), max: value });
+    this.notify({ kind: 'stateUpdate', state: { ...this.getSettings() } });
   }
 
   setFrom(value: number) {
     if (value > this.to && this.range) return;
     this.from = this.roundValue(value);
-    this.notify(Events.changeFrom, { ...this.getSettings(), from: value });
+    this.notify({ kind: 'changeFrom', value: value });
   }
 
   setTo(value: number) {
     if (value < this.from || value > this.max) return;
     this.to = this.roundValue(value);
-    this.notify(Events.changeTo, { ...this.getSettings(), to: value });
+    this.notify({ kind: 'changeTo', value: value });
   }
 
   setStep(value: number) {
     if (Math.abs(this.max - this.min) <= value || value <= 0) return;
     this.step = this.roundValue(value);
     this.setValuesArray();
-    this.notify(Events.update, { ...this.getSettings(), step: value });
+    this.notify({ kind: 'stateUpdate', state: { ...this.getSettings() } });
   }
 
   setVertical(value: boolean) {
     this.vertical = value;
-    this.notify(Events.update, { ...this.getSettings(), vertical: value });
+    this.notify({ kind: 'stateUpdate', state: { ...this.getSettings() } });
   }
 
   setTip(value: boolean) {
     this.tip = value;
-    this.notify(Events.update, { ...this.getSettings(), tip: value });
+    this.notify({ kind: 'stateUpdate', state: { ...this.getSettings() } });
   }
 
   setRange(value: boolean) {
@@ -102,17 +102,17 @@ class Model extends Observable {
       [this.to, this.from] = [this.from, this.to];
     }
     this.range = value;
-    this.notify(Events.update, { ...this.getSettings(), range: value });
+    this.notify({ kind: 'stateUpdate', state: { ...this.getSettings() } });
   }
 
   setConnect(value: boolean) {
     this.connect = value;
-    this.notify(Events.update, { ...this.getSettings(), connect: value });
+    this.notify({ kind: 'stateUpdate', state: { ...this.getSettings() } });
   }
 
   setScale(value: boolean) {
     this.scale = value;
-    this.notify(Events.update, { ...this.getSettings(), scale: value });
+    this.notify({ kind: 'stateUpdate', state: { ...this.getSettings() } });
   }
 
   getSettings() {

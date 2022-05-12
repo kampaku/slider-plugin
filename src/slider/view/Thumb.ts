@@ -1,14 +1,13 @@
 import createElement from '../../helpers/create-element';
-import type SettingsInterface from '../../helpers/SettingsInterface';
-import Events from '../../helpers/Events';
+import type { ViewEvents } from '../../helpers/Events';
 
 class Thumb {
   element: HTMLElement;
-  notify: (eventName: Events, settings: SettingsInterface) => void;
+  notify: (arg: ViewEvents) => void;
   settings: SettingsInterface;
 
   constructor(
-    notify: (eventName: Events, settings: SettingsInterface) => void,
+    notify: (arg: ViewEvents) => void,
     settings: SettingsInterface,
   ) {
     this.notify = notify;
@@ -92,9 +91,9 @@ class Thumb {
     const arr = this.settings.valueArray;
     const index = Math.floor((newPosition / sliderEnd) * (arr.length - 1));
     if (this.element.dataset.thumb === 'from') {
-      this.notify(Events.moveFrom, { ...this.settings, from: arr[index] });
+      this.notify({ kind: 'moveFrom', value: arr[index] });
     } else {
-      this.notify(Events.moveTo, { ...this.settings, to: arr[index] });
+      this.notify({ kind: 'moveTo', value: arr[index] });
     }
   }
 }

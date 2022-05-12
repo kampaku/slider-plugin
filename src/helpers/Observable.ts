@@ -1,13 +1,11 @@
-import type Events from './Events';
-
-class Observable {
-  observers: Observer[];
+abstract class Observable<T> {
+  observers: Observer<T>[];
 
   constructor() {
     this.observers = [];
   }
 
-  attach(observer: Observer) {
+  attach(observer: Observer<T>) {
     const isExist = this.observers.includes(observer);
     if (isExist) {
       return;
@@ -15,12 +13,12 @@ class Observable {
     this.observers.push(observer);
   }
 
-  detach(observer: Observer) {
+  detach(observer: Observer<T>) {
     this.observers = this.observers.filter((callback) => callback !== observer);
   }
 
-  notify(eventName: Events, arg: SettingsInterface) {
-    this.observers.forEach((observer) => observer(eventName, arg));
+  notify(arg: T) {
+    this.observers.forEach((observer) => observer(arg));
   }
 }
 

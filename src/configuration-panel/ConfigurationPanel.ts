@@ -1,5 +1,5 @@
 import type SuperSlider from '../slider/SuperSlider';
-import Events from '../helpers/Events';
+import type { ModelEvents } from '../helpers/Events';
 import './configuration-panel.scss';
 
 interface NumVal {
@@ -122,11 +122,11 @@ class ConfigurationPanel {
     }
   };
 
-  private update(eventName: Events) {
+  private update(args: ModelEvents) {
     const shouldUpdate =
-      eventName === Events.changeFrom ||
-      eventName === Events.changeTo ||
-      eventName === Events.update;
+      args.kind === 'stateUpdate' ||
+      args.kind === 'changeFrom' ||
+      args.kind === 'changeTo';
     if (!shouldUpdate) return;
     this.initValues();
   }

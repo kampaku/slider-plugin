@@ -1,10 +1,13 @@
+import type { ModelEvents } from '../src/helpers/Events';
 import Observable from '../src/helpers/Observable';
 
 describe('test observable', () => {
-  let observable: Observable;
+  class TestObservable extends Observable<ModelEvents> {}
+  let observable: TestObservable;
+
 
   beforeEach(() => {
-    observable = new Observable();
+    observable = new TestObservable();
   });
 
   test('should attach', () => {

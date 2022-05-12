@@ -1,3 +1,5 @@
+import type { ViewEvents } from 'src/helpers/Events';
+
 import createElement from '../../helpers/create-element';
 import Observable from '../../helpers/Observable';
 import isCollide from '../../helpers/isCollide';
@@ -7,7 +9,7 @@ import Tip from './Tip';
 import Connect from './Connect';
 import Scale from './Scale';
 
-class View extends Observable {
+class View extends Observable<ViewEvents> {
   sliderContainer: HTMLElement;
   private root: JQuery<HTMLElement>;
   private thumbFrom: Thumb;

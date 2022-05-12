@@ -1,14 +1,13 @@
 import isCollide from '../../helpers/isCollide';
 import createElement from '../../helpers/create-element';
-import type SettingsInterface from '../../helpers/SettingsInterface';
-import Events from '../../helpers/Events';
+import type { ViewEvents } from '../../helpers/Events';
 
 class Scale {
   element: HTMLElement;
   settings: SettingsInterface;
-  notify: (eventName: Events, settings: SettingsInterface) => void;
+  notify: (arg: ViewEvents) => void;
   constructor(
-    notify: (eventName: Events, settings: SettingsInterface) => void,
+    notify: (arg: ViewEvents) => void,
     settings: SettingsInterface,
   ) {
     this.settings = settings;
@@ -72,21 +71,21 @@ class Scale {
     const left = Math.abs(value - from);
     const right = Math.abs(value - to);
     if (!range) {
-      this.notify(Events.moveFrom, { ...this.settings, from: value });
+      this.notify({ kind: 'moveFrom', value });
       return;
     }
     if (left === right) {
       if (value > from) {
-        this.notify(Events.moveTo, { ...this.settings, to: value });
+        this.notify({ kind: 'moveTo', value });
       } else {
-        this.notify(Events.moveFrom, { ...this.settings, from: value });
+        this.notify({ kind: 'moveFrom', value });
       }
       return;
     }
     if (left < right) {
-      this.notify(Events.moveFrom, { ...this.settings, from: value });
+      this.notify({ kind: 'moveFrom', value });
     } else {
-      this.notify(Events.moveTo, { ...this.settings, to: value });
+      this.notify({ kind: 'moveTo', value });
     }
   }
 }
