@@ -55,36 +55,46 @@ class ConfigurationPanel {
   };
 
   private findElements() {
-    this.minInput = this.container.querySelector(
-      '[data-name="min"]',
-    ) as HTMLInputElement;
-    this.maxInput = this.container.querySelector(
-      '[data-name="max"]',
-    ) as HTMLInputElement;
-    this.stepInput = this.container.querySelector(
-      '[data-name="step"]',
-    ) as HTMLInputElement;
-    this.fromInput = this.container.querySelector(
-      '[data-name="from"]',
-    ) as HTMLInputElement;
-    this.toInput = this.container.querySelector(
-      '[data-name="to"]',
-    ) as HTMLInputElement;
-    this.rangeInput = this.container.querySelector(
-      '[data-name="range"]',
-    ) as HTMLInputElement;
-    this.tipInput = this.container.querySelector(
-      '[data-name="tip"]',
-    ) as HTMLInputElement;
-    this.connectInput = this.container.querySelector(
-      '[data-name="connect"]',
-    ) as HTMLInputElement;
-    this.scaleInput = this.container.querySelector(
-      '[data-name="scale"]',
-    ) as HTMLInputElement;
-    this.verticalInput = this.container.querySelector(
-      '[data-name="vertical"]',
-    ) as HTMLInputElement;
+    const minInput = this.container.querySelector('[data-name="min"]');
+    if (minInput instanceof HTMLInputElement) {
+      this.minInput = minInput;
+    }
+    const maxInput = this.container.querySelector('[data-name="max"]');
+    if (maxInput instanceof HTMLInputElement) {
+      this.maxInput = maxInput;
+    }
+    const stepInput = this.container.querySelector('[data-name="step"]');
+    if (stepInput instanceof HTMLInputElement) {
+      this.stepInput = stepInput;
+    }
+    const fromInput = this.container.querySelector('[data-name="from"]');
+    if (fromInput instanceof HTMLInputElement) {
+      this.fromInput = fromInput;
+    }
+    const toInput = this.container.querySelector('[data-name="to"]');
+    if (toInput instanceof HTMLInputElement) {
+      this.toInput = toInput;
+    }
+    const rangeInput = this.container.querySelector('[data-name="range"]');
+    if (rangeInput instanceof HTMLInputElement) {
+      this.rangeInput = rangeInput;
+    }
+    const tipInput = this.container.querySelector('[data-name="tip"]');
+    if (tipInput instanceof HTMLInputElement) {
+      this.tipInput = tipInput;
+    }
+    const connectInput = this.container.querySelector('[data-name="connect"]');
+    if (connectInput instanceof HTMLInputElement) {
+      this.connectInput = connectInput;
+    }
+    const scaleInput = this.container.querySelector('[data-name="scale"]');
+    if (scaleInput instanceof HTMLInputElement) {
+      this.scaleInput = scaleInput;
+    }
+    const verticalInput = this.container.querySelector('[data-name="vertical"]');
+    if (verticalInput instanceof HTMLInputElement) {
+      this.verticalInput = verticalInput;
+    }
   }
 
   private initValues() {

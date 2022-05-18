@@ -64,8 +64,8 @@ class Scale {
   }
 
   private onScaleClick(event: PointerEvent) {
-    const target = event.target as HTMLElement;
-    if (!target || !target.matches('.slider__scale-marker')) return;
+    const target = event.target;
+    if (!(target instanceof HTMLElement) || !target.matches('.slider__scale-marker')) return;
     const value = Number(target.dataset.value);
     const { from, to, range } = this.settings;
     const left = Math.abs(value - from);

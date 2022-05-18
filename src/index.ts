@@ -44,8 +44,8 @@ const settings = [
   },
 ];
 
-const plugins = document.querySelectorAll('.js-wrapper') as NodeListOf<HTMLElement>;
-const sliders = document.querySelectorAll('.js-slider-container') as NodeListOf<HTMLElement>;
+const plugins = document.querySelectorAll<HTMLElement>('.js-wrapper');
+const sliders = document.querySelectorAll<HTMLElement>('.js-slider-container');
 
 settings.forEach((setting, i) => {
   const slider: SuperSlider = $(sliders[i]).superSlider(setting);
